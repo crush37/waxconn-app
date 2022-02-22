@@ -1,0 +1,24 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <app-back-button (click)="markAsVisited()"></app-back-button>
+    <app-submit-button label="Create" [formGroup]="formGroup" [goTo]="'channels/discogs'"></app-submit-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="importing">
+  <span class="font-bold">Database Importer is running. Please wait.</span>
+</mat-card>
+
+<mat-card *ngIf="loading && !importing">Loading..</mat-card>
+
+<div *ngIf="!loading && !importing && release" class="grid lg:grid-cols-8 gap-4">
+
+  <div class="lg:col-span-6">
+    <app-part-listing-overview [release]="release" (mediaCondition)="onMediaConditionChange($event)" (values)="onPartChanges($event)"></app-part-listing-overview>
+  </div>
+
+  <div class="lg:col-span-2">
+    <app-part-listing-summary [release]="release" (values)="onPartChanges($event)" [mediaCondition]="mediaCondition"></app-part-listing-summary>
+  </div>
+
+</div>

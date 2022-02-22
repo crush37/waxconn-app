@@ -1,0 +1,50 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+
+    <ng-container *ngIf="!loading && order">
+      <button mat-flat-button *ngIf="order.paymentStatus === 'requires_confirmation'"
+              (click)="openPaymentDialog()" color="accent" class="ml-2">Confirm Payment
+      </button>
+      <button mat-flat-button *ngIf="order.paymentStatus === 'paid' && order.fulfillmentStatus === 'unfulfilled'"
+              (click)="openFulfillmentDialog()" color="accent" class="ml-2">Mark as Fulfilled
+      </button>
+    </ng-container>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<div *ngIf="!loading && order" class="grid lg:grid-cols-8 gap-x-4">
+
+  <div class="lg:order-last lg:col-span-2">
+    <div class="grid grid-flow-row gap-x-4">
+      <div class="mb-4">
+        <app-part-order-summary [order]="order"></app-part-order-summary>
+      </div>
+
+      <div class="mb-4">
+        <app-part-order-notes [notes]="order.message"></app-part-order-notes>
+      </div>
+
+      <div class="mb-4">
+        <app-part-order-customer-overview [order]="order"></app-part-order-customer-overview>
+      </div>
+    </div>
+  </div>
+
+  <div class="lg:col-span-6">
+    <div class="grid grid-cols-4 gap-x-4">
+
+      <div class="col-span-full mb-4">
+        <app-part-order-item-list [loading]="loading" [order]="order" [orderItems]="orderItems"></app-part-order-item-list>
+      </div>
+
+      <div class="col-span-full lg:col-start-3 mb-4">
+        <app-part-order-totals [order]="order"></app-part-order-totals>
+      </div>
+
+    </div>
+  </div>
+
+</div>

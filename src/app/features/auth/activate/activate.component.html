@@ -1,0 +1,45 @@
+<div *ngIf="formGroup && !activated" class="flex h-full">
+  <div class="my-auto px-5 w-full">
+    <mat-card class="mx-auto text-center" style="max-width: 370px">
+      <form (ngSubmit)="onSubmit()" [formGroup]="formGroup" autocomplete="off">
+        <img alt="" class="mx-auto pb-3" src="assets/waxconn-dark-basic-150.png" width="150">
+        <p class="pb-2">Thank you for verifying your email.<br>
+          Please set your password to activate the account.
+        </p>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput required type="password">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Confirm Password</mat-label>
+          <input formControlName="passwordConfirmation" matInput type="password">
+        </mat-form-field>
+        <p *ngIf="password.invalid" [ngClass]="{'mat-error': password.invalid && (password.dirty || password.touched)}">
+          Password must contain at least 8 characters,<br> including upper, lowercase and numbers.
+        </p>
+        <p *ngIf="password.valid && confirmation.pristine">
+          Looking good. Please confirm the password.
+        </p>
+        <p *ngIf="password.valid && confirmation.hasError('NoPasswordMatch')" class="mat-error">
+          Password does not match!
+        </p>
+        <p *ngIf="password.valid && confirmation.valid">
+          All good. Please press <span class="font-bold">Activate</span> to continue.
+        </p>
+        <button class="w-full mt-1" color="accent" mat-flat-button>Activate</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+
+<div *ngIf="activated" class="flex h-full">
+  <div class="my-auto px-5 w-full">
+    <mat-card class="mx-auto text-center" style="max-width: 370px">
+      <img alt="" class="mx-auto pb-3" src="assets/waxconn-dark-basic-150.png" width="150">
+      <p class="pb-2">Account activated, you can login now.<br>
+        Thank you.
+      </p>
+      <button class="w-full" color="accent" mat-flat-button routerLink="/login">To Login</button>
+    </mat-card>
+  </div>
+</div>

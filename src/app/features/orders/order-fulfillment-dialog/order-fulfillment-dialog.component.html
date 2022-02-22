@@ -1,0 +1,35 @@
+<div class="grid mx-4">
+  <form [formGroup]="formGroup" autocomplete="off">
+    <h3>Fulfillment Confirmation</h3>
+    <mat-divider></mat-divider>
+
+<!--    <div class="py-4">-->
+<!--      <mat-checkbox [checked]="true" disabled>All items fulfilled.</mat-checkbox>-->
+<!--    </div>-->
+
+    <h3 class="pt-4">Shipment information (optional)</h3>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tracking number</mat-label>
+      <input formControlName="trackingNumber" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="loading || (showOtherTrackingUrl || couriers?.length === 0)" appearance="outline">
+      <mat-label>Tracking URL</mat-label>
+      <input formControlName="otherTrackingUrl" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!loading && !showOtherTrackingUrl && couriers && couriers.length > 0" appearance="outline">
+      <mat-label>Courier</mat-label>
+      <mat-select (selectionChange)="onCourierSelect($event)" formControlName="courier">
+        <mat-option *ngFor="let courier of couriers" [value]="courier.name">{{ courier.name }}</mat-option>
+        <mat-option value="other">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <div class="justify-self-end pt-4">
+    <button [mat-dialog-close]="false" mat-flat-button>Back</button>
+    <button (click)="submitForm()" color="accent" class="ml-2" mat-flat-button>Mark as Fulfilled</button>
+  </div>
+</div>

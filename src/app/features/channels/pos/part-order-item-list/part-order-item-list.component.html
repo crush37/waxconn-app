@@ -1,0 +1,41 @@
+<mat-card class="px-0 pb-0 h-full">
+  <div class="flex w-full p-4 pt-0 text-left">
+    <div class="flex-grow self-center font-bold">Shopping Cart</div>
+    <div class="block sm:hidden flex-grow-0 self-center justify-self-end">
+      <button (click)="close()" color="primary" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card-content class="scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-100 overflow-y-scroll w-full">
+    <table class="table-fixed w-full">
+      <thead>
+      <tr>
+        <th class="w-6/6"></th>
+      </tr>
+      </thead>
+
+      <tbody *ngIf="items.length > 0">
+      <tr *ngFor="let row of items" (click)="remove(row.productId)" class="border-b hover:bg-gray-50 cursor-pointer">
+        <td class="p-4 sm:pr-0 flex items-center">
+          <div class="pr-4">
+            <img alt="" height="45" src="{{ item(row).thumb || 'assets/placeholder-45.png' }}" style="height: 45px; width: 45px; min-width: 45px">
+          </div>
+          <div class="flex-1 pr-4 items-center">
+            <strong>{{ item(row).vendor }}</strong><br>
+            {{ item(row).title }}
+          </div>
+          <div class="text-right">
+            <strong>{{ item(row).quantity }}x</strong><br>
+            {{ item(row).price | currency }}
+          </div>
+          <div class="hidden sm:block ml-6 mr-4">
+            <mat-icon class="pt-1 text-yellow-500">indeterminate_check_box</mat-icon>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>

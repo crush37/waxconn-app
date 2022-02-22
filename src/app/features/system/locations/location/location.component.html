@@ -1,0 +1,79 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <app-submit-button [formGroup]="formGroup" [goTo]="'system/locations'" [reload]="true"></app-submit-button>
+  </ng-template>
+</app-page-header>
+
+<div *ngIf="loading" class="py-3 px-4 text-primary-400">Loading..</div>
+
+<form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
+  <mat-card class="grid grid-cols-4 gap-x-4">
+
+    <div class="col-span-full">
+      <h3 class="inline-flex">Details</h3>
+      <mat-slide-toggle formControlName="default" class="float-right">
+        <span>Default</span>
+      </mat-slide-toggle>
+      <mat-divider></mat-divider>
+      <p class="pt-4 pb-2 text-primary-300">
+        A short name to make it easy to identify this location across the system.
+      </p>
+    </div>
+
+    <div class="col-span-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput required type="text">
+      </mat-form-field>
+    </div>
+
+    <div class="col-span-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input formControlName="phone" matInput type="text">
+      </mat-form-field>
+    </div>
+
+    <div class="col-span-full pt-2">
+      <h3>Address</h3>
+      <mat-divider></mat-divider>
+      <p class="pt-4 pb-2 text-primary-300">
+        The location address details.
+      </p>
+    </div>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+      <mat-label>Address</mat-label>
+      <input formControlName="address1" matInput required type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+      <mat-label></mat-label>
+      <input formControlName="address2" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>Country</mat-label>
+      <mat-select formControlName="country" (selectionChange)="onSetCountry($event)">
+        <mat-option *ngFor="let country of countries" value="{{ country.name }}">{{ country.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>Region/Province</mat-label>
+      <input formControlName="region" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>City</mat-label>
+      <input formControlName="city" matInput required type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>Postal / ZIP Code</mat-label>
+      <input formControlName="postcode" matInput required type="text">
+    </mat-form-field>
+
+  </mat-card>
+</form>

@@ -1,0 +1,68 @@
+<mat-card>
+  <h3>Summary</h3>
+  <mat-divider></mat-divider>
+
+  <form [formGroup]="formGroup" autocomplete="off">
+    <div class="grid grid-cols-2 pt-4 gap-x-4">
+      <div class="col-span-full">
+        <p class="pb-2">
+          <span class="mat-body-strong">Ref #{{ product.id }}</span>
+        </p>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" (valueChange)="isActive($event)">
+            <mat-option value="active">Active</mat-option>
+            <mat-option value="draft">Draft</mat-option>
+            <mat-option value="archived">Archived</mat-option>
+            <mat-option *ngIf="isDeleted()" value="deleted">Deleted</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <p>Where the product is available for sale.</p>
+        <ul *ngIf="channels">
+          <li *ngFor="let channel of channels">
+            <mat-checkbox (change)="selectChannel(channel.id, $event)" [checked]="isChannelChecked(channel.id)" disabled>
+              {{ channel.name | titlecase }}
+            </mat-checkbox>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pt-6 col-span-full">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ currencyCode }} Default Price</mat-label>
+          <input formControlName="price" matInput required type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Available quantity</mat-label>
+          <input formControlName="quantity" matInput type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-1">
+          <mat-label>SKU (Stock Keeping Unit)</mat-label>
+          <input formControlName="sku" matInput type="text">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="col-span-1">
+        <mat-label>Weight</mat-label>
+        <input formControlName="weight" matInput type="number">
+        <div matSuffix><small>grams</small></div>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-1">
+        <mat-label>Counts as</mat-label>
+        <input formControlName="formatQuantity" matInput type="number">
+        <div matSuffix><small>items</small></div>
+      </mat-form-field>
+
+      <div class="pt-2 col-span-full">
+        <span class="mat-body-strong">Created</span>: {{ product.createdAt | date }}<br>
+        <span class="mat-body-strong">Last Update</span>: {{ product.updatedAt | date }}
+      </div>
+
+    </div>
+  </form>
+</mat-card>

@@ -1,0 +1,69 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <app-delete-button
+        *ngIf="!loading && repricing && !repricing?.startedAt && !repricing.cancelledAt"
+        [id]="repricing.id"
+        label="Cancel"
+        message="Cancelled successfully!">
+    </app-delete-button>
+  </ng-template>
+</app-page-header>
+
+<div *ngIf="loading" class="py-3 px-4 text-primary-400">Loading..</div>
+
+<form *ngIf="!loading && repricing" [formGroup]="formGroup" autocomplete="off">
+  <mat-card class="grid grid-cols-4 gap-x-4">
+
+    <div class="col-span-full">
+      <h3 class="inline-flex pr-4">#{{ repricing.id }}</h3>
+      <ng-container *ngIf="!repricing.startedAt && !repricing.cancelledAt && !repricing.completedAt">
+        <span class="rounded py-1 px-3 bg-yellow-300">Scheduled</span>
+      </ng-container>
+
+      <ng-container *ngIf="repricing.startedAt && !repricing.completedAt && !repricing.cancelledAt">
+        <span class="rounded py-1 px-3 bg-green-400">Running</span>
+      </ng-container>
+
+      <ng-container *ngIf="repricing.completedAt">
+        <span class="rounded py-1 px-3 bg-gray-300">Completed</span>
+      </ng-container>
+
+      <ng-container *ngIf="repricing.cancelledAt">
+        <span class="rounded py-1 px-3 bg-gray-300">Cancelled</span>
+      </ng-container>
+      <div class="float-right pt-0.5">
+        <span class="mat-body-strong">Created on</span>: {{ repricing.createdAt | date }}
+      </div>
+      <mat-divider></mat-divider>
+      <p class="pt-4 mb-0">
+
+        <ng-container *ngIf="!repricing.cancelledAt">
+          <span class="mat-body-strong">Started on</span>: {{ (repricing.startedAt | date) || 'n/a' }}<br>
+          <span class="mat-body-strong">Completed on</span>: {{ (repricing.completedAt | date) || 'n/a' }}
+        </ng-container>
+
+        <ng-container *ngIf="repricing.cancelledAt">
+          <span class="mat-body-strong">Cancelled on</span>: {{ (repricing.cancelledAt | date) }}
+        </ng-container>
+      </p>
+
+      <ng-container *ngIf="!repricing.cancelledAt">
+        <p class="pt-4">
+          <span class="mat-body-strong">Description</span>: {{ repricing.operator | titlecase }}
+          <ng-container *ngIf="repricing.operation === 'create'">
+            <ng-container *ngIf="repricing.discountType === 'fixed'">{{ repricing.value | currency }}</ng-container>
+            <ng-container *ngIf="repricing.discountType === 'percentage'">{{ repricing.value }} % </ng-container>
+            <ng-container *ngIf="repricing.discountType === 'percentage' && repricing.rounding">(with rounding)</ng-container>
+            <ng-container *ngIf="repricing.discountType === 'percentage' && !repricing.rounding">(no rounding)</ng-container>
+          </ng-container>
+          <ng-container *ngIf="repricing.operation === 'restore'">Restore default prices</ng-container>
+        </p>
+
+        <app-repricing-details-channel-list [loading]="loading" [repricingChannels]="repricingChannels"></app-repricing-details-channel-list>
+      </ng-container>
+
+    </div>
+
+  </mat-card>
+</form>

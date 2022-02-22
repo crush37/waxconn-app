@@ -1,0 +1,34 @@
+<mat-card class="px-0 pt-0 mb-4">
+  <app-data-list [itemRoute]="['orders']" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-8/12 p-4 text-left">Latest Orders</th>
+      <th class="w-2/12 p-4 text-right hidden lg:table-cell">Items</th>
+      <th class="w-4/12 lg:w-2/12 p-4 text-right">Total</th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 text-left border-b">
+        <div class="flex items-center">
+          <div class="mr-4">
+            <img alt="" height="25" src="assets/{{ val(row).channelType }}-25.png">
+          </div>
+          <div class="w-44 pr-4">
+            <span class="mat-small">{{ val(row).channelType | titlecase }} - {{ val(row).createdAt | date }}</span><br>
+            <ng-container *ngIf="val(row).channelType !== 'pos'">
+              <span class="mat-body-strong">{{ val(row).reference }}</span>
+              <span class="mat-small text-primary-300"> | #{{ val(row).id }}</span>
+            </ng-container>
+            <ng-container *ngIf="val(row).channelType === 'pos'">
+              <span class="mat-body-strong">#{{ val(row).id }}</span>
+            </ng-container>
+          </div>
+        </div>
+      </td>
+
+      <td class="p-4 text-right border-b hidden lg:table-cell">{{ val(row).itemsCount }}</td>
+      <td class="p-4 text-right border-b">{{ val(row).total | currency }}</td>
+    </ng-template>
+
+  </app-data-list>
+</mat-card>

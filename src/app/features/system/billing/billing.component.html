@@ -1,0 +1,172 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<div class="grid grid-cols-3 gap-x-4">
+  <div *ngIf="!loading && billing" class="col-span-full lg:col-span-2 pb-4">
+    <mat-card>
+      <div class="flex">
+        <div class="flex-grow">
+          <h3>Current Plan: {{ billing.plan }}</h3>
+<!--          <h3>Current Plan: Standard <a [routerLink]="" class="pl-1 link text-sm">change</a></h3>-->
+        </div>
+        <div class="flex-grow-0 self-center justify-self-end pb-4">
+          <span class="rounded py-1 px-3 bg-yellow-300">Active</span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="grid grid-cols-3">
+        <div class="col-span-full lg:col-span-2">
+          <p class="pt-4">
+<!--            <span class="mat-body-strong">Member Since: </span>24/03/2018<br>-->
+            <span class="mat-body-strong">Payment Method: </span> Paypal
+<!--            <a [routerLink]="" class="pl-1 link">change</a>-->
+            <br>
+          </p>
+          <h3 class="pt-4 mb-1">Billing Settings</h3>
+          <p>This information appears on your monthly invoice and should be your legal address.</p>
+          <p *ngIf="billing.settings.address1 && billing.settings.country" class="pt-3">
+            {{ billing.settings.companyName }}<br>
+            {{ billing.settings.address1 }}<br>
+            <ng-container *ngIf="billing.settings.address2">{{ billing.settings.address2 }}<br></ng-container>
+            {{ billing?.settings?.city }}, {{ billing.settings.country }}, {{ billing.settings.postcode }}
+          </p>
+          <p *ngIf="!billing.settings.address1 && !billing.settings.country" class="pt-3">Not available</p>
+          <h3 class="pt-4 mb-1">Tax ID</h3>
+          <p *ngIf="billing.settings.taxNumber">{{ billing.settings.taxNumber }}</p>
+          <p *ngIf="!billing.settings.taxNumber">Not available</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="col-span-full lg:col-span-1 lg:text-right">
+    <div class="grid">
+      <div class="col-span-full pb-4">
+        <mat-card>
+          <div *ngIf="!loading && billing" class="flex">
+            <div *ngIf="hasPendingPayment || isPaid" class="flex-grow text-left">
+              <h3> #{{ billing.pendingInvoice?.externalId }} </h3>
+            </div>
+            <div *ngIf="!hasPendingPayment && !isPaid" class="flex-grow">
+              <h3>Month-to-date Summary</h3>
+            </div>
+            <div *ngIf="!hasPendingPayment && isPaid" class="flex-grow-0 self-center justify-self-end pb-4">
+              <span class="rounded py-1 px-3 bg-green-400">Paid</span>
+            </div>
+            <div *ngIf="hasPendingPayment" class="flex-grow-0 self-center justify-self-end pb-4">
+              <span class="rounded py-1 px-3 bg-green-400">New Invoice Available</span>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div *ngIf="!loading && billing && !isPaid">
+            <p class="pt-5">{{ billing.description }}</p>
+            <div class="flex lg:justify-end pt-4">
+              <table class="table-auto">
+                <tbody>
+                <tr>
+                  <td *ngIf="billing.totalSubscription > 0" class="font-bold pr-4"> Subscription:</td>
+                  <td *ngIf="billing.totalSubscription > 0"> {{ billing.totalSubscription | currency: 'EUR' }} </td>
+                </tr>
+                <tr *ngIf="billing.totalDiscounts > 0">
+                  <td class="font-bold pr-4"> Discounts:</td>
+                  <td> - {{ billing.totalDiscounts | currency: 'EUR' }} </td>
+                </tr>
+                <tr>
+                  <td class="font-bold pr-4"> Channels:</td>
+                  <td> {{ billing.totalChannels || 0 | currency: 'EUR' }} </td>
+                </tr>
+                <tr>
+                  <td class="font-bold pr-4"> Tax <span *ngIf="billing.totalTax > 0" class="font-normal"> (23%)</span>:
+                  </td>
+                  <td> {{ billing.totalTax || 0 | currency: 'EUR' }} </td>
+                </tr>
+                <tr>
+                  <td class="font-bold pr-4">Total:</td>
+                  <td> {{ billing.total || 0 | currency: 'EUR' }} </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="!loading && isPaid" [@fadeInOnEnter] [@bounceInOnEnter] class="pt-4 pb-2 text-center">
+            <div>
+              <h3 class="mb-0">Thank you!</h3>
+              <p class="mb-4">Your payment was processed successfully.</p>
+              <button (click)="getData()" color="accent" mat-flat-button class="ml-2">
+                Close
+              </button>
+            </div>
+          </div>
+          <div *ngIf="!hasPendingPayment && !isPaid" class="pt-8"></div>
+          <div [hidden]="!hasPendingPayment" #paypal class="pt-8"></div>
+        </mat-card>
+      </div>
+
+      <div *ngIf="!loading && !isPaid" class="col-span-full pb-4 text-center">
+        <mat-card>
+          <div *ngIf="!hasPendingPayment">
+            <p class="mb-0">
+              <ng-container *ngIf="billing?.trial">First invoice is generated in</ng-container>
+              <ng-container *ngIf="!billing?.trial">Next invoice is generated in</ng-container>
+              {{ billing?.nextInvoiceAt | date: 'LLLL d, yyyy' }}.<br>
+              If you have any question please <a href="https://waxconn.com/contact-us" target="_blank" class="link">contact us</a>.
+            </p>
+          </div>
+          <div *ngIf="hasPendingPayment">
+            <p class="mb-0">Payments are due within 7 days.<br>If you have any question please
+              <a href="https://waxconn.com/contact-us" target="_blank" class="link">contact us</a>.
+            </p>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-span-full">
+    <h3>Billing History</h3>
+  </div>
+
+  <div *ngIf="billing?.invoices" class="col-span-full pb-4">
+    <mat-card class="px-0 pt-0">
+      <table class="table-fixed w-full text-left">
+        <thead>
+        <tr class="border-collapse border-b">
+          <th class="w-2/12 p-4">Date</th>
+          <th class="w-2/12 p-4">Description</th>
+          <th class="w-6/12 p-4 text-right">Amount</th>
+<!--          <th class="w-2/12 p-4"></th>-->
+        </tr>
+        </thead>
+
+        <tbody *ngIf="loading">
+        <tr>
+          <td class="p-4">Loading..</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="!loading && billing.invoices.length === 0">
+        <tr>
+          <td class="p-4">No records found.</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="!loading && billing.invoices.length > 0">
+        <ng-container *ngFor="let invoice of billing.invoices">
+          <tr class="hover:bg-gray-50 cursor-pointer">
+            <td class="p-4 border-b">{{ invoice.createdAt | date: 'mediumDate' }}</td>
+            <td class="p-4 border-b">{{ invoice.description }}</td>
+            <td class="p-4 border-b text-right">{{ invoice.total | currency: 'EUR' }}</td>
+<!--            <td class="p-4 border-b text-right"><a href="#" target="_blank" class="link">Download</a></td>-->
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </mat-card>
+  </div>
+
+</div>

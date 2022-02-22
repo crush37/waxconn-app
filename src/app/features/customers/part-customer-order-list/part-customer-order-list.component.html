@@ -1,0 +1,56 @@
+<mat-card class="px-0">
+  <app-data-list [itemRoute]="['orders']" [page]="orderList" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-5/12 px-4 pb-4 text-left"><h3 class="mb-0">Orders</h3></th>
+      <th class="w-5/12 px-4 pb-4 text-right">Payment / Fulfillment</th>
+      <th class="w-1/12 px-4 pb-4 text-right">Items</th>
+      <th class="w-1/12 px-4 pb-4 text-right">Total</th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+        <td class="p-4 text-left border-b">
+          <div class="flex items-center">
+            <div class="mr-4">
+              <img alt="" height="25" src="assets/{{ o(row).channelType }}-25.png">
+            </div>
+            <div class="w-44 pr-4">
+              <span class="mat-small">{{ o(row).channelType | titlecase }} - {{ o(row).createdAt | date }}</span><br>
+              <ng-container *ngIf="o(row).channelType !== 'pos'">
+                <span class="mat-body-strong">{{ o(row).reference }}</span>
+                <span class="mat-small text-primary-300"> | #{{ o(row).id }}</span>
+              </ng-container>
+              <ng-container *ngIf="o(row).channelType === 'pos'">
+                <span class="mat-body-strong">#{{ o(row).id }}</span>
+              </ng-container>
+            </div>
+          </div>
+        </td>
+
+      <td class="p-4 text-right border-b">
+        <div *ngIf="!o(row).cancelledAt" class="flex justify-end">
+          <div class="pr-4">
+            <span [class]="'rounded py-1 px-3 ' + (o(row).paymentStatus === 'paid' ? 'bg-gray-300' : 'bg-yellow-300')">
+              {{ o(row).paymentStatus | removeUnderscore | titlecase }}
+            </span>
+          </div>
+          <div class="w-24">
+            <span [class]="'rounded py-1 px-3 ' + (o(row).fulfillmentStatus === 'fulfilled' ? 'bg-gray-300' : 'bg-yellow-300')">
+              {{ o(row).fulfillmentStatus | removeUnderscore | titlecase }}
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="o(row).cancelledAt" class="flex justify-end">
+          <div>
+            <span class="rounded py-1 px-3 bg-gray-300">Cancelled</span>
+          </div>
+        </div>
+      </td>
+
+        <td class="p-4 text-right border-b">{{ o(row).itemsCount }}</td>
+
+        <td class="p-4 text-right border-b">{{ o(row).total | currency }}</td>
+    </ng-template>
+  </app-data-list>
+</mat-card>

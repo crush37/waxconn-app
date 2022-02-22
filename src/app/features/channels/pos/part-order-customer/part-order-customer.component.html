@@ -1,0 +1,11 @@
+<mat-card *ngIf="customer" class="mt-4">
+  <div class="flex">
+    <div class="flex-grow font-bold mb-4">Customer</div>
+    <div class="flex-grow-0 text-right">
+      <ng-container *ngIf="customer.firstName">
+        <h4 class="pb-1 m-0">{{ customer.fullName }}</h4>
+      </ng-container>
+      <a [routerLink]="[]" class="link">{{ customer.email }}</a>
+    </div>
+  </div>
+</mat-card>

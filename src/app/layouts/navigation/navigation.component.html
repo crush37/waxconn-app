@@ -1,0 +1,49 @@
+<mat-nav-list class="flex flex-col h-full pt-7 ml-2 lg:ml-3">
+  <div class="pl-2 mb-10">
+    <a routerLink="/">
+      <img alt="" src="assets/waxconn-dark-146.png" width="146">
+    </a>
+  </div>
+
+  <a *ngIf="!['system', 'tools'].includes(path)"
+     (click)="listItemClick.emit()"
+     [routerLinkActiveOptions]="{ exact: true }"
+     href="#" mat-list-item routerLink="/"
+     routerLinkActive="mat-drawer-active-item">
+    <mat-icon class="mr-3">home</mat-icon>
+    <span>Home</span>
+  </a>
+
+  <a (click)="listItemClick.emit()"
+     *ngFor="let link of links"
+     [routerLinkActiveOptions]="{ exact: false }"
+     href="#" mat-list-item routerLink="{{ link.href }}"
+     routerLinkActive="mat-drawer-active-item">
+    <mat-icon class="mr-3">{{ link.icon }}</mat-icon>
+    <span> {{ link.text }}</span>
+  </a>
+
+  <a *ngIf="displayPos && !['system', 'tools'].includes(path)"
+     (click)="listItemClick.emit()"
+     [routerLinkActiveOptions]="{ exact: false }"
+     href="#" mat-list-item
+     routerLink="/channels/pos/orders/new"
+     routerLinkActive="mat-drawer-active-item"
+     class="mt-10">
+    <mat-icon class="mr-3">ballot</mat-icon>
+    <span>POS Terminal</span>
+  </a>
+
+  <div class="flex-grow"></div>
+
+  <a mat-list-item *ngIf="path === 'tools'" routerLink="/system">
+    <mat-icon class="mr-3">arrow_back</mat-icon>
+  </a>
+  <a mat-list-item *ngIf="path === 'system'" routerLink="/">
+    <mat-icon class="mr-3">arrow_back</mat-icon>
+  </a>
+  <a mat-list-item *ngIf="!['system', 'tools'].includes(path) && isAdmin" routerLink="/system">
+    <mat-icon class="mr-3">settings</mat-icon>
+    <span>System</span>
+  </a>
+</mat-nav-list>

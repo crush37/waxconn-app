@@ -1,0 +1,36 @@
+<mat-card class="px-0">
+  <app-data-list [page]="repricingChannels" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-3/12 px-4 pb-4 text-left">Channel</th>
+      <th class="w-3/12 px-4 pb-4 text-left">Total Listings</th>
+      <th class="w-3/12 px-4 pb-4 text-left">Total Processed</th>
+      <th class="w-3/12 px-4 pb-4 text-right">Completed on</th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <tr class="hover:bg-gray-50">
+        <td class="p-4 text-left border-b font-bold">{{ item(row).channelType | titlecase }}</td>
+        <td class="p-4 text-left border-b">{{ item(row).totalListings || 'n/a' }}</td>
+        <td class="p-4 text-left border-b">{{ item(row).totalProcessed || 'n/a' }}</td>
+        <td class="p-4 text-right border-b">
+          <ng-container *ngIf="!item(row).startedAt && !item(row).cancelledAt && !item(row).completedAt">
+            <span class="rounded py-1 px-3 bg-yellow-300">Scheduled</span>
+          </ng-container>
+
+          <ng-container *ngIf="item(row).startedAt && !item(row).completedAt && !item(row).cancelledAt">
+            <span class="rounded py-1 px-3 bg-green-400">Running</span>
+          </ng-container>
+
+          <ng-container *ngIf="item(row).completedAt">{{ item(row).completedAt | date }}</ng-container>
+
+          <ng-container *ngIf="item(row).cancelledAt">
+            <span class="rounded py-1 px-3 bg-gray-300">Cancelled</span>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+
+  </app-data-list>
+
+</mat-card>

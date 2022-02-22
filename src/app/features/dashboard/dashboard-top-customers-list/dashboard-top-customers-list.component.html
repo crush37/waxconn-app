@@ -1,0 +1,37 @@
+<mat-card class="px-0 pt-0 mb-4">
+  <table class="table-fixed w-full">
+    <thead>
+    <tr class="border-collapse border-b">
+      <th class="w-9/12 lg:w-7/12 p-4 text-left">Top Customers</th>
+      <th class="w-3/12 lg:w-2/12 p-4 text-right">Orders</th>
+      <th class="w-3/12 p-4 text-right hidden lg:table-cell">Spent</th>
+    </tr>
+    </thead>
+
+    <tbody *ngIf="loading">
+    <tr>
+      <td class="p-4">Loading..</td>
+    </tr>
+    </tbody>
+
+    <tbody *ngIf="!loading && customers?.length === 0">
+    <tr>
+      <td class="p-4">Nothing found.</td>
+    </tr>
+    </tbody>
+
+    <tbody *ngIf="!loading && customers">
+    <tr *ngFor="let customer of customers" [routerLink]="['customers', customer.id]" class="hover:bg-gray-50 cursor-pointer">
+      <td class="p-4 text-left border-b">
+        <span class="mat-body-strong">{{ customer.fullName }}</span><br>
+        <span *ngIf="customer.defaultAddress" class="mat-small">
+          {{ customer.defaultAddress?.city | titlecase }}, {{ customer.defaultAddress?.country | titlecase }}
+        </span>
+        <span *ngIf="!customer.defaultAddress" class="mat-small"> Not available </span>
+      </td>
+      <td class="p-4 text-right border-b">{{ customer.ordersCount }}</td>
+      <td class="p-4 text-right border-b hidden lg:table-cell">{{ customer.amountSpent | currency }}</td>
+    </tr>
+    </tbody>
+  </table>
+</mat-card>

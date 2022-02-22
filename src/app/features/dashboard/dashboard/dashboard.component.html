@@ -1,0 +1,62 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <ng-container *ngIf="!loading && isAppReady">
+      <button [matMenuTriggerFor]="actions" class="pl-6" mat-button>{{ range }}
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #actions="matMenu" xPosition="before">
+        <button *ngFor="let range of ranges" (click)="getData(range.value)" mat-menu-item>{{ range.name }}</button>
+      </mat-menu>
+    </ng-container>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="!isAppReady" class="grid grid-cols-8 gap-x-4">
+  <div class="col-span-full pb-2">
+    <h3>Welcome to Waxconn</h3>
+    <mat-divider></mat-divider>
+    <p class="pt-4 pb-2 text-primary-400">
+      Hi {{ user.firstName  }},<br>
+      Welcome and thank you for trying Waxconn!<br><br>
+      Before you start using the system please visit the <span class="font-bold">System Settings</span>,
+      add your company and contact details and set the account standards.<br>
+      After that don't forget to add a default <span class="font-bold">Location</span> and enable your
+      <span class="font-bold">Sales Channels</span>.<br>
+      <br>
+      If you have any question or need assistance please don't hesitate to contact us. We will gladly help.
+    </p>
+    <button routerLink="/system/general" color="primary" mat-flat-button>
+      To System Settings
+    </button>
+  </div>
+</mat-card>
+
+<div *ngIf="isAppReady" class="grid grid-cols-3 grid-flow-col gap-4">
+  <div class="col-span-full lg:col-span-1 order-1 lg:order-2">
+
+    <app-dashboard-sales-summary
+        [loading]="loading"
+        [channelSales]="channelSales"
+        [totalSales]="totalSales"
+    ></app-dashboard-sales-summary>
+
+    <app-dashboard-top-customers-list
+        [loading]="loading"
+        [customers]="topCustomers"
+    ></app-dashboard-top-customers-list>
+
+  </div>
+
+  <div class="col-span-full lg:col-span-2 row-span-3 order-2 lg:order-1">
+
+    <div class="hidden sm:block">
+      <app-dashboard-sales-chart
+          [loading]="loading"
+          [sales]="chartSales"
+      ></app-dashboard-sales-chart>
+    </div>
+
+    <app-dashboard-latest-orders-list></app-dashboard-latest-orders-list>
+
+  </div>
+</div>

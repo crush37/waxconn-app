@@ -1,0 +1,86 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <app-submit-button label="Connect & Save" [formGroup]="formGroup" [goTo]="'system/channels'"
+                       [reload]="true"></app-submit-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
+  <div class="grid grid-cols-3 gap-4">
+
+    <!--  Left Side -->
+    <div class="col-span-full lg:col-span-2 order-last lg:order-first">
+      <mat-card class="grid grid-cols-2 gap-4 mb-4">
+        <div class="col-span-full">
+          <h3 class="inline-flex">General</h3>
+          <mat-slide-toggle formControlName="isActive" class="float-right">
+            <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
+            <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
+          </mat-slide-toggle>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div class="col-span-full lg:col-span-1">
+          <p class="pt-4 pb-2 text-primary-300">
+            A short and unique name for internal usage (optional).
+          </p>
+          <mat-form-field appearance="outline">
+            <mat-label>Channel name</mat-label>
+            <input formControlName="name" matInput type="text">
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-full lg:col-span-1">
+          <p class="pt-4 pb-2 text-primary-300">
+            Where you manage your inventory and fulfill orders.
+          </p>
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="locationId" required>
+              <mat-option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card>
+    </div>
+
+    <!--  Right Side -->
+    <div class="col-span-full lg:col-span-1 order-first lg:order-last">
+      <mat-card class="mb-4">
+        <div class="col-span-full">
+          <h3 class="inline-flex">Credentials</h3>
+          <!--        <a [routerLink]="" class="float-right pt-0.5 link">Need help?</a>-->
+          <mat-divider></mat-divider>
+          <p class="pt-4 pb-2 text-primary-300">
+            Required to connect to Shopify and manage your inventory and orders.
+          </p>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+          <mat-label>Store URL (eg. waxstore.myshopify.com)</mat-label>
+          <input formControlName="hostname" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+          <mat-label>API Key</mat-label>
+          <input formControlName="apiKey" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+          <mat-label>API Password</mat-label>
+          <input formControlName="apiPassword" matInput required type="password">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+          <mat-label>Shared Secret</mat-label>
+          <input formControlName="apiSharedSecret" matInput required type="text">
+        </mat-form-field>
+
+      </mat-card>
+    </div>
+  </div>
+
+</form>

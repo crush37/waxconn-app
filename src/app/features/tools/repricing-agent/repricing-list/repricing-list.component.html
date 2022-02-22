@@ -1,0 +1,47 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <button [routerLink]="['new']" color="primary" mat-flat-button class="ml-2">Create Repricing</button>
+  </ng-template>
+</app-page-header>
+
+<mat-card class="px-0 pt-0">
+  <app-data-list [itemRoute]="['tools', 'repricing-agent']" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-10/12 pt-4 px-4 text-left"><h3>List</h3></th>
+      <th class="w-2/12 pt-4 px-4"></th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 border-b">
+        <span class="mat-caption text-primary-300">{{ val(row).createdAt | date }}</span><br>
+        <span>
+          <ng-container *ngFor="let channel of val(row).channels | slice:0; let i = index">
+            <span class="font-bold">{{ channel.channelType | titlecase }}</span><ng-container
+              *ngIf="i + 1 < (val(row).channels?.length || 0)">, </ng-container>
+          </ng-container>
+        </span>
+      </td>
+
+      <td class="p-4 text-right border-b">
+        <ng-container *ngIf="!val(row).startedAt && !val(row).cancelledAt && !val(row).completedAt">
+          <span class="rounded py-1 px-3 bg-yellow-300">Scheduled</span>
+        </ng-container>
+
+        <ng-container *ngIf="val(row).startedAt && !val(row).completedAt && !val(row).cancelledAt">
+          <span class="rounded py-1 px-3 bg-green-400">Running</span>
+        </ng-container>
+
+        <ng-container *ngIf="val(row).completedAt">
+          <span class="rounded py-1 px-3 bg-gray-300">Completed</span>
+        </ng-container>
+
+        <ng-container *ngIf="val(row).cancelledAt">
+          <span class="rounded py-1 px-3 bg-gray-300">Cancelled</span>
+        </ng-container>
+      </td>
+    </ng-template>
+
+  </app-data-list>
+</mat-card>

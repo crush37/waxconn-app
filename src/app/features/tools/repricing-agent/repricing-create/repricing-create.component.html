@@ -1,0 +1,103 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<mat-card *ngIf="!loading && channels.length === 0" class="grid grid-cols-8 gap-x-4">
+    <div class="col-span-full pb-2">
+      <h3>Not available</h3>
+      <mat-divider></mat-divider>
+      <p class="pt-4 pb-2 text-primary-400">
+        Please activate a sales channel before using the Repricing Agent.
+      </p>
+      <button routerLink="/system/channels" color="primary" mat-flat-button>
+        To Sales Channels
+      </button>
+    </div>
+</mat-card>
+
+<form *ngIf="!loading && channels.length > 0" [formGroup]="form" autocomplete="off">
+  <mat-card class="grid grid-cols-3 gap-x-4">
+
+    <div class="col-span-full">
+      <h3>Operation Details</h3>
+      <mat-divider></mat-divider>
+      <p class="pt-4 pb-2 text-primary-400">
+        Reprice and bulk update all products on the selected sales channels.
+      </p>
+    </div>
+
+    <div class="col-span-full py-1 pb-6">
+      <mat-radio-group formControlName="operation" class="inline-flex flex-col">
+        <mat-radio-button value="create" (change)="selectOperation($event)">Create new</mat-radio-button>
+        <mat-radio-button value="restore" (change)="selectOperation($event)" class="pt-1">Restore default prices</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>Operator</mat-label>
+      <mat-select formControlName="operator" required>
+        <mat-option value="add">Add (+)</mat-option>
+        <mat-option value="subtract">Subtract (-)</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>Value</mat-label>
+      <input formControlName="value" matInput required type="number">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="discountType" required>
+        <mat-option value="fixed">Fixed Value</mat-option>
+        <mat-option value="percentage">Percentage</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="form.get('discountType')?.value === 'percentage'"
+         class="col-span-full flex items-center pb-3.5">
+      <mat-checkbox formControlName="rounding">Round decimals?</mat-checkbox>
+    </div>
+
+    <div class="col-span-full py-1">
+      <p [class.mat-error]="form.get('type')?.touched && form.get('type')?.getError('required')">
+        On what channels should the repricing be applied to?
+      </p>
+
+      <mat-radio-group formControlName="type" class="inline-flex flex-col" required>
+        <mat-radio-button value="all">On all channels</mat-radio-button>
+        <mat-radio-button value="channels" class="pt-1">On selected channels</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div *ngIf="form.get('type')?.value === 'channels'" class="col-span-full pt-4">
+      <p [class.mat-error]="form.get('channels')?.touched && selectedChannels.length === 0">
+        Please select at least one channel.
+      </p>
+
+      <ul *ngIf="channels">
+        <li *ngFor="let channel of channels">
+          <mat-checkbox (change)="selectChannel(channel.id, $event)">
+            {{ channel.name | titlecase }}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-span-full pt-6">
+      <button color="warn" routerLink="/tools/repricing-agent" mat-flat-button>Discard</button>
+      <app-submit-button label="Save & Run" [formGroup]="form" [goTo]="'tools/repricing-agent'"></app-submit-button>
+
+      <p class="pt-4 text-primary-400">
+        <span class="mat-body-strong">Note:</span>
+        The repricing process may take several minutes or hours to finish depending on the selected channels and
+        size of the inventory.
+      </p>
+    </div>
+
+  </mat-card>
+</form>

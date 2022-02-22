@@ -1,0 +1,55 @@
+<mat-card>
+  <h3>Customer</h3>
+  <mat-divider></mat-divider>
+
+  <ng-container *ngIf="!order.customerId">
+    <div class="pt-5 text-primary-400">
+      <p>
+        Generic customer.
+      </p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="order.customerId">
+    <div class="pt-5 pb-3">
+      <p>
+        <a [routerLink]="['/', 'customers', order.customerId]" class="link">{{ order.customerName || 'Generic Customer' }}</a><br>
+        {{ order.customer?.ordersCount | i18nPlural: itemPluralMapping['order']}}<br><br>
+        <a [routerLink]="[]" class="link">{{ order.email }}</a>
+      </p>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="py-3">
+      <h3> Shipping Address </h3>
+      <p *ngIf="!order.shippingAddress" class="text-primary-300">Not provided.</p>
+      <p *ngIf="order.shippingAddress">
+        <span> {{ order.shippingAddress.fullName }} </span><br>
+        <span> {{ order.shippingAddress.address1 }} </span><br>
+        <span *ngIf="order.shippingAddress.address2"> {{ order.shippingAddress.address2 }} <br></span>
+        <span> {{ order.shippingAddress.city }}, {{ order.shippingAddress.postcode }} </span><br>
+        <span *ngIf="order.shippingAddress.region"> {{ order.shippingAddress.region }} <br></span>
+        <span> {{ order.shippingAddress.country }} </span>
+        <span *ngIf="order.shippingAddress.phone"><br><br>
+          {{ order.shippingAddress.phone }} </span>
+      </p>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="py-3">
+      <h3> Billing Address </h3>
+      <p *ngIf="!order.billingAddress" class="text-primary-300">Not provided.</p>
+      <p *ngIf="order.billingAddress">
+        <span> {{ order.billingAddress.fullName }} </span><br>
+        <span> {{ order.billingAddress.address1 }} </span><br>
+        <span *ngIf="order.billingAddress.address2"> {{ order.billingAddress.address2 }} <br></span>
+        <span> {{ order.billingAddress.city }}, {{ order.billingAddress.postcode }} </span><br>
+        <span *ngIf="order.billingAddress.region"> {{ order.billingAddress.region }} <br></span>
+        <span> {{ order.billingAddress.country }} </span>
+        <span *ngIf="order.billingAddress.phone"><br><br>
+          {{ order.billingAddress.phone }} </span>
+      </p>
+    </div>
+  </ng-container>
+
+</mat-card>
