@@ -1,0 +1,7 @@
+<button *ngIf="mode === 'normal'" (click)="submit()" [disabled]="!formGroup.dirty" class="ml-2" color="primary" mat-flat-button>
+  {{ label }}
+</button>
+
+<button *ngIf="mode === 'big'" (click)="submit()" [disabled]="!formGroup.dirty" class="w-full p-4" color="primary" mat-flat-button>
+  {{ label }}
+</button>

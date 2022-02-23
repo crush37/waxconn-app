@@ -1,0 +1,15 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<mat-card *ngIf="!loading" class="grid">
+  <form [formGroup]="formGroup" autocomplete="off">
+    <div class="col-span-full">
+      Under development.
+    </div>
+  </form>
+</mat-card>

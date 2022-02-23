@@ -1,0 +1,21 @@
+<mat-card>
+  <h3 class="inline-flex items-center">Summary</h3>
+  <mat-divider></mat-divider>
+
+  <div class="pt-4 grid gap-1">
+    <div>
+      Channel: <span class="mat-body-strong">{{ order.channelType | titlecase }}</span>
+    </div>
+    <div *ngIf="order.channelType !== 'pos'">
+      <span class="mat-body-strong">Order {{ order.reference }}</span>
+      <span class="mat-small text-primary-300"> | #{{ order.id }}</span>
+    </div>
+    <div *ngIf="order.channelType === 'pos'">
+      <span class="mat-body-strong">Order #{{ order.id }}</span>
+    </div>
+    <div class="pt-4">
+      <span class="mat-body-strong">Created</span>: {{ order.createdAt | date }}<br>
+      <span class="mat-body-strong">Last Update</span>: {{ order.updatedAt | date }}
+    </div>
+  </div>
+</mat-card>

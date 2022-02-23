@@ -1,0 +1,162 @@
+<form [formGroup]="formGroup" autocomplete="on">
+
+  <mat-card>
+    <mat-tab-group mat-align-tabs="end" animationDuration="750ms" dynamicHeight>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img alt="" height="25" src="assets/discogs-25.png">
+        </ng-template>
+        <ng-container *ngTemplateOutlet="discogsListing"></ng-container>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <img alt="" height="25" src="assets/shopify-25.png">
+        </ng-template>
+        <ng-container *ngTemplateOutlet="shopifyProduct"></ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+
+  <ng-template #discogsListing>
+<!--    <div class="flex items-center">-->
+<!--      <div class="mr-4">-->
+<!--        <img alt="" height="75" src="{{ product.thumb }}" style="height: 75px; width: 75px; min-width: 75px;">-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>-->
+<!--        <p *ngIf="product.options.discogs">-->
+<!--          Discogs Release #{{ product.options.discogs.releaseId }}-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div *ngIf="product.options.discogs" class="flex-1 grid justify-items-end">-->
+<!--        <a (click)="$event.stopPropagation()" href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}" rel="noopener noreferrer"-->
+<!--           class="link content-center" target="_blank">-->
+<!--          <mat-icon style="transform: scale(0.8);">open_in_new</mat-icon>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="grid grid-cols-2 gap-x-4 py-4">
+      <div class="col-span-full">
+        <p class="mb-1" *ngIf="product.options.discogs">
+          Discogs Release #
+          <a (click)="$event.stopPropagation()" href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}" rel="noopener noreferrer" class="link content-center" target="_blank">
+            {{ product.options.discogs.releaseId }}
+          </a>
+        </p>
+        <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="grid grid-cols-2 gap-x-4 pt-4">
+      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
+        <mat-label>Media Condition</mat-label>
+        <mat-select formControlName="mediaCondition" required>
+          <mat-option value="Mint (M)">Mint (M)</mat-option>
+          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
+          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
+          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
+          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
+          <mat-option value="Good (G)">Good (G)</mat-option>
+          <mat-option value="Fair (F)">Fair (F)</mat-option>
+          <mat-option value="Poor (P)">Poor (P)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
+        <mat-label>Sleeve Condition</mat-label>
+        <mat-select formControlName="sleeveCondition">
+          <mat-option value="Not Graded">Not Graded</mat-option>
+          <mat-option value="Generic">Generic</mat-option>
+          <mat-option value="No Cover">No Cover</mat-option>
+          <mat-option value="Mint (M)">Mint (M)</mat-option>
+          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
+          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
+          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
+          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
+          <mat-option value="Good (G)">Good (G)</mat-option>
+          <mat-option value="Fair (F)">Fair (F)</mat-option>
+          <mat-option value="Poor (P)">Poor (P)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Item Condition Comments</mat-label>
+        <input formControlName="comments" matInput maxlength="500"/>
+        <mat-hint align="end">{{formGroup.get('comments')?.value?.length}} / 500</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Private Comments</mat-label>
+        <textarea formControlName="privateComments" matInput maxlength="500" rows="5"></textarea>
+        <mat-hint align="end">{{formGroup.get('privateComments')?.value?.length}} / 255</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Location</mat-label>
+        <input formControlName="location" matInput maxlength="500"/>
+        <mat-hint align="end">{{formGroup.get('location')?.value?.length}} / 255</mat-hint>
+      </mat-form-field>
+    </div>
+  </ng-template>
+
+  <ng-template #shopifyProduct>
+<!--    <div class="flex items-center">-->
+<!--      <div class="mr-4">-->
+<!--        <img alt="" height="75" src="{{ product.thumb }}" style="height: 75px; width: 75px; min-width: 75px;">-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>-->
+<!--        <p *ngIf="product.options.discogs">-->
+<!--          Discogs Release #{{ product.options.discogs.releaseId }}-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div *ngIf="product.options.discogs" class="flex-1 grid justify-items-end">-->
+<!--        <a (click)="$event.stopPropagation()" href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}" rel="noopener noreferrer"-->
+<!--           class="link content-center" target="_blank">-->
+<!--          <mat-icon style="transform: scale(0.8);">open_in_new</mat-icon>-->
+<!--        </a>-->
+<!--      </div>-->
+<!--    </div>-->
+    <h3 class="pt-4">Details</h3>
+    <mat-divider></mat-divider>
+
+    <div class="grid grid-cols-2 gap-x-4 pt-4">
+      <div class="col-span-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Vendor / Artist</mat-label>
+          <input formControlName="vendor" matInput>
+        </mat-form-field>
+      </div>
+
+      <div class="col-span-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input formControlName="title" matInput>
+        </mat-form-field>
+      </div>
+
+<!--      <div class="col-span-full">-->
+<!--        <quill-editor formControlName="description" [styles]="{height: '450px'}"></quill-editor>-->
+<!--      </div>-->
+    </div>
+
+    <h3>SEO Metadata</h3>
+    <mat-divider></mat-divider>
+
+    <mat-form-field appearance="outline" class="col-span-full pt-4">
+      <mat-label>Meta Title</mat-label>
+      <input formControlName="metaTitle" matInput maxlength="255">
+      <mat-hint align="end">{{formGroup.get('metaTitle')?.value?.length}} / 60</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full">
+      <mat-label>Meta Description</mat-label>
+      <textarea formControlName="metaDescription" matInput maxlength="255" rows="4"></textarea>
+      <mat-hint align="end">{{formGroup.get('metaDescription')?.value?.length}} / 160</mat-hint>
+    </mat-form-field>
+  </ng-template>
+
+</form>

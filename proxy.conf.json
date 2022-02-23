@@ -1,0 +1,21 @@
+{
+  "/api/*": {
+    "target": "http://waxconn-api-0.test",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/api",
+      "^/sanctum": "/sanctum"
+    },
+    "logLevel": "debug"
+  },
+  "/sanctum/*": {
+    "target": "http://waxconn-api-0.test",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/sanctum": "/sanctum"
+    },
+    "logLevel": "debug"
+  }
+}

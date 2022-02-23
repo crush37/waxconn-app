@@ -1,0 +1,28 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <button [routerLink]="['new']" color="primary" mat-flat-button class="ml-2">Add User</button>
+  </ng-template>
+</app-page-header>
+
+<mat-card class="px-0 pt-0">
+  <app-data-list [itemRoute]="['system','users']" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-10/12 p-4 text-left">Name</th>
+      <th class="w-2/12 p-4"></th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 border-b">
+        {{ val(row).fullName }}<br><span class="mat-small">{{ val(row).role | titlecase }}</span>
+      </td>
+
+      <td class="p-4 text-right border-b">
+        <span *ngIf="val(row).isActive" class="rounded py-1 px-3 bg-yellow-300">Active</span>
+        <span *ngIf="!val(row).isActive" class="rounded py-1 px-3 bg-gray-300">Inactive</span>
+      </td>
+    </ng-template>
+
+  </app-data-list>
+</mat-card>

@@ -1,0 +1,40 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <button routerLink="/channels/discogs" color="primary" mat-flat-button>
+      Add Product
+    </button>
+  </ng-template>
+</app-page-header>
+
+<mat-card class="px-0">
+  <app-data-list [itemRoute]="['products']" [searchConfig]="searchConfig">
+
+    <ng-template #header>
+      <th class="w-10/12 md:w-10/12 p-4 text-left">Product</th>
+      <th class="w-1/12 p-4 text-right hidden md:table-cell">Inventory</th>
+      <th class="w-1/12 p-4 text-right hidden md:table-cell">Type</th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 text-left border-b">
+        <div class="flex items-center">
+          <img alt="" height="60" src="{{ g(row).thumb }}" style="height: 60px; width: 60px; min-width: 60px;" class="mr-4">
+          <div>
+            <span class="mat-body-strong">{{ g(row).vendor }} - {{ g(row).title }}</span><br>
+            <span *ngIf="g(row).status === 'active' && g(row).listings" class="mat-small">
+              Available on
+              <ng-container *ngFor="let channel of productChannels(g(row).listings ?? []); let i = index">
+                {{ channel }}<ng-container *ngIf="(i + 1) < productChannels(g(row).listings ?? []).length">, </ng-container>
+              </ng-container>
+            </span>
+            <span *ngIf="g(row).status !== 'active'" class="mat-small">{{ g(row).status | titlecase }}</span>
+          </div>
+        </div>
+      </td>
+
+      <td class="p-4 text-right border-b"><strong>{{ g(row).inventoryCount }}</strong></td>
+      <td class="p-4 text-right border-b hidden md:table-cell">{{ g(row).type }}</td>
+    </ng-template>
+
+  </app-data-list>
+</mat-card>

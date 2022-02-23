@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="pr-6">
+    <button (click)="toggle.emit()" aria-label="Toggle sidenav" mat-icon-button type="button">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span class="flex-auto"></span>
+    <app-update-notification></app-update-notification>
+<!--    <app-notifications></app-notifications>-->
+    <button [matMenuTriggerFor]="menu" class="pr-0 lg:pr-2" mat-button>{{ username || 'Are you a ghost?'}}
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+<!--      <button *ngFor="let link of links" mat-menu-item routerLink="{{ link.href }}">-->
+<!--        <mat-icon>{{ link.icon }}</mat-icon>-->
+<!--        <span class="pr-2">{{ link.text }}</span>-->
+<!--      </button>-->
+      <button (click)="logout()" mat-menu-item>
+        <mat-icon>login</mat-icon>
+        <span class="pr-2">Log Out</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

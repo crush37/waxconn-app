@@ -1,0 +1,135 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-submit-button [formGroup]="formGroup" [goTo]="'system'" [reload]="true"></app-submit-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<form *ngIf="!loading && setting" [formGroup]="formGroup" autocomplete="off">
+  <div class="grid grid-cols-1 gap-x-4">
+      <mat-card class="col-span-full mb-4">
+        <div class="col-span-full">
+          <h3>App details</h3>
+          <mat-divider></mat-divider>
+          <p class="pt-4 pb-2 text-primary-300">
+            This is your Waxconn account and shop name.
+          </p>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-span-full">
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput required type="text">
+        </mat-form-field>
+      </mat-card>
+
+      <mat-card class="col-span-full grid grid-cols-4 gap-x-4 mb-4">
+        <div class="col-span-full">
+          <h3>Business details</h3>
+          <mat-divider></mat-divider>
+          <p class="pt-4 pb-2 text-primary-300">
+            This is your business legal information, we will be use it for billing purposes.
+          </p>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-3">
+          <mat-label>Business legal name</mat-label>
+          <input formControlName="companyName" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>VAT Number</mat-label>
+          <input formControlName="taxNumber" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+          <mat-label>Address</mat-label>
+          <input formControlName="address1" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+          <mat-label></mat-label>
+          <input formControlName="address2" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Country</mat-label>
+          <mat-select formControlName="country" required>
+            <mat-option *ngFor="let country of countries" value="{{ country.name }}">{{ country.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Region/Province</mat-label>
+          <input formControlName="region" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>City</mat-label>
+          <input formControlName="city" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Postal / ZIP Code</mat-label>
+          <input formControlName="postcode" matInput required type="text">
+        </mat-form-field>
+      </mat-card>
+
+      <mat-card class="col-span-full grid grid-cols-2 gap-x-4 mb-4">
+        <div class="col-span-full">
+          <h3>Contact details</h3>
+          <mat-divider></mat-divider>
+          <p class="pt-4 pb-2 text-primary-300">
+            We will use this information for billing purposes and in case we need to contact you about your Waxconn account.
+          </p>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Phone</mat-label>
+          <input formControlName="phone" matInput type="text">
+        </mat-form-field>
+      </mat-card>
+
+      <mat-card class="col-span-full grid grid-cols-3 gap-x-4 mb-4">
+        <div class="col-span-full">
+          <h3>Standards</h3>
+          <mat-divider></mat-divider>
+          <p class="pt-4 pb-2 text-primary-300">
+            This settings are applied globally in your Waxconn account.
+          </p>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Language</mat-label>
+          <mat-select formControlName="language" required>
+            <mat-option value="en">English</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="currency" required>
+            <mat-option value="AUD">Australian Dollar (AUD)</mat-option>
+            <mat-option value="GBP">British Pound (GBP)</mat-option>
+            <mat-option value="CAD">Canadian Dollar (CAD)</mat-option>
+            <mat-option value="EUR">Euro (EUR)</mat-option>
+            <mat-option value="JPY">Japanese Yen (JPY)</mat-option>
+            <mat-option value="NOK">Norwegian Krone (NOK)</mat-option>
+            <mat-option value="USD">US Dollar (USD)</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-full lg:col-span-1">
+          <mat-label>Timezone</mat-label>
+          <mat-select formControlName="timezone" required>
+            <mat-option *ngFor="let timezone of timezones" value="{{ timezone.id }}">{{ timezone.id }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card>
+    </div>
+</form>

@@ -1,0 +1,33 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <button [routerLink]="['new']" color="primary" mat-flat-button class="ml-2">Add Location</button>
+  </ng-template>
+</app-page-header>
+
+<mat-card class="px-0 pt-0">
+  <app-data-list [itemRoute]="['system','locations']" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-10/12 p-4 text-left">List</th>
+      <th class="w-2/12 p-4"></th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 border-b">
+        <span class="mat-body-2"> {{ val(row).name }} </span><br>
+        <span class="mat-caption"> {{ val(row).address1 }}, </span>
+        <span *ngIf="val(row).address2" class="mat-caption"> {{ val(row).address2 }}, </span>
+        <span class="mat-caption"> {{ val(row).city }}, {{ val(row).postcode }}, {{ val(row).country }}</span><br>
+        <span *ngIf="val(row).phone" class="mat-caption"> {{ val(row).phone }} </span>
+      </td>
+
+      <td class="p-4 text-right border-b">
+        <span *ngIf="val(row).default" class="rounded py-1 px-3 bg-yellow-300">Default</span>
+        <span *ngIf="!val(row).default" class="rounded py-1 px-3 bg-gray-300">Other</span>
+      </td>
+
+    </ng-template>
+
+  </app-data-list>
+</mat-card>

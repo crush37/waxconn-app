@@ -1,0 +1,38 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions></ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<mat-card *ngIf="!loading && !hasLocation" class="grid grid-cols-8 gap-x-4">
+  <div class="col-span-full pb-2">
+    <h3>Not available</h3>
+    <mat-divider></mat-divider>
+    <p class="pt-4 pb-2 text-primary-400">
+      Please create a location to be able to manage the sales channels.
+    </p>
+    <button routerLink="/system/locations" color="primary" mat-flat-button>
+      To Locations
+    </button>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="!loading && hasLocation" class="px-0 pt-0">
+  <app-data-list [itemRoute]="['system','channels',':type', 'settings']" [paginated]="false">
+    <ng-template #header>
+      <th class="w-10/12 p-4 text-left">List</th>
+      <th class="w-2/12 p-4"></th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 border-b">
+        <span class="mat-body-2"> {{ val(row).name }} </span> ({{ val(row).type | titlecase }})
+      </td>
+
+      <td class="p-4 text-right border-b">
+        <span *ngIf="val(row).isActive" class="rounded py-1 px-3 bg-yellow-300">Enabled</span>
+        <span *ngIf="!val(row).isActive" class="rounded py-1 px-3 bg-gray-300">Disabled</span>
+      </td>
+    </ng-template>
+  </app-data-list>
+</mat-card>

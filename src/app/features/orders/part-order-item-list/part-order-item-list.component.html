@@ -1,0 +1,44 @@
+<mat-card class="px-0">
+  <app-data-list [page]="orderItems" [paginated]="false">
+
+    <ng-template #header>
+      <th class="w-8/12 px-4 pb-4 text-left">
+        <h3 *ngIf="order.fulfillmentStatus === 'fulfilled'" class="mb-0 flex items-center"> Fulfilled
+          <mat-icon class="ml-2 text-green-600">check_circle</mat-icon>
+        </h3>
+        <h3 *ngIf="order.fulfillmentStatus !== 'fulfilled'" class="mb-0 flex items-center">
+          <mat-icon class="mr-2 text-red-600">error</mat-icon>
+          {{ order.fulfillmentStatus | removeUnderscore | titlecase }}
+        </h3>
+      </th>
+      <th class="w-2/12 px-4 pb-4 text-right">Quantity</th>
+      <th class="w-2/12 px-4 pb-4 text-right">Subtotal</th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <tr [routerLink]="['/', 'products', item(row).productId]" [ngClass]="item(row).productId ? 'cursor-pointer hover:bg-gray-50' : 'pointer-events-none bg-gray-50'" class="border-b">
+        <td class="p-4 sm:pr-0 flex items-center">
+          <div class="pr-4">
+            <img alt="" height="45" src="{{ item(row).thumb || 'assets/placeholder-45.png' }}" style="height: 45px; width: 45px; min-width: 45px">
+          </div>
+          <div class="flex-1 pr-4 items-center">
+            <strong>{{ item(row).title }}</strong>
+            <br>
+            <span *ngIf="!item(row).productId">Ref: Not available </span>
+            <span *ngIf="item(row).productId">Ref: #{{ item(row).productId }} </span>
+            <span *ngIf="item(row).sku"> / SKU: {{ item(row).sku }} </span>
+            <span *ngIf="item(row).location"> / Location: {{ item(row).location }} </span>
+          </div>
+        </td>
+        <td class="p-4 text-right">
+          <strong>{{ item(row).quantity }}</strong>
+        </td>
+        <td class="p-4 text-right">
+          {{ item(row).price * item(row).quantity | currency }}
+        </td>
+      </tr>
+    </ng-template>
+
+  </app-data-list>
+
+</mat-card>

@@ -1,0 +1,6 @@
+<button *ngIf="updateAvailable" (click)="updateApp()" mat-icon-button
+        matTooltipClass="bg-white text-gray-900 text-sm text-bold border border-gray-800 whitespace-pre-line px-4"
+        matTooltipPosition="left"
+        [matTooltip]="getTooltipText()">
+  <mat-icon (@heartBeat.done)="animDone()" [@heartBeat]="animState" class="text-green-300">new_releases</mat-icon>
+</button>

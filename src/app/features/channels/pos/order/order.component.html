@@ -1,0 +1,64 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <!--    <button mat-icon-button color="primary">-->
+    <!--      <mat-icon>fullscreen</mat-icon>-->
+    <!--    </button>-->
+    <button mat-flat-button (click)="clearCart()" color="primary" class="ml-2" [disabled]="orderItems.length === 0">
+      Clear Cart
+    </button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<div class="grid grid-flow-col grid-cols-3 gap-4 flex-grow">
+  <!-- Left Panel-->
+  <div #mainContainer class="col-span-full sm:col-span-2">
+    <div *ngIf="!showCustomerSearch && !showProductSearch" class="grid sm:grid-cols-2 gap-4 mt-4 sm:mt-0">
+      <button *ngIf="!customer" (click)="searchCustomer()" color="primary" class="py-5 sm:py-10" mat-flat-button>
+        <mat-icon class="mr-2 sm:mr-3">people</mat-icon>
+        <span class="mr-2 sm:mr-3">Add Customer</span>
+      </button>
+      <button *ngIf="customer" (click)="removeCustomer()" color="primary" class="py-5 sm:py-10" mat-flat-button>
+        <mat-icon class="mr-3 sm:mr-4">people</mat-icon>
+        <span class="mr-2 sm:mr-3">Remove Customer</span>
+      </button>
+      <button (click)="searchProduct()" color="primary" class="py-5 sm:py-10" mat-flat-button>
+        <mat-icon class="mr-2 sm:mr-3">album</mat-icon>
+        <span class="mr-2 sm:mr-3">Add Product</span>
+      </button>
+      <button (click)="showCart()" color="primary" class="inline-block sm:hidden py-5 sm:py-10" mat-flat-button>
+        <mat-icon class="mr-2 sm:mr-3">shopping_cart</mat-icon>
+        <span class="mr-2 sm:mr-3">View Cart</span>
+      </button>
+    </div>
+    <div class="absolute sm:relative z-50 sm:z-auto top-0 sm:top-auto left-0 sm:left-auto h-full sm:h-auto">
+      <app-order-customer
+          *ngIf="showCustomerSearch"
+          (customer)="setCustomer($event)"
+          (hide)="hideSearch()">
+      </app-order-customer>
+      <app-order-product-list
+          *ngIf="showProductSearch"
+          [items]="orderItems"
+          (hide)="hideSearch()">
+      </app-order-product-list>
+      <app-part-order-customer *ngIf="customer && !showCustomerSearch && !showProductSearch" [customer]="customer"></app-part-order-customer>
+    </div>
+  </div>
+  <!-- Right Panel-->
+  <div class="col-span-full sm:col-span-1 flex flex-col gap-4">
+    <div #itemsContainer class="hidden sm:block flex-grow absolute sm:relative z-50 sm:z-auto top-0 sm:top-auto left-0 sm:left-auto h-full" [style.display]="showShoppingCart ? 'block !important' : 'inherit'">
+      <app-part-order-item-list
+          [items]="orderItems"
+          (hide)="hideCart()">
+      </app-part-order-item-list>
+    </div>
+    <div>
+      <app-part-order-summary [items]="orderItems"></app-part-order-summary>
+    </div>
+    <button mat-flat-button (click)="openCheckoutDialog()" class="w-full p-4" color="primary" [disabled]="orderItems.length === 0">
+      Checkout
+    </button>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<mat-card *ngIf="!loading && channels.length === 0" class="grid grid-cols-8 gap-x-4">
+  <div class="col-span-full pb-2">
+    <h3>Not available</h3>
+    <mat-divider></mat-divider>
+    <p class="pt-4 pb-2 text-primary-400">
+      Please activate a sales channel before using the Database Importer.
+    </p>
+    <button routerLink="/system/channels" color="primary" mat-flat-button>
+      To Sales Channels
+    </button>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="!loading && channels.length > 0">
+  <ng-container *ngIf="!isImporting">
+    <div>
+      Last Import on:<br>
+      <span class="text-primary-700 mat-body-strong">{{ (lastImportAt | date) || 'n/a' }}</span>
+    </div>
+    <div class="pt-6">
+      <p>
+        Please select the channels to import data from:
+      </p>
+      <form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
+        <ng-container *ngFor="let channel of channels">
+          <ng-container *ngIf="channel.type === 'discogs'">
+            <mat-checkbox formControlName="channelDiscogs" labelPosition="after" (change)="selectChannel(channel.id, $event)">
+              <span class="font-bold">Discogs</span> (products, orders, customers)
+            </mat-checkbox><br>
+          </ng-container>
+          <ng-container *ngIf="channel.type === 'shopify'">
+            <mat-checkbox formControlName="channelShopify" labelPosition="after" (change)="selectChannel(channel.id, $event)">
+              <span class="font-bold">Shopify</span> (orders, customers)
+            </mat-checkbox><br>
+          </ng-container>
+        </ng-container>
+      </form>
+    </div>
+    <div class="pt-8">
+      <p class="mb-8">
+        <span class="font-bold">Notes:</span><br>
+        While running some system features will be temporarily disabled.<br>
+        Depending on the amount of data the import can take several hours to complete.
+      </p>
+      <button (click)="submit()" [disabled]="!formGroup.dirty" color="primary" mat-flat-button>
+        Import All
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isImporting">
+    <div>
+      <span class="font-bold">Database Importer is running. Please wait.</span><br>
+      <br>
+      <br>
+      <span class="font-bold">Notes:</span><br> We will notify you by email once the import is completed.
+    </div>
+  </ng-container>
+</mat-card>

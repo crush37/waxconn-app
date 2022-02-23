@@ -1,0 +1,8 @@
+<mat-card>
+  <h3>Notes</h3>
+  <mat-divider></mat-divider>
+  <div class="pt-5">
+    <p *ngIf="notes">{{ notes }}</p>
+    <p *ngIf="!notes" class="text-primary-400">No notes from customer.</p>
+  </div>
+</mat-card>

@@ -1,0 +1,80 @@
+<ng-container *ngTemplateOutlet="topActionsTemplateOutlet"></ng-container>
+
+<div *ngIf="importing" class="px-4 font-bold">Database Importer is running. Please wait.</div>
+
+<form *ngIf="!importing && searchConfig" [formGroup]="formGroup" autocomplete="off" class="px-4" (keydown.enter)="$event.preventDefault()">
+  <div class="lg:flex">
+    <div class="lg:flex-grow">
+      <div class="flex-auto">
+        <mat-form-field [appearance]="searchConfig.appearance">
+          <mat-label>{{ searchConfig.label || 'Filter' }}</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput type="text" formControlName="q">
+          <button *ngIf="formGroup.get('q')?.value" matSuffix aria-label="Clear"
+                  (click)="formGroup.get('q')?.setValue('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="lg:flex-grow-0">
+      <ng-container *ngFor="let select of searchConfig.selects">
+        <mat-form-field [appearance]="searchConfig.appearance" class="w-full lg:w-40 lg:pl-2">
+          <mat-label>{{ select.header }}</mat-label>
+          <mat-select formControlName="{{select.name}}" [multiple]="select.multiple">
+            <mat-option *ngIf="!select.multiple" value="all">All</mat-option>
+            <mat-option *ngFor="let option of select.options" value="{{option.value}}">{{option.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+    </div>
+  </div>
+</form>
+
+<table *ngIf="!importing" class="table-fixed w-full">
+  <thead>
+  <tr class="border-collapse border-b">
+    <ng-container *ngTemplateOutlet="headerTemplateOutlet"></ng-container>
+  </tr>
+  </thead>
+
+  <tbody *ngIf="loading">
+  <tr>
+    <td class="p-4">Loading..</td>
+  </tr>
+  </tbody>
+
+  <tbody *ngIf="!loading && page.data.length === 0">
+  <tr>
+    <td class="p-4">Nothing found.</td>
+  </tr>
+  </tbody>
+
+  <tbody *ngIf="!loading && page">
+  <ng-container *ngFor="let row of page.data">
+    <tr *ngIf="itemRoute"
+        [routerLink]="makeRouterLink(row)"
+        [ngClass]="{'text-gray-400': wasVisited(row.id)}"
+        class="hover:bg-gray-50 cursor-pointer">
+      <ng-container *ngTemplateOutlet="rowTemplateOutlet; context: { row: row }"></ng-container>
+    </tr>
+
+    <ng-container *ngIf="!itemRoute">
+      <ng-container *ngTemplateOutlet="rowTemplateOutlet; context: { row: row }"></ng-container>
+    </ng-container>
+  </ng-container>
+  </tbody>
+</table>
+
+<div *ngIf="!importing && paginated" class="grid grid-cols-2">
+  <mat-paginator
+      [length]="page?.total"
+      [pageIndex]="page?.current"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageSize]="page?.size"
+      class="lg:order-last pt-3 col-span-full"
+      showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+<ng-container *ngTemplateOutlet="footerTemplateOutlet"></ng-container>

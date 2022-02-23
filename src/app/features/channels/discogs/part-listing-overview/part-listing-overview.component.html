@@ -1,0 +1,164 @@
+<form [formGroup]="formGroup" autocomplete="on">
+  <mat-card>
+    <h3 class="inline-flex">Discogs Release #{{ release.id }}</h3>
+    <div class="float-right">
+      <a (click)="$event.stopPropagation()" href="{{ release.externalUrl }}" rel="noopener noreferrer"
+         class="link content-center" target="_blank">
+        <mat-icon style="transform: scale(0.8);">open_in_new</mat-icon>
+      </a>
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="grid grid-cols-6 md:gap-x-12">
+      <div class="col-span-full block md:hidden">
+        <img alt="" width="100%" src="{{ release.images[0].src }}" class="float-left py-4">
+      </div>
+      <div class="col-span-full block md:hidden">
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="col-span-full md:col-span-4">
+        <img alt="" height="150" src="{{ release.thumb }}" class="float-left pt-4 pr-4 hidden md:block">
+        <h3 class="mat-body-strong pt-4 underline md:no-underline">
+          {{release.artist }} - {{ release.title }}
+        </h3>
+        <div class="grid grid-cols-3">
+          <div class="mat-body-strong col-span-1">Label:</div>
+          <div class="text-right pt-0.5 col-span-2">{{ release.label || 'n/a' }}</div>
+          <div class="mat-body-strong col-span-1">Format:</div>
+          <div class="text-right pt-0.5 col-span-2">{{ release.type || 'n/a' }}, {{ release.format || 'n/a' }}</div>
+          <div class="mat-body-strong col-span-1">Country:</div>
+          <div class="text-right pt-0.5 col-span-2">{{ release.country || 'n/a' }}</div>
+          <div class="mat-body-strong col-span-1">Year:</div>
+          <div class="text-right pt-0.5 col-span-2">{{ release.year || 'n/a' }}</div>
+        </div>
+      </div>
+
+      <div class="col-span-full md:col-span-2">
+        <h3 class="mat-body-strong pt-4 md:text-right underline md:no-underline">
+          Statistics
+        </h3>
+        <div class="grid grid-cols-2">
+          <div class="mat-body-strong">Have:</div>
+          <div class="text-right pt-0.5">{{ release.have || 'n/a' }}</div>
+          <div class="mat-body-strong">Want:</div>
+          <div class="text-right pt-0.5">{{ release.want || 'n/a' }}</div>
+          <div class="mat-body-strong">For Sale:</div>
+          <div class="text-right pt-0.5">{{ release.numForSale || 0 }}</div>
+          <div class="mat-body-strong">Lowest Price:</div>
+          <div class="text-right pt-0.5">{{ release.lowestPrice > 0 ? (release.lowestPrice | currency) : 'n/a' }}</div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-accordion>
+    <mat-expansion-panel class="mt-4">
+      <mat-expansion-panel-header class="px-4">
+        <mat-panel-title>
+          <h3 class="m-0">Release Details</h3>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="grid">
+        <div *ngIf="release.companies">
+          <span class="mat-body-strong">Companies</span>
+          <p class="pt-2">
+            <ng-container *ngFor="let company of release.companies">
+              {{ company.type }} - {{ company.name }}<br>
+            </ng-container>
+          </p>
+        </div>
+
+        <div *ngIf="release.notes">
+          <span class="mat-body-strong">Notes</span>
+          <p class="pt-2" [innerHTML]="release.notes"></p>
+        </div>
+
+        <div *ngIf="release.identifiers">
+          <span class="mat-body-strong">Identifiers</span>
+          <p class="pt-2">
+            <ng-container *ngFor="let identifier of release.identifiers">
+              <ng-container *ngIf="identifier.type">{{ identifier.type }}</ng-container>
+              <ng-container *ngIf="identifier.description">({{ identifier.description }}):</ng-container>
+              <ng-container *ngIf="identifier.value">{{ identifier.value }}</ng-container>
+              <br>
+            </ng-container>
+          </p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-card class="mt-4">
+    <h3>New Product</h3>
+    <mat-divider></mat-divider>
+
+    <div class="grid grid-cols-2 gap-x-4 pt-4">
+      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
+        <mat-label>Media Condition</mat-label>
+        <mat-select formControlName="mediaCondition" required (valueChange)="onSelectMediaCondition($event)">
+          <mat-option value="Mint (M)">Mint (M)</mat-option>
+          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
+          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
+          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
+          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
+          <mat-option value="Good (G)">Good (G)</mat-option>
+          <mat-option value="Fair (F)">Fair (F)</mat-option>
+          <mat-option value="Poor (P)">Poor (P)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
+        <mat-label>Sleeve Condition</mat-label>
+        <mat-select formControlName="sleeveCondition">
+          <mat-option value="Not Graded">Not Graded</mat-option>
+          <mat-option value="Generic">Generic</mat-option>
+          <mat-option value="No Cover">No Cover</mat-option>
+          <mat-option value="Mint (M)">Mint (M)</mat-option>
+          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
+          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
+          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
+          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
+          <mat-option value="Good (G)">Good (G)</mat-option>
+          <mat-option value="Fair (F)">Fair (F)</mat-option>
+          <mat-option value="Poor (P)">Poor (P)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Item Condition Comments</mat-label>
+        <input formControlName="comments" matInput maxlength="500"/>
+        <mat-hint align="end">{{formGroup.get('comments')?.value?.length}} / 500</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Private Comments</mat-label>
+        <textarea formControlName="privateComments" matInput maxlength="500" rows="5"></textarea>
+        <mat-hint align="end">{{formGroup.get('privateComments')?.value?.length}} / 255</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Location</mat-label>
+        <input formControlName="location" matInput maxlength="500"/>
+        <mat-hint align="end">{{formGroup.get('location')?.value?.length}} / 255</mat-hint>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <mat-card class="mt-4">
+    <h3>SEO Metadata</h3>
+    <mat-divider></mat-divider>
+
+    <mat-form-field appearance="outline" class="col-span-full pt-4">
+      <mat-label>Meta Title</mat-label>
+      <input formControlName="metaTitle" matInput maxlength="255">
+      <mat-hint align="end">{{formGroup.get('metaTitle')?.value?.length}} / 60</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-full">
+      <mat-label>Meta Description</mat-label>
+      <textarea formControlName="metaDescription" matInput maxlength="255" rows="4"></textarea>
+      <mat-hint align="end">{{formGroup.get('metaDescription')?.value?.length}} / 160</mat-hint>
+    </mat-form-field>
+  </mat-card>
+</form>

@@ -1,0 +1,15 @@
+<div class="grid mx-4">
+  <form [formGroup]="formGroup" autocomplete="off">
+    <h3>Payment Confirmation</h3>
+    <mat-divider></mat-divider>
+    <div class="py-4">
+      <span class="mat-body-strong">{{ data.channelType | titlecase }} Order {{ data.reference }}</span><br>
+      <span class="mat-body-strong">Amount Paid</span>: {{ data.total | currency }}
+    </div>
+  </form>
+
+  <div class="justify-self-end pt-4">
+    <button [mat-dialog-close]="false" mat-flat-button>Back</button>
+    <button (click)="submitForm()" color="accent" class="ml-2" mat-flat-button>Mark as Paid</button>
+  </div>
+</div>

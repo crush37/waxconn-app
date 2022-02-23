@@ -1,0 +1,43 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="!enabled">
+  <span class="font-bold">Discogs channel is disabled.</span>
+</mat-card>
+
+<mat-card *ngIf="enabled" class="px-0">
+  <app-data-list *ngIf="enabled" [itemRoute]="['channels', 'discogs']" [searchConfig]="searchConfig">
+
+    <ng-template #header>
+      <th class="w-8/12 p-4 text-left">Discogs Releases</th>
+      <th class="w-3/12 p-4 text-right">Type</th>
+      <th class="w-2/12 p-4 text-right">Country, Year</th>
+    </ng-template>
+
+    <ng-template #row let-row="row">
+      <td class="p-4 text-left border-b">
+        <div class="flex items-center">
+          <div class="mr-4">
+            <img alt="" height="60" src="{{ g(row).thumb }}" style="height: 60px; width: 60px">
+          </div>
+          <div>
+            <span class="mat-body-strong">{{ g(row).title }}</span><br>
+            <span class="mat-caption">({{ g(row).catalog }})</span>
+          </div>
+        </div>
+      </td>
+
+      <td class="p-4 text-right border-b">{{ g(row).format || 'n/a' }}</td>
+
+      <td class="p-4 text-right border-b">
+        <span *ngIf="g(row).country" class="mat-body-strong">{{ g(row).country }}</span>
+        <ng-container *ngIf="g(row).country && g(row).year">,</ng-container>
+        <ng-container *ngIf="g(row).year">{{ g(row).year }}</ng-container>
+      </td>
+    </ng-template>
+
+  </app-data-list>
+</mat-card>

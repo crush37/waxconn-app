@@ -1,0 +1,10 @@
+<div class="flex">
+  <div class="flex-grow">
+    <h4 class="mb-0 text-primary-300">{{ subTitle }}</h4>
+    <h2 class="hidden lg:block pr-4">{{ title }}</h2>
+    <h3 class="lg:hidden pr-4">{{ title }}</h3>
+  </div>
+  <div class="flex-grow-0 self-center justify-self-end">
+    <ng-container *ngTemplateOutlet="actions"></ng-container>
+  </div>
+</div>

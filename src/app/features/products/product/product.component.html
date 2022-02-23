@@ -1,0 +1,21 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+    <app-submit-button *ngIf="product?.status != 'deleted'" [formGroup]="formGroup" [goTo]="'products'"></app-submit-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<div *ngIf="!loading && product" class="grid lg:grid-cols-8 gap-4">
+  <div class="lg:col-span-6">
+    <app-part-product-overview [product]="product" [formGroup]="formGroup"></app-part-product-overview>
+  </div>
+
+  <div class="lg:col-span-2">
+    <app-part-product-summary [product]="product" [formGroup]="formGroup"></app-part-product-summary>
+    <div class="pt-5 text-center">
+      <app-delete-button *ngIf="product.status != 'deleted'" [id]="product.id" label="Delete Product"></app-delete-button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<mat-card class="mb-4 pr-0">
+  <h3>Total Sales</h3>
+  <mat-divider></mat-divider>
+  <div class="flex flex-wrap pt-6">
+    <div *ngIf="loading">Loading..</div>
+    <ng-container *ngIf="!loading">
+      <h1 class="w-full text-center">{{ totalSales?.total || 0 | currency }} <span class="text-sm">/ {{ totalSales?.count || 0 }}</span></h1>
+      <div *ngFor="let channel of channelSales" class="flex-grow text-center bg-gray-100 rounded pb-1 mr-4">
+        <h3 class="mb-0">{{ channel.name }}</h3>
+        {{ channel.total || 0 | currency }} <span class="text-xs hidden lg:inline">/ {{ channel.count || 0 }}</span>
+      </div>
+    </ng-container>
+  </div>
+</mat-card>
