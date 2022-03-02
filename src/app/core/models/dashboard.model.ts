@@ -10,6 +10,7 @@ export class Dashboard extends Resource {
   public topCustomers!: {
     id: number,
     fullName: string,
+    email: string,
     defaultAddress?: {
       city: string,
       country: string
@@ -49,7 +50,11 @@ export class DashboardSerializer implements Serializer {
     json.top_customers?.forEach((customer: any) => {
       resource.topCustomers.push({
         id: customer.id,
-        fullName: customer.first_name + ' ' + customer.last_name,
+        fullName: (customer.first_name) + (customer.last_name
+            ? ' ' + customer.last_name
+            : ''
+        ),
+        email: customer.email,
         defaultAddress: customer.default_address
           ? { city: customer.default_address?.city, country: customer.default_address?.country }
           : undefined,

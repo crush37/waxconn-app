@@ -27,7 +27,10 @@ export class CustomerSerializer implements Serializer {
     resource.externalId = json.external_id;
     resource.firstName = json.first_name;
     resource.lastName = json.last_name;
-    resource.fullName = json.first_name + ' ' + json.last_name;
+    resource.fullName = (json.first_name) + (json.last_name
+        ? ' ' + json.last_name
+        : ''
+    );
     resource.email = json.email;
     resource.phone = json.phone;
     resource.ordersCount = json.orders_count;
