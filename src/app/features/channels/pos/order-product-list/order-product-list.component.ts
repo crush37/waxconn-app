@@ -28,6 +28,8 @@ export class OrderProductListComponent {
 
   g = (row: Product) => row;
 
+  imagePlaceholder = './assets/default-placeholder.png';
+
   select(product: Product): void {
     let item = this.items.find(item => item.productId === product.id);
     if (!item && product.inventoryCount >= 1 && product.status !== 'draft' && this.availableOnPosChannel(product)) {
@@ -63,5 +65,9 @@ export class OrderProductListComponent {
 
   close(): void {
     this.hide.emit(true);
+  }
+
+  onImgError(event: any){
+    event.target.src = this.imagePlaceholder;
   }
 }

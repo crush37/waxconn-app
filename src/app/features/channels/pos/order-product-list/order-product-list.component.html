@@ -18,9 +18,8 @@
       <ng-template #row let-row="row">
         <tr (click)="select(row)" class="hover:bg-gray-50 border-b cursor-pointer">
           <td class="p-4 text-left flex items-center">
-            <div class="pr-4">
-              <img alt="" height="60" src="{{ g(row).thumb }}" style="height: 60px; width: 60px; min-width: 60px">
-            </div>
+            <img src="{{ g(row).thumb  || imagePlaceholder }}" style="height: 60px; width: 60px; min-width: 60px;"
+                 height="60" width="60" (error)="onImgError($event)" class="mr-4" alt="">
             <div class="flex-1 pr-4 items-center">
               <strong>{{ g(row).vendor }}</strong> ({{ g(row).type }})<br>
               {{ g(row).title }}

@@ -11,6 +11,8 @@ export class PartOrderItemListComponent {
 
   item = (row: OrderItem) => row;
 
+  imagePlaceholder = './assets/default-placeholder.png';
+
   remove(productId: string): void {
     this.items.map((item: OrderItem, index) => {
       if (item.productId === productId) {
@@ -24,5 +26,9 @@ export class PartOrderItemListComponent {
 
   close(): void {
     this.hide.emit(true);
+  }
+
+  onImgError(event: any){
+    event.target.src = this.imagePlaceholder;
   }
 }
