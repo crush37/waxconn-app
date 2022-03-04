@@ -11,5 +11,11 @@ export class PartOrderItemListComponent {
   @Input() order!: Order;
   @Input() orderItems: { data: OrderItem[] | null } = { data: null };
 
+  imagePlaceholder = './assets/default-placeholder.png';
+
   item = (row: OrderItem) => row;
+
+  onImgError(event: any){
+    event.target.src = this.imagePlaceholder;
+  }
 }
