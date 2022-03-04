@@ -14,7 +14,7 @@ import { SearchConfig } from '@shared/data-list/data-list.component';
     { provide: 'apiServiceOptions', useValue: { with: 'listings', per_page: 6 } },
     { provide: 'apiServiceSerializer', useClass: ProductSerializer },
     DataListService,
-    { provide: 'DataListServiceStorageKey', useValue: 'products' },
+    { provide: 'DataListServiceStorageKey', useValue: 'pos' },
   ]
 })
 export class OrderProductListComponent {
