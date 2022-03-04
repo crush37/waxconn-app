@@ -51,7 +51,9 @@ export class UserComponent implements OnInit {
       firstName: new FormControl(this.user?.firstName, Validators.required),
       lastName: new FormControl(this.user?.lastName, Validators.required),
       email: new FormControl(this.user?.email, Validators.required),
-      phone: new FormControl(this.user?.phone)
+      phone: new FormControl(this.user?.phone),
+      newOrderNotification: new FormControl(this.user?.newOrderNotification ?? false),
+      paidOrderNotification: new FormControl(this.user?.paidOrderNotification ?? false),
     });
   }
 }

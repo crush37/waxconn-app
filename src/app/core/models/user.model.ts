@@ -10,6 +10,8 @@ export class User extends Resource {
   public email!: string;
   public phone!: string;
   public language!: string;
+  public newOrderNotification!: boolean;
+  public paidOrderNotification!: boolean;
   public role!: string;
   public isActive!: string;
   public emailVerifiedAt!: string;
@@ -30,6 +32,8 @@ export class UserSerializer implements Serializer {
     resource.phone = json.phone;
     resource.language = json.language;
     resource.role = json.role;
+    resource.newOrderNotification = json.notifications.new_orders;
+    resource.paidOrderNotification = json.notifications.paid_orders;
     resource.isActive = json.is_active;
     resource.emailVerifiedAt = json.email_verified_at;
     resource.createdAt = json.created_at;
@@ -44,7 +48,11 @@ export class UserSerializer implements Serializer {
       email: resource.email,
       phone: resource.phone,
       language: resource.language,
-      role: resource.role
+      role: resource.role,
+      notifications: {
+        new_orders: resource.newOrderNotification,
+        paid_orders: resource.paidOrderNotification
+      },
     };
   }
 }
