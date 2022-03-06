@@ -50,8 +50,9 @@ export class ProductListComponent {
           { text: 'Archived', value: 'archived' },
         ]
       }
-    ]
+    ],
   };
+  imagePlaceholder = './assets/default-placeholder.png';
 
   constructor(protected dialog: MatDialog) {
   }
@@ -63,5 +64,9 @@ export class ProductListComponent {
     return channels.filter((channel, index) => {
       return channels.indexOf(channel) === index;
     });
+  }
+
+  onImgError(event: any){
+    event.target.src = this.imagePlaceholder;
   }
 }

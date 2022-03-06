@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template #row let-row="row">
-      <td class="p-4 text-left border-b">
+      <td class="p-4 text-left border-b" [ngClass]="{'py-6': !g(row).defaultAddress}">
         <span *ngIf="g(row).firstName" class="mat-body-strong">{{ g(row).fullName }}</span>
         <span *ngIf="!g(row).firstName && g(row).email" class="mat-body-strong">{{ g(row).email }}</span>
         <span *ngIf="!g(row).firstName && !g(row).email" class="mat-body-strong">Not available</span>
@@ -22,7 +22,6 @@
         <span *ngIf="g(row).defaultAddress" class="mat-small">
           {{ g(row).defaultAddress?.city | titlecase }}, {{ g(row).defaultAddress?.country | titlecase }}
         </span>
-        <span *ngIf="!g(row).defaultAddress" class="mat-small"> Not available </span>
       </td>
       <td class="p-4 text-right border-b">{{ g(row).ordersCount }}</td>
       <td class="p-4 text-right border-b hidden lg:table-cell">{{ g(row).amountSpent | currency }}</td>

@@ -17,5 +17,14 @@
       "^/sanctum": "/sanctum"
     },
     "logLevel": "debug"
+  },
+  "/auth/*": {
+    "target": "http://waxconn-api-0.test",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth": "/auth"
+    },
+    "logLevel": "debug"
   }
 }

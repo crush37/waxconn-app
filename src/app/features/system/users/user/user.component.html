@@ -8,12 +8,17 @@
 
 <div *ngIf="loading" class="py-3 px-4 text-primary-400">Loading..</div>
 
-<div class="grid">
-  <form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
-    <div class="col-span-full">
-      <mat-card class="grid grid-cols-6 gap-x-4">
-
-        <div class="col-span-6">
+<form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
+  <div class="grid grid-cols-3 gap-4">
+    <!--  Left Side -->
+    <div class="col-span-full lg:col-span-2 order-last lg:order-first">
+      <!--  General Settings -->
+      <mat-card class="grid grid-cols-2 gap-x-4 mb-4">
+        <div class="col-span-full">
+          <h3 class="inline-flex">General</h3>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="col-span-full pt-4">
           <mat-form-field appearance="outline">
             <mat-label> Role</mat-label>
             <mat-select formControlName="role" required>
@@ -22,36 +27,50 @@
             </mat-select>
           </mat-form-field>
         </div>
-
-        <div class="col-span-3">
+        <div class="col-span-1">
           <mat-form-field appearance="outline">
             <mat-label> First name</mat-label>
             <input formControlName="firstName" matInput required type="text">
           </mat-form-field>
         </div>
-
-        <div class="col-span-3">
+        <div class="col-span-1">
           <mat-form-field appearance="outline">
             <mat-label> Last name</mat-label>
             <input formControlName="lastName" matInput required type="text">
           </mat-form-field>
         </div>
-
-        <div class="col-span-3">
+        <div class="col-span-1">
           <mat-form-field appearance="outline">
             <mat-label> Email</mat-label>
             <input formControlName="email" matInput required type="text">
           </mat-form-field>
         </div>
-
-        <div class="col-span-3">
+        <div class="col-span-1">
           <mat-form-field appearance="outline">
             <mat-label> Phone</mat-label>
             <input formControlName="phone" matInput type="text">
           </mat-form-field>
         </div>
-
       </mat-card>
     </div>
-  </form>
-</div>
+
+    <!--  Right Side -->
+    <div class="col-span-full lg:col-span-1 order-first lg:order-last">
+      <!--  Credentials -->
+      <mat-card class="grid grid-cols-1 gap-4 mb-4">
+        <div class="col-span-full">
+          <h3 class="inline-flex">Email Notifications</h3>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="col-span-full">
+          <p><strong>Orders</strong></p>
+          <ul>
+            <li><mat-checkbox formControlName="newOrderNotification">New Orders</mat-checkbox></li>
+            <li><mat-checkbox formControlName="paidOrderNotification">Paid Orders</mat-checkbox></li>
+          </ul>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+</form>

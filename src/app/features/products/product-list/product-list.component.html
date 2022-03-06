@@ -18,7 +18,8 @@
     <ng-template #row let-row="row">
       <td class="p-4 text-left border-b">
         <div class="flex items-center">
-          <img alt="" height="60" src="{{ g(row).thumb }}" style="height: 60px; width: 60px; min-width: 60px;" class="mr-4">
+          <img src="{{ g(row).thumb  || imagePlaceholder }}" style="height: 60px; width: 60px; min-width: 60px;"
+               height="60" width="60" (error)="onImgError($event)" class="mr-4" alt="">
           <div>
             <span class="mat-body-strong">{{ g(row).vendor }} - {{ g(row).title }}</span><br>
             <span *ngIf="g(row).status === 'active' && g(row).listings" class="mat-small">

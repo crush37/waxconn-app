@@ -34,7 +34,10 @@ export class CustomerAddressSerializer implements Serializer {
     resource.externalId = json.external_id;
     resource.firstName = json.first_name;
     resource.lastName = json.last_name;
-    resource.fullName = json.first_name + ' ' + json.last_name;
+    resource.fullName = (json.first_name) + (json.last_name
+        ? ' ' + json.last_name
+        : ''
+    );
     resource.companyName = json.company_name;
     resource.address1 = json.address_1;
     resource.address2 = json.address_2;

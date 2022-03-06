@@ -14,7 +14,7 @@ import { SearchConfig } from '@shared/data-list/data-list.component';
     { provide: 'apiServiceOptions', useValue: { with: 'listings', per_page: 6 } },
     { provide: 'apiServiceSerializer', useClass: ProductSerializer },
     DataListService,
-    { provide: 'DataListServiceStorageKey', useValue: 'products' },
+    { provide: 'DataListServiceStorageKey', useValue: 'pos' },
   ]
 })
 export class OrderProductListComponent {
@@ -27,6 +27,8 @@ export class OrderProductListComponent {
   @Output() hide = new EventEmitter<boolean>();
 
   g = (row: Product) => row;
+
+  imagePlaceholder = './assets/default-placeholder.png';
 
   select(product: Product): void {
     let item = this.items.find(item => item.productId === product.id);
@@ -63,5 +65,9 @@ export class OrderProductListComponent {
 
   close(): void {
     this.hide.emit(true);
+  }
+
+  onImgError(event: any){
+    event.target.src = this.imagePlaceholder;
   }
 }
