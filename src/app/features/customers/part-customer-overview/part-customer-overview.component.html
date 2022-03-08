@@ -2,34 +2,36 @@
   <h3>Customer</h3>
   <mat-divider></mat-divider>
   <div class="pt-5 pb-3">
-    <p>
-      <ng-container *ngIf="customer.firstName">{{ customer.fullName }}</ng-container>
-      <ng-container *ngIf="!customer.firstName">Generic Customer</ng-container>
-        <br>
-      {{ customer.ordersCount | i18nPlural: itemPluralMapping['order']}}<br><br>
-      <a [routerLink]="[]" class="link">{{ customer.email }}</a>
-    </p>
+    <ng-container *ngIf="customer.firstName">{{ customer.fullName }}</ng-container>
+    <ng-container *ngIf="!customer.firstName">Generic Customer</ng-container><br>
+    {{ customer.ordersCount | i18nPlural: itemPluralMapping['order']}}<br><br>
+    <div class="flex items-center">
+      <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">email</mat-icon>
+      <a href="mailto:{{ customer.email }}" class="link">{{ customer.email }}</a>
+    </div>
+    <div *ngIf="customer.phone" class="flex items-center mt-1">
+      <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">phone</mat-icon>
+      <a href="tel:{{ customer.phone }}" class="link">{{ customer.phone }}</a>
+    </div>
   </div>
   <mat-divider></mat-divider>
   <div class="py-3">
     <h3> Default Address </h3>
     <p *ngIf="!customer.defaultAddress" class="text-primary-300">Not provided.</p>
-    <p *ngIf="customer.defaultAddress">
+    <ng-container *ngIf="customer.defaultAddress">
       <span> {{ customer.defaultAddress.fullName }} </span><br>
       <span> {{ customer.defaultAddress.address1 }} </span><br>
       <span *ngIf="customer.defaultAddress.address2"> {{ customer.defaultAddress.address2 }} <br></span>
       <span> {{ customer.defaultAddress.city }}, {{ customer.defaultAddress.postcode }} </span><br>
       <span *ngIf="customer.defaultAddress.region"> {{ customer.defaultAddress.region }} <br></span>
       <span> {{ customer.defaultAddress.country }} </span>
-      <span *ngIf="customer.defaultAddress.phone"><br><br>
-        {{ customer.defaultAddress.phone }} </span>
-    </p>
+    </ng-container>
   </div>
   <mat-divider></mat-divider>
   <div class="pt-3">
     <h3>Email marketing</h3>
     <p>
-      <a [routerLink]="[]" class="link">{{ customer.acceptsMarketing ? 'Subscribed' : 'Not subscribed' }}</a>
+      {{ customer.acceptsMarketing ? 'Subscribed' : 'Not subscribed' }}
     </p>
   </div>
 </mat-card>
