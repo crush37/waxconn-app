@@ -1,0 +1,38 @@
+<div class="grid mx-4 gap-x-4">
+  <form [formGroup]="formGroup" autocomplete="off">
+    <h3>Edit Customer</h3>
+    <mat-divider></mat-divider>
+
+    <mat-form-field appearance="outline" class="pt-4">
+      <mat-label>First name</mat-label>
+      <input formControlName="firstName" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-1">
+      <mat-label>Last name</mat-label>
+      <input formControlName="lastName" matInput type="text">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-1">
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput required type="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="col-span-1">
+      <mat-label>Phone</mat-label>
+      <input formControlName="phone" matInput type="text">
+    </mat-form-field>
+
+    <div class="col-span-full self-center">
+      <mat-checkbox formControlName="acceptsMarketing" labelPosition="after">
+        Accepts Marketing?
+      </mat-checkbox>
+    </div>
+
+  </form>
+
+  <div class="justify-self-end pt-4">
+    <button [mat-dialog-close]="false" mat-flat-button>Back</button>
+    <button (click)="submit()" color="accent" class="ml-2" mat-flat-button>Update</button>
+  </div>
+</div>

@@ -1,5 +1,8 @@
 <mat-card>
-  <h3>Customer</h3>
+  <h3 class="items">Customer
+    <a [routerLink]="" (click)="openEditDialog()"
+       class="float-right pt-1 link font-medium text-sm cursor-pointer">Edit</a>
+  </h3>
   <mat-divider></mat-divider>
   <div class="pt-5 pb-3">
     <ng-container *ngIf="customer.firstName">{{ customer.fullName }}</ng-container>

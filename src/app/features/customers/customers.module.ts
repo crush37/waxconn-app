@@ -6,6 +6,7 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { PartCustomerOverviewComponent } from './part-customer-overview/part-customer-overview.component';
 import { PartCustomerOrderListComponent } from './part-customer-order-list/part-customer-order-list.component';
 import { PartCustomerSummaryComponent } from './part-customer-summary/part-customer-summary.component';
+import { DialogCustomerEditComponent } from './dialog-customer-edit/dialog-customer-edit.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { PartCustomerSummaryComponent } from './part-customer-summary/part-custo
     CustomerListComponent,
     PartCustomerOverviewComponent,
     PartCustomerOrderListComponent,
-    PartCustomerSummaryComponent
+    PartCustomerSummaryComponent,
+    DialogCustomerEditComponent,
   ],
   imports: [
     SharedModule,

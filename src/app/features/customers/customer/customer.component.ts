@@ -55,12 +55,16 @@ export class CustomerComponent implements OnInit {
       if (params.get('id') || this.id) {
         this.id = params.get('id') || this.id;
         this.loading = true;
-        this.apiService.get(this.id).subscribe((customer: Customer) => {
-          this.customer = customer;
-          this.orderList.data = customer.orders;
-          this.loading = false;
-        });
+        this.loadData();
       }
+    });
+  }
+
+  loadData(): void {
+    this.apiService.get(this.id).subscribe((customer: Customer) => {
+      this.customer = customer;
+      this.orderList.data = customer.orders;
+      this.loading = false;
     });
   }
 }
