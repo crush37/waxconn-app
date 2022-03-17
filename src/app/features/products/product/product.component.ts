@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Product as BaseProduct, ProductSerializer as BaseProductSerializer } from '@core/models/product.model';
 import { Listing, ListingSerializer } from '@core/models/listing.model';
@@ -18,6 +18,15 @@ export class ProductSerializer extends BaseProductSerializer {
       : null;
 
     return { ...super.fromJson(json), ...resource };
+  }
+
+  toJson(resource: any): {} {
+    const json: any = {};
+    json.listings = resource.listings
+      ? resource.listings.map((listing: any) => new ListingSerializer().toJson(listing))
+      : null;
+
+    return { ...super.toJson(resource), ...json };
   }
 }
 
@@ -53,6 +62,7 @@ export class ProductComponent implements OnInit {
         this.apiService.get(this.id).subscribe((product: Product) => {
           this.product = product;
           this.formGroup.setControl('id', new FormControl(product.id));
+          this.formGroup.setControl('listings', new FormArray([]));
           this.loading = false;
         });
         this.formGroup.valueChanges.subscribe(form => {

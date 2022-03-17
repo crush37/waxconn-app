@@ -11,6 +11,7 @@ export class Setting extends Resource {
   public apiPassword!: string;
   public apiSharedSecret!: string;
   public isActive!: boolean;
+  public productUpdatesPolicy!: string;
 }
 
 @Injectable({
@@ -28,6 +29,7 @@ export class SettingSerializer implements Serializer {
     resource.apiPassword = json.settings.api_password;
     resource.apiSharedSecret = json.settings.api_shared_secret;
     resource.isActive = json.is_active;
+    resource.productUpdatesPolicy = json.settings.product_updates.policy
 
     return resource;
   }
@@ -42,7 +44,10 @@ export class SettingSerializer implements Serializer {
         api_hostname: resource.hostname,
         api_key: resource.apiKey,
         api_password: resource.apiPassword,
-        api_shared_secret: resource.apiSharedSecret
+        api_shared_secret: resource.apiSharedSecret,
+        product_updates: {
+          policy: resource.productUpdatesPolicy,
+        },
       },
       is_active: resource.isActive
     };

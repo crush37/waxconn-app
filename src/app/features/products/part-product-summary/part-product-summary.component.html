@@ -32,12 +32,12 @@
       <div class="pt-6 col-span-full">
         <mat-form-field appearance="outline">
           <mat-label>{{ currencyCode }} Default Price</mat-label>
-          <input formControlName="price" matInput required type="number">
+          <input formControlName="price" matInput required type="number" min="0.01">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Available quantity</mat-label>
-          <input formControlName="quantity" matInput type="number">
+          <input formControlName="quantity" matInput type="number" min="1">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-span-1">
@@ -48,13 +48,13 @@
 
       <mat-form-field appearance="outline" class="col-span-1">
         <mat-label>Weight</mat-label>
-        <input formControlName="weight" matInput type="number">
+        <input formControlName="weight" matInput type="number" min="1">
         <div matSuffix><small>grams</small></div>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="col-span-1">
         <mat-label>Counts as</mat-label>
-        <input formControlName="formatQuantity" matInput type="number">
+        <input formControlName="formatQuantity" matInput type="number" min="1">
         <div matSuffix><small>items</small></div>
       </mat-form-field>
 

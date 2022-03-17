@@ -29,7 +29,9 @@ export class Product extends Resource {
       formatQuantity: number,
       comments: string,
       privateComments: string,
-      location: string
+      location: string,
+      price: number,
+      quantity: number,
     }
   };
 }
@@ -70,6 +72,8 @@ export class ProductSerializer implements Serializer {
           comments: element.properties.comments,
           privateComments: element.properties.private_comments,
           location: element.properties.location,
+          price: element.properties.price,
+          quantity: element.properties.quantity,
         }
       }
     })
@@ -86,10 +90,6 @@ export class ProductSerializer implements Serializer {
       type: resource.type,
       meta_title: resource.metaTitle,
       meta_description: resource.metaDescription,
-      inventory: {
-        available: resource.quantity,
-        sku: resource.sku,
-      },
       price: resource.price,
       cost: resource.cost,
       weight: resource.weight,
@@ -104,7 +104,11 @@ export class ProductSerializer implements Serializer {
           private_comments: resource.privateComments,
           location: resource.location
         }
-      }
+      },
+      inventory: {
+        available: resource.quantity,
+        sku: resource.sku,
+      },
     };
   }
 }

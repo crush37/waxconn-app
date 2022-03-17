@@ -45,6 +45,33 @@
           </mat-form-field>
         </div>
       </mat-card>
+
+      <!--  Product Updates -->
+      <mat-card class="grid grid-cols-2 gap-4 mb-4">
+        <div class="col-span-full">
+          <h3 class="inline-flex">Product Updates</h3>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="col-span-full md:col-span-1">
+          <div class="mb-4">Sets the product updates policy.</div>
+          <mat-radio-group formControlName="productUpdatesPolicy" class="inline-flex flex-col" (change)="toggleProductPolicy($event)">
+            <mat-radio-button value="complete" class="pt-1">Complete</mat-radio-button>
+            <mat-radio-button value="partial" class="pt-1">Partial</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div *ngIf="productUpdatesPolicy === 'complete'" class="col-span-full md:col-span-1 bg-gray-50 rounded-xl p-4 md:p-8">
+          <h4 class="font-bold">Complete Update Policy</h4>
+          <p>When this policy in enabled and a product is updated, all related data (images, descriptions,
+            tags, etc) are always restored and any customizations in Shopify are overwritten.</p>
+          <p>You should not use the polity if products are manually customized in Shopify.</p>
+        </div>
+        <div *ngIf="productUpdatesPolicy === 'partial'" class="col-span-full md:col-span-1 bg-gray-50 rounded-xl p-4 md:p-8">
+          <h4 class="font-bold">Partial Update Policy</h4>
+          <p>When this policy in enabled and a product is updated, only the modified fields
+            are updated in Shopify. No images, tags or other custom data is overwritten.</p>
+          <p>You should use the polity if you need to customize products in Shopify.</p>
+        </div>
+      </mat-card>
     </div>
 
     <!--  Right Side -->

@@ -5,6 +5,7 @@ import { ApiService } from '@core/services/api.service';
 import { Setting, SettingSerializer } from '../shopify.model';
 import { Location } from '@core/models/location.model';
 import { ApiMetaService } from '@core/services/api-meta.service';
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-settings',
@@ -26,6 +27,7 @@ export class SettingsComponent implements OnInit {
   formGroup = new FormGroup({});
 
   locations!: Location[];
+  productUpdatesPolicy!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,6 +43,7 @@ export class SettingsComponent implements OnInit {
         this.getMetaData();
         this.apiService.get(this.id).subscribe((settings: Setting) => {
           this.settings = settings;
+          this.productUpdatesPolicy = settings.productUpdatesPolicy;
           this.setFormGroup();
           this.loading = false;
         });
@@ -64,6 +67,11 @@ export class SettingsComponent implements OnInit {
       apiPassword: new FormControl(this.settings?.apiPassword, Validators.required),
       apiSharedSecret: new FormControl(this.settings?.apiSharedSecret, Validators.required),
       isActive: new FormControl(this.settings?.isActive || false),
+      productUpdatesPolicy: new FormControl(this.settings?.productUpdatesPolicy, Validators.required),
     });
+  }
+
+  toggleProductPolicy(event: MatRadioChange) {
+    this.productUpdatesPolicy = event.value;
   }
 }
