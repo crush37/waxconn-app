@@ -1,4 +1,4 @@
-<mat-card class="px-0 pb-0 h-full">
+<mat-card class="px-0 pb-0 h-full rounded-none sm:rounded-lg">
   <div class="flex w-full p-4 pt-0 text-left">
     <div *ngIf="search" class="flex-grow self-center font-bold">Customers</div>
     <div *ngIf="!search" class="flex-grow self-center font-bold">New Customer</div>
@@ -7,7 +7,7 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
       <button *ngIf="search" (click)="newCustomer()" color="primary" mat-flat-button>
-        <mat-icon>add</mat-icon>
+        New Customer
       </button>
       <button *ngIf="!search" (click)="submit()" color="primary" mat-flat-button [disabled]="!formGroup.dirty">
         Save
@@ -25,9 +25,9 @@
           <tr (click)="selectCustomer(row)" class="hover:bg-gray-50 cursor-pointer">
             <td class="text-left border-b">
               <div class="p-4">
-                <ng-container *ngIf="g(row).firstName">
-                  <a [routerLink]="['/', 'customers', g(row).id]" class="link">{{ g(row).fullName }}</a><br>
-                </ng-container>
+                <span *ngIf="g(row).firstName" class="font-bold">
+                  {{ g(row).fullName }}<br>
+                </span>
                 <span class="mat-small">{{ g(row).email }}</span>
               </div>
             </td>

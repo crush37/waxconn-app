@@ -47,11 +47,11 @@
           [items]="orderItems"
           (hide)="hideSearch()">
       </app-order-product-list>
-      <app-part-order-customer *ngIf="customer && !showCustomerSearch && !showProductSearch" [customer]="customer"></app-part-order-customer>
     </div>
   </div>
   <!-- Right Panel-->
   <div class="col-span-full sm:col-span-1 flex flex-col gap-4">
+    <app-part-order-customer *ngIf="customer && !showCustomerSearch && !showProductSearch" [customer]="customer"></app-part-order-customer>
     <div #itemsContainer class="hidden sm:block flex-grow absolute sm:relative z-50 sm:z-auto top-0 sm:top-auto left-0 sm:left-auto h-full" [style.display]="showShoppingCart ? 'block !important' : 'inherit'">
       <app-part-order-item-list
           [items]="orderItems"

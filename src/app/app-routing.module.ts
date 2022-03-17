@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-    resolve: {app: AppResolver},
+    resolve: { app: AppResolver },
     component: MainLayoutComponent,
     children: [
       {
