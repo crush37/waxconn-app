@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { ApiMetaService } from '@core/services/api-meta.service';
-import { Setting, SettingSerializer } from '../discogs.model';
 import { Location } from '@core/models/location.model';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatAccordion } from '@angular/material/expansion';
+import { Setting, SettingSerializer } from '../discogs.model';
 
 @Component({
   selector: 'app-settings',
@@ -28,6 +29,8 @@ export class SettingsComponent implements OnInit {
 
   locations!: Location[];
   listingPolicy!: string;
+
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
 
   constructor(
     private activatedRoute: ActivatedRoute,

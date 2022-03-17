@@ -1,7 +1,7 @@
 <app-page-header [title]="title" [subTitle]="subTitle">
   <ng-template #actions>
     <app-back-button></app-back-button>
-    <app-submit-button label="Connect & Save" [formGroup]="formGroup" [goTo]="'system/channels'"
+    <app-submit-button [formGroup]="formGroup" [goTo]="'system/channels'"
                        [reload]="true"></app-submit-button>
   </ng-template>
 </app-page-header>
