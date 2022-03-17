@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Customer } from '@core/models/customer.model';
 import { OrderItem } from '@core/models/order-item.model';
 import { DialogOrderCheckoutComponent } from '../dialog-order-checkout/dialog-order-checkout.component';
+import { DialogDiscountComponent } from '@features/channels/pos/dialog-discount/dialog-discount.component';
 
 @Component({
   selector: 'app-order',
@@ -18,6 +19,7 @@ export class OrderComponent implements OnInit {
   formGroup = new FormGroup({});
   customer?: Customer;
   orderItems: OrderItem[] = [];
+  totalDiscounts: number = 0;
 
   showCustomerSearch = false;
   showProductSearch = false;
@@ -83,6 +85,11 @@ export class OrderComponent implements OnInit {
     this.showShoppingCart = false;
   }
 
+  emptyCart(): void {
+    this.totalDiscounts = 0;
+    this.formGroup.controls.totalDiscounts.patchValue(0);
+  }
+
   openCheckoutDialog(): void {
     const dialogRef = this.dialog.open(DialogOrderCheckoutComponent, {
       panelClass: 'wax-dialog',
@@ -101,8 +108,26 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  openDiscountDialog(): void {
+    const dialogRef = this.dialog.open(DialogDiscountComponent, {
+      panelClass: 'wax-dialog',
+      width: '550px',
+      height: '400px',
+      autoFocus: true,
+      data: { formGroup: this.formGroup }
+    });
+
+    dialogRef.afterClosed().subscribe(formGroup => {
+      if (formGroup) {
+        this.formGroup = formGroup;
+        this.totalDiscounts = formGroup.get('totalDiscounts').value;
+      }
+    });
+  }
+
   clearCart(): void {
     this.customer = undefined;
+    this.totalDiscounts = 0;
     this.orderItems = [];
     this.setFormGroup();
   }

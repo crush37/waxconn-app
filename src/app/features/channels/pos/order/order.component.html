@@ -27,6 +27,10 @@
         <mat-icon class="mr-2 sm:mr-3">album</mat-icon>
         <span class="mr-2 sm:mr-3">Add Product</span>
       </button>
+      <button (click)="openDiscountDialog()" color="primary" class="py-5 sm:py-10" mat-flat-button [disabled]="orderItems.length === 0">
+        <mat-icon class="mr-2 sm:mr-3">discount</mat-icon>
+        <span class="mr-2 sm:mr-3">Add Discount</span>
+      </button>
       <button (click)="showCart()" color="primary" class="inline-block sm:hidden py-5 sm:py-10" mat-flat-button>
         <mat-icon class="mr-2 sm:mr-3">shopping_cart</mat-icon>
         <span class="mr-2 sm:mr-3">View Cart</span>
@@ -51,11 +55,12 @@
     <div #itemsContainer class="hidden sm:block flex-grow absolute sm:relative z-50 sm:z-auto top-0 sm:top-auto left-0 sm:left-auto h-full" [style.display]="showShoppingCart ? 'block !important' : 'inherit'">
       <app-part-order-item-list
           [items]="orderItems"
-          (hide)="hideCart()">
+          (hide)="hideCart()"
+          (empty)="emptyCart()">
       </app-part-order-item-list>
     </div>
     <div>
-      <app-part-order-summary [items]="orderItems"></app-part-order-summary>
+      <app-part-order-summary [items]="orderItems" [totalDiscounts]="totalDiscounts"></app-part-order-summary>
     </div>
     <button mat-flat-button (click)="openCheckoutDialog()" class="w-full p-4" color="primary" [disabled]="orderItems.length === 0">
       Checkout

@@ -51,7 +51,8 @@ export class DialogOrderCheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     const items = this.data.formGroup.get('items')?.value;
-    this.total = items.reduce((acc: number, item: OrderItem) => acc + (item.price * item.quantity), 0);
+    const totalDiscounts = this.data.formGroup.get('totalDiscounts')?.value;
+    this.total = items.reduce((acc: number, item: OrderItem) => acc + (item.price * item.quantity), 0) - totalDiscounts;
     this.itemsCount = items.reduce((acc: number, item: OrderItem) => acc + item.quantity, 0);
   }
 

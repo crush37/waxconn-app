@@ -6,6 +6,7 @@ import { OrderItem } from '@core/models/order-item.model';
   templateUrl: './part-order-summary.component.html'
 })
 export class PartOrderSummaryComponent {
+  @Input() totalDiscounts: number = 0;
   @Input() items: OrderItem[] = [];
 
   itemsCount(): number {
@@ -13,6 +14,6 @@ export class PartOrderSummaryComponent {
   }
 
   orderTotal(): number {
-    return this.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+    return this.items.reduce((acc, item) => acc + (item.price * item.quantity), 0) - this.totalDiscounts;
   }
 }

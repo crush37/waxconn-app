@@ -1,0 +1,21 @@
+<div class="px-4 h-full">
+  <div class="flex flex-col h-full">
+    <div class="flex flex-1 flex-wrap content-center items-center justify-center">
+      <div class="text-center">
+        <form [formGroup]="formGroup" autocomplete="off">
+          <span class="mat-body-strong text-base">Discount</span><br>
+          <mat-form-field appearance="outline">
+            <mat-label> {{ currencyCode }} </mat-label>
+            <input formControlName="totalDiscounts" matInput type="number" class="text-center font-bold text-4xl"
+                   min="0" [max]="getMaxDiscount()">
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+
+    <button (click)="submit()" class="w-full p-4" color="primary" mat-flat-button>
+      Add
+    </button>
+  </div>
+</div>
+

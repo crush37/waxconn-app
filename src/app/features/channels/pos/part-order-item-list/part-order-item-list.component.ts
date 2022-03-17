@@ -8,6 +8,7 @@ import { OrderItem } from '@core/models/order-item.model';
 export class PartOrderItemListComponent {
   @Input() items: OrderItem[] = [];
   @Output() hide = new EventEmitter<boolean>();
+  @Output() empty = new EventEmitter<boolean>();
 
   item = (row: OrderItem) => row;
 
@@ -21,7 +22,10 @@ export class PartOrderItemListComponent {
       if (item.quantity === 0) {
         this.items.splice(index, 1);
       }
-    })
+    });
+    if (this.items.length === 0) {
+      this.empty.emit(true);
+    }
   }
 
   close(): void {

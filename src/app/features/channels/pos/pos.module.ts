@@ -10,6 +10,7 @@ import { PartOrderSummaryComponent } from './part-order-summary/part-order-summa
 import { DialogOrderCheckoutComponent } from './dialog-order-checkout/dialog-order-checkout.component';
 import { OrderProductListComponent } from './order-product-list/order-product-list.component';
 import { OrderCustomerComponent } from './order-customer/order-customer.component';
+import { DialogDiscountComponent } from './dialog-discount/dialog-discount.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { OrderCustomerComponent } from './order-customer/order-customer.componen
     PartOrderSummaryComponent,
     DialogOrderCheckoutComponent,
     OrderProductListComponent,
-    OrderCustomerComponent
+    OrderCustomerComponent,
+    DialogDiscountComponent,
   ],
   exports: [
     PosCreateOrderButtonComponent
