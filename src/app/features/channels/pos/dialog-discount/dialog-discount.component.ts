@@ -35,8 +35,8 @@ export class DialogDiscountComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.data.formGroup.valid) {
-      return;
+    if (!this.formGroup.controls.totalDiscounts.value) {
+      this.formGroup.controls.totalDiscounts.patchValue(0);
     }
     this.dialogRef.close(this.formGroup);
     this.data.formGroup.enable();
