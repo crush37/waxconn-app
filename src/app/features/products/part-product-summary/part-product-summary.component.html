@@ -14,7 +14,7 @@
           <mat-select formControlName="status" (valueChange)="isActive($event)">
             <mat-option value="active">Active</mat-option>
             <mat-option value="draft">Draft</mat-option>
-            <mat-option value="archived">Archived</mat-option>
+            <mat-option *ngIf="isArchived()" value="archived">Archived</mat-option>
             <mat-option *ngIf="isDeleted()" value="deleted">Deleted</mat-option>
           </mat-select>
         </mat-form-field>

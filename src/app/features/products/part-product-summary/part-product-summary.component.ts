@@ -44,6 +44,10 @@ export class PartProductSummaryComponent implements OnInit {
     }
   }
 
+  isArchived(): boolean {
+    return this.product.status === 'archived';
+  }
+
   isDeleted(): boolean {
     return this.product.status === 'deleted';
   }
