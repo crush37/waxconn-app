@@ -31,6 +31,12 @@ export class PartProductOverviewComponent implements OnInit {
     return this.formGroup.controls['listings'] as FormArray;
   }
 
+  isListedOn(channel: string): boolean {
+    return !!this.product.listings?.find(listing => {
+      return listing.channelType === channel;
+    });
+  }
+
   setFormGroup(): void {
     this.formGroup.addControl('title', new FormControl(this.product.title));
     this.formGroup.addControl('vendor', new FormControl(this.product.vendor));

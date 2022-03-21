@@ -3,13 +3,25 @@
   <mat-card>
     <mat-tab-group formArrayName="listings" mat-align-tabs="end" animationDuration="750ms" dynamicHeight>
       <ng-container *ngFor="let listing of listings.controls; let i = index">
-        <mat-tab *ngIf="['discogs', 'shopify'].includes(listing.get('channelType')?.value)">
+        <mat-tab *ngIf="listing.get('channelType')?.value === 'discogs'">
           <ng-template mat-tab-label>
             <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">
           </ng-template>
-          <ng-container
-              *ngTemplateOutlet="listing.get('channelType')?.value === 'discogs' ? discogsListing : shopifyListing; context: { listing: listing }">
-          </ng-container>
+          <ng-container *ngTemplateOutlet="discogsListing; context: { listing: listing }"></ng-container>
+        </mat-tab>
+
+        <mat-tab *ngIf="listing.get('channelType')?.value === 'pos' && !isListedOn('discogs')">
+          <ng-template mat-tab-label>
+            <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">
+          </ng-template>
+          <ng-container *ngTemplateOutlet="posListing; context: { listing: listing }"></ng-container>
+        </mat-tab>
+
+        <mat-tab *ngIf="listing.get('channelType')?.value === 'shopify'">
+          <ng-template mat-tab-label>
+            <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">
+          </ng-template>
+          <ng-container *ngTemplateOutlet="shopifyListing; context: { listing: listing }"></ng-container>
         </mat-tab>
       </ng-container>
     </mat-tab-group>
@@ -100,7 +112,93 @@
         </mat-form-field>
       </div>
     </div>
+  </ng-template>
 
+  <ng-template #posListing let-listingForm="listing">
+    <div class="grid grid-cols-4 gap-x-4 pt-4">
+      <div class="col-span-full mb-4">
+        <p class="mb-1" *ngIf="product.options.discogs">Discogs Release #
+          <a (click)="$event.stopPropagation()"
+             href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}"
+             rel="noopener noreferrer" class="link content-center" target="_blank">
+            {{ product.options.discogs.releaseId }}
+          </a>
+        </p>
+        <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="grid grid-cols-2 gap-x-4 pt-4">
+      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
+        <mat-label>Media Condition</mat-label>
+        <mat-select formControlName="mediaCondition" required>
+          <mat-option value="Mint (M)">Mint (M)</mat-option>
+          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
+          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
+          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
+          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
+          <mat-option value="Good (G)">Good (G)</mat-option>
+          <mat-option value="Fair (F)">Fair (F)</mat-option>
+          <mat-option value="Poor (P)">Poor (P)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
+        <mat-label>Sleeve Condition</mat-label>
+        <mat-select formControlName="sleeveCondition">
+          <mat-option value="Not Graded">Not Graded</mat-option>
+          <mat-option value="Generic">Generic</mat-option>
+          <mat-option value="No Cover">No Cover</mat-option>
+          <mat-option value="Mint (M)">Mint (M)</mat-option>
+          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
+          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
+          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
+          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
+          <mat-option value="Good (G)">Good (G)</mat-option>
+          <mat-option value="Fair (F)">Fair (F)</mat-option>
+          <mat-option value="Poor (P)">Poor (P)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Item Condition Comments</mat-label>
+        <input formControlName="comments" matInput maxlength="500">
+        <mat-hint align="end">{{formGroup.get('comments')?.value?.length}} / 500</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Private Comments</mat-label>
+        <textarea formControlName="privateComments" matInput maxlength="500" rows="5"></textarea>
+        <mat-hint align="end">{{formGroup.get('privateComments')?.value?.length}} / 255</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="col-span-2">
+        <mat-label>Location</mat-label>
+        <input formControlName="location" matInput maxlength="500">
+        <mat-hint align="end">{{formGroup.get('location')?.value?.length}} / 255</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <h3>Advanced Settings</h3>
+    <mat-divider></mat-divider>
+    <p class="pt-4">Channel specific settings that overwrite the default settings.</p>
+
+    <div class="grid grid-cols-4 gap-x-4" [formGroup]="listingForm">
+      <div class="col-span-1">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ currencyCode }} Price</mat-label>
+          <input formControlName="price" matInput type="number" min="0.01">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Available Quantity</mat-label>
+          <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
+        </mat-form-field>
+      </div>
+    </div>
   </ng-template>
 
   <ng-template #shopifyListing let-listingForm="listing">
@@ -160,7 +258,6 @@
         </mat-form-field>
       </div>
     </div>
-
   </ng-template>
 
 </form>
