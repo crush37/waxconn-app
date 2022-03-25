@@ -28,9 +28,17 @@
   </mat-card>
 
   <ng-template #discogsListing>
-    <div class="grid grid-cols-4 gap-x-4 pt-4">
+    <div class="grid grid-cols-4 gap-x-4">
+      <div class="col-span-full block md:hidden">
+        <app-lightbox [imageData]="product.images" classes="float-left py-4"></app-lightbox>
+      </div>
+      <div class="col-span-full block md:hidden">
+        <mat-divider></mat-divider>
+      </div>
+
       <div class="col-span-full mb-4">
-        <p class="mb-1" *ngIf="product.options.discogs">Discogs Release #
+        <app-lightbox [imageData]="product.images" thumbSize="150" classes="float-left pt-4 pr-4 hidden md:block"></app-lightbox>
+        <p class="pt-4 mb-1" *ngIf="product.options.discogs">Discogs Release #
           <a (click)="$event.stopPropagation()"
              href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}"
              rel="noopener noreferrer" class="link content-center" target="_blank">
@@ -96,9 +104,17 @@
   </ng-template>
 
   <ng-template #posListing let-listingForm="listing">
-    <div class="grid grid-cols-4 gap-x-4 pt-4">
+    <div class="grid grid-cols-4 gap-x-4">
+      <div class="col-span-full block md:hidden">
+        <app-lightbox [imageData]="product.images" classes="float-left py-4"></app-lightbox>
+      </div>
+      <div class="col-span-full block md:hidden">
+        <mat-divider></mat-divider>
+      </div>
+
       <div class="col-span-full mb-4">
-        <p class="mb-1" *ngIf="product.options.discogs">Discogs Release #
+        <app-lightbox [imageData]="product.images" thumbSize="150" classes="float-left pt-4 pr-4 hidden md:block"></app-lightbox>
+        <p class="pt-4 mb-1" *ngIf="product.options.discogs">Discogs Release #
           <a (click)="$event.stopPropagation()"
              href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}"
              rel="noopener noreferrer" class="link content-center" target="_blank">

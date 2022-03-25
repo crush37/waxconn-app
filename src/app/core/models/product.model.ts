@@ -21,6 +21,7 @@ export class Product extends Resource {
   public status!: string;
   public createdAt!: string;
   public updatedAt!: string;
+  public images!: { src: string, thumb: string}[];
   public options!: {
     discogs?: {
       releaseId: string,
@@ -60,6 +61,11 @@ export class ProductSerializer implements Serializer {
     resource.status = json.status;
     resource.createdAt = json.created_at;
     resource.updatedAt = json.updated_at;
+
+    resource.images = [];
+    json.images?.forEach(function (element: any) {
+      resource.images.push({ src: element.src, thumb: element.src })
+    });
 
     resource.options = {};
     json.options?.forEach(function (element: any) {

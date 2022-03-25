@@ -11,15 +11,15 @@
 
     <div class="grid grid-cols-6 md:gap-x-12">
       <div class="col-span-full block md:hidden">
-        <img alt="" width="100%" src="{{ release.images[0].src }}" class="float-left py-4">
+        <app-lightbox [imageData]="release.images" classes="float-left py-4"></app-lightbox>
       </div>
       <div class="col-span-full block md:hidden">
         <mat-divider></mat-divider>
       </div>
 
       <div class="col-span-full md:col-span-4">
-        <img alt="" height="150" src="{{ release.thumb }}" class="float-left pt-4 pr-4 hidden md:block">
-        <h3 class="mat-body-strong pt-4 underline md:no-underline">
+        <app-lightbox [imageData]="release.images" thumbSize="150" classes="float-left pt-4 pr-4 hidden md:block"></app-lightbox>
+        <h3 class="font-bold pt-4 underline md:no-underline">
           {{release.artist }} - {{ release.title }}
         </h3>
         <div class="grid grid-cols-3">

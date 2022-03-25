@@ -6,6 +6,9 @@ import { CurrencyPipe } from './pipes/currency.pipe';
 import { DataListComponent } from '@shared/data-list/data-list.component';
 import { DatePipe } from './pipes/date.pipe';
 import { DeleteButtonComponent } from '@shared/delete-button/delete-button.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxComponent } from './lightbox/lightbox.component';
+import { LightboxModule } from 'ng-gallery/lightbox';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,14 +48,17 @@ import { UpdateNotificationComponent } from './update-notification/update-notifi
     DataListComponent,
     DatePipe,
     DeleteButtonComponent,
+    LightboxComponent,
     PageHeaderComponent,
     NotificationsComponent,
     RemoveUnderscorePipe,
     SubmitButtonComponent,
-    UpdateNotificationComponent
+    UpdateNotificationComponent,
   ],
   imports: [
     CommonModule,
+    GalleryModule,
+    LightboxModule,
     MatBadgeModule,
     MatButtonModule,
     MatDialogModule,
@@ -103,6 +109,7 @@ import { UpdateNotificationComponent } from './update-notification/update-notifi
     RouterModule,
     SubmitButtonComponent,
     UpdateNotificationComponent,
+    LightboxComponent,
   ]
 })
 export class SharedModule {

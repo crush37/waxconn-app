@@ -13,6 +13,8 @@
 @import 'scss/palette';
 @import 'scss/spiner-theme';
 
+@import '../node_modules/@angular/cdk/overlay-prebuilt.css';
+
 // Typography config
 $typography-config: mat.define-typography-config(
     $font-family: (Lato, "Helvetica Neue", sans-serif),

@@ -36,7 +36,7 @@ export class ProductSerializer extends BaseProductSerializer {
   providers: [
     ApiService,
     { provide: 'apiServiceEndpoint', useValue: 'products' },
-    { provide: 'apiServiceOptions', useValue: { with: 'listings,options' } },
+    { provide: 'apiServiceOptions', useValue: { with: 'listings,options,images' } },
     { provide: 'apiServiceSerializer', useClass: ProductSerializer },
   ]
 })

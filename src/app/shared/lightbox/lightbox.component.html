@@ -1,0 +1,5 @@
+
+<a (click)="lightbox.open(0)" class="cursor-pointer">
+  <img *ngIf="!thumbSize" alt="" src="{{ imageData[0].src }}" class="{{ classes }}">
+  <img *ngIf="thumbSize" alt="" src="{{ imageData[0].src }}" class="{{ classes }}" [style.width.px]="thumbSize">
+</a>
