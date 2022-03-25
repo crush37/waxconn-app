@@ -2,14 +2,14 @@
 
   <mat-card>
     <mat-tab-group formArrayName="listings" mat-align-tabs="end" animationDuration="750ms" dynamicHeight>
-      <ng-container *ngFor="let listing of listings.controls; let i = index">
-        <mat-tab *ngIf="listing.get('channelType')?.value === 'discogs'">
-          <ng-template mat-tab-label>
-            <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">
-          </ng-template>
-          <ng-container *ngTemplateOutlet="discogsListing; context: { listing: listing }"></ng-container>
-        </mat-tab>
+      <mat-tab *ngIf="isListedOn('discogs')">
+        <ng-template mat-tab-label>
+          <img alt="" height="25" src="assets/discogs-25.png">
+        </ng-template>
+        <ng-container *ngTemplateOutlet="discogsListing"></ng-container>
+      </mat-tab>
 
+      <ng-container *ngFor="let listing of listings.controls; let i = index">
         <mat-tab *ngIf="listing.get('channelType')?.value === 'pos' && !isListedOn('discogs')">
           <ng-template mat-tab-label>
             <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">
@@ -27,7 +27,7 @@
     </mat-tab-group>
   </mat-card>
 
-  <ng-template #discogsListing let-listingForm="listing">
+  <ng-template #discogsListing>
     <div class="grid grid-cols-4 gap-x-4 pt-4">
       <div class="col-span-full mb-4">
         <p class="mb-1" *ngIf="product.options.discogs">Discogs Release #
@@ -92,25 +92,6 @@
         <input formControlName="location" matInput maxlength="500">
         <mat-hint align="end">{{formGroup.get('location')?.value?.length}} / 255</mat-hint>
       </mat-form-field>
-    </div>
-
-    <h3>Advanced Settings</h3>
-    <mat-divider></mat-divider>
-    <p class="pt-4">Channel specific settings that overwrite the default settings.</p>
-
-    <div class="grid grid-cols-4 gap-x-4" [formGroup]="listingForm">
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ currencyCode }} Price</mat-label>
-          <input formControlName="price" matInput type="number" min="0.01">
-        </mat-form-field>
-      </div>
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>Available Quantity</mat-label>
-          <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
-        </mat-form-field>
-      </div>
     </div>
   </ng-template>
 
