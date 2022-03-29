@@ -8,7 +8,7 @@ import { Lightbox } from 'ng-gallery/lightbox';
 })
 export class LightboxComponent implements OnInit {
   items: GalleryItem[] = [];
-  @Input() imageData: { src: string, thumb: string}[] = [];
+  @Input() imageData: { src: string, thumb: string }[] = [];
   @Input() thumbSize?: string;
   @Input() classes: string = '';
 
@@ -16,6 +16,10 @@ export class LightboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.imageData.length === 0) {
+      const img = 'assets/default-placeholder.png';
+      this.imageData.push({ src: img, thumb: img });
+    }
     this.items = this.imageData.map(item => new ImageItem({ src: item.src, thumb: item.thumb }));
     const lightboxRef = this.gallery.ref('lightbox');
     lightboxRef.load(this.items);
