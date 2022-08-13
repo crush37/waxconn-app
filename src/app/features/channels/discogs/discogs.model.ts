@@ -92,6 +92,7 @@ export class ReleaseSerializer implements Serializer {
       meta_title: resource.metaTitle,
       meta_description: resource.metaDescription,
       price: resource.price,
+      taxable: resource.taxable,
       inventory: {
         available: resource.quantity,
         sku: resource.sku

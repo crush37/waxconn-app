@@ -35,6 +35,12 @@
           <input formControlName="price" matInput required type="number" min="0.01">
         </mat-form-field>
 
+        <ul class="pb-6">
+          <li>
+            <mat-checkbox formControlName="taxable">Charge tax</mat-checkbox>
+          </li>
+        </ul>
+
         <mat-form-field appearance="outline">
           <mat-label>Available quantity</mat-label>
           <input formControlName="quantity" matInput type="number" min="1">
