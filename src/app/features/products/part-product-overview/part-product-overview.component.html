@@ -2,7 +2,7 @@
 
   <mat-card>
     <mat-tab-group formArrayName="listings" mat-align-tabs="end" animationDuration="750ms" dynamicHeight>
-      <mat-tab *ngIf="isListedOn('discogs')">
+      <mat-tab>
         <ng-template mat-tab-label>
           <img alt="" height="25" src="assets/discogs-25.png">
         </ng-template>
@@ -10,13 +10,6 @@
       </mat-tab>
 
       <ng-container *ngFor="let listing of listings.controls; let i = index">
-        <mat-tab *ngIf="listing.get('channelType')?.value === 'pos' && !isListedOn('discogs')">
-          <ng-template mat-tab-label>
-            <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">
-          </ng-template>
-          <ng-container *ngTemplateOutlet="posListing; context: { listing: listing }"></ng-container>
-        </mat-tab>
-
         <mat-tab *ngIf="listing.get('channelType')?.value === 'shopify'">
           <ng-template mat-tab-label>
             <img alt="" height="25" src="assets/{{ listing.get('channelType')?.value }}-25.png">

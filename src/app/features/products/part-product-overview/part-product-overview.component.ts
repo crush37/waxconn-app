@@ -54,14 +54,16 @@ export class PartProductOverviewComponent implements OnInit {
   setFormGroupListings(): void {
     this.product.listings?.sort((a, b) => (a.channelType > b.channelType) ? 1 : -1);
     this.product.listings?.forEach((listing: any) => {
-      this.listings.push(new FormGroup({
-        channelName: new FormControl(listing.channelName),
-        channelType: new FormControl(listing.channelType),
-        productId: new FormControl(listing.productId),
-        channelId: new FormControl(listing.channelId),
-        available: new FormControl(listing.available),
-        price: new FormControl(listing.price),
-      }));
+      if (!listing.unpublishedAt) {
+        this.listings.push(new FormGroup({
+          channelName: new FormControl(listing.channelName),
+          channelType: new FormControl(listing.channelType),
+          productId: new FormControl(listing.productId),
+          channelId: new FormControl(listing.channelId),
+          available: new FormControl(listing.available),
+          price: new FormControl(listing.price),
+        }));
+      }
     });
   }
 
