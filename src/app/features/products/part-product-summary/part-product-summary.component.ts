@@ -20,6 +20,7 @@ export class PartProductSummaryComponent implements OnInit {
 
   currencyCode!: string;
   disableQuantities: boolean = true;
+  disableEdits: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute) {
   }
@@ -37,8 +38,10 @@ export class PartProductSummaryComponent implements OnInit {
 
   isActive(status: string) {
     if (status !== 'archived') {
+      this.disableEdits = false;
       this.formGroup.enable();
     } else {
+      this.disableEdits = true;
       this.formGroup.disable();
       this.formGroup.get('status')?.enable();
     }
@@ -55,15 +58,19 @@ export class PartProductSummaryComponent implements OnInit {
   setFormGroup(): void {
     this.formGroup.addControl('quantity', new FormControl(this.product.inventoryCount, Validators.min(1)));
     this.formGroup.addControl('price', new FormControl(this.product.price));
+    this.formGroup.addControl('barcode', new FormControl(this.product.barcode));
     this.formGroup.addControl('sku', new FormControl(this.product.sku));
     this.formGroup.addControl('formatQuantity', new FormControl(this.product.options.discogs?.formatQuantity));
     this.formGroup.addControl('weight', new FormControl(this.product.weight));
     this.formGroup.addControl('status', new FormControl(this.product.status));
+    this.formGroup.addControl('channels', new FormControl(this.selectedChannels, Validators.required));
   }
 
   setSelectedChannels(): void {
     this.product.listings?.forEach((listing: Listing) => {
-      this.selectedChannels.push(listing.channelId);
+      if (!listing.unpublishedAt) {
+        this.selectedChannels.push(listing.channelId);
+      }
     });
   }
 
@@ -72,6 +79,9 @@ export class PartProductSummaryComponent implements OnInit {
     event.checked ?
       this.selectedChannels.push(id) :
       this.selectedChannels.splice(i, 1);
+
+    this.formGroup.patchValue({ channels: this.selectedChannels });
+    this.formGroup.controls.channels.markAsDirty();
   }
 
   isChannelChecked(id: string): boolean {

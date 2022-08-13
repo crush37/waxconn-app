@@ -19,10 +19,10 @@
           </mat-select>
         </mat-form-field>
 
-        <p>Where the product is available for sale.</p>
+        <p [ngClass]="{'mat-error': formGroup.controls.channels?.hasError('required')}">Where the product is available for sale.</p>
         <ul *ngIf="channels">
           <li *ngFor="let channel of channels">
-            <mat-checkbox (change)="selectChannel(channel.id, $event)" [checked]="isChannelChecked(channel.id)" disabled>
+            <mat-checkbox (change)="selectChannel(channel.id, $event)" [checked]="isChannelChecked(channel.id)" [disabled]="disableEdits">
               {{ channel.name | titlecase }}
             </mat-checkbox>
           </li>
@@ -43,6 +43,11 @@
         <mat-form-field appearance="outline" class="col-span-1">
           <mat-label>SKU (Stock Keeping Unit)</mat-label>
           <input formControlName="sku" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Barcode (ISBN, UPC, GTIN, etc)</mat-label>
+          <input formControlName="barcode" matInput type="text">
         </mat-form-field>
       </div>
 
