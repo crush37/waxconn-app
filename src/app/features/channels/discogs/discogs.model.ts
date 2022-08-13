@@ -8,6 +8,7 @@ export class Release extends Resource {
   public title!: string;
   public thumb!: string;
   public label!: string;
+  public barcode!: string;
   public catalogNumber!: string;
   public companies!: { name: string, catalog: string, type: string }[];
   public identifiers!: { type: string, value: string, description: string }[];
@@ -46,6 +47,7 @@ export class ReleaseSerializer implements Serializer {
     resource.artist = json.artist;
     resource.thumb = json.thumb;
     resource.label = json.label;
+    resource.barcode = json.barcode;
     resource.catalogNumber = json.catalog_number;
     resource.companies = json.companies;
     resource.identifiers = json.identifiers;
@@ -78,6 +80,7 @@ export class ReleaseSerializer implements Serializer {
     return {
       channel_id: resource.channelId,
       release_id: resource.releaseId,
+      barcode: resource.barcode,
       listings: resource.listings.map((listing: any) => {
         return { channel_id: listing };
       }),

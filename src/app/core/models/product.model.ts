@@ -12,6 +12,7 @@ export class Product extends Resource {
   public type!: string;
   public quantity!: number;
   public price!: number;
+  public barcode!: string;
   public sku!: string;
   public cost!: number;
   public currency!: string;
@@ -51,6 +52,7 @@ export class ProductSerializer implements Serializer {
     resource.metaDescription = json.meta_description;
     resource.type = json.type;
     resource.quantity = json.quantity;
+    resource.barcode = json.barcode;
     resource.sku = json.sku;
     resource.price = json.price;
     resource.cost = json.cost;
@@ -94,6 +96,7 @@ export class ProductSerializer implements Serializer {
       title: resource.title,
       description: resource.description,
       type: resource.type,
+      barcode: resource.barcode,
       meta_title: resource.metaTitle,
       meta_description: resource.metaDescription,
       price: resource.price,
@@ -115,6 +118,7 @@ export class ProductSerializer implements Serializer {
         available: resource.quantity,
         sku: resource.sku,
       },
+      channels: resource.channels,
     };
   }
 }
