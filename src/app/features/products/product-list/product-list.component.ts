@@ -60,7 +60,9 @@ export class ProductListComponent {
   g = (row: Product) => row;
 
   productChannels(listings: Listing[]): string[] {
+    listings = listings.filter((listing: Listing) => listing.unpublishedAt === null);
     const channels = listings.map(listing => listing.channelName);
+
     return channels.filter((channel, index) => {
       return channels.indexOf(channel) === index;
     });

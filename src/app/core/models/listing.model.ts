@@ -12,6 +12,10 @@ export class Listing extends Resource {
   public available!: number | null;
   public price!: number | null;
   public policy!: boolean;
+  public publishedAt!: string;
+  public unpublishedAt!: string;
+  public cancelReason!: string;
+  public cancelledAt!: string;
   public createdAt!: string;
   public updatedAt!: string;
 }
@@ -32,6 +36,10 @@ export class ListingSerializer implements Serializer {
     resource.available = json.available;
     resource.price = json.price;
     resource.policy = json.policy;
+    resource.publishedAt = json.published_at;
+    resource.unpublishedAt = json.unpublished_at;
+    resource.cancelReason = json.cancel_reason;
+    resource.cancelledAt = json.cancelled_at;
     resource.createdAt = json.created_at;
     resource.updatedAt = json.updated_at;
 
