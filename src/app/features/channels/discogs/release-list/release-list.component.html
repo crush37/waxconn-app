@@ -35,7 +35,7 @@
 
       <td class="p-4 text-right border-b">
         <span *ngIf="g(row).country" class="mat-body-strong">{{ g(row).country }}</span>
-        <ng-container *ngIf="g(row).country && g(row).year">,</ng-container>
+        <ng-container *ngIf="g(row).country && g(row).year">, </ng-container>
         <ng-container *ngIf="g(row).year">{{ g(row).year }}</ng-container>
       </td>
     </ng-template>

@@ -39,7 +39,7 @@ export class PartListingSummaryComponent implements OnInit {
       this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
       this.disableQuantities = !response.app.quantities;
       this.channels = response.app.channels;
-      if (!this.release.blockedFromSale) {
+      if (!this.release.blockedFromSale && this.release.status !== 'Draft') {
         this.selectedChannels = this.channels.map((channel: any) => channel.id);
       }
     });

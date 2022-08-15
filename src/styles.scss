@@ -107,3 +107,7 @@ button:focus{
 .expansion-panel .mat-form-field + .mat-form-field {
   margin-left: 8px;
 }
+
+.mat-tooltip {
+  font-size: 12px !important;   // default is 10px :-/
+}

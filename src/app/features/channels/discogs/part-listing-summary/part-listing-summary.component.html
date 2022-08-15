@@ -21,9 +21,10 @@
             <mat-checkbox
                 (change)="selectChannel(channel.id, $event)"
                 [checked]="isChannelChecked(channel.id)"
-                [disabled]="release.blockedFromSale && channel.type === 'discogs'">
-              <span matTooltip="Cannot be sold in Discogs Marketplace"
-                    [matTooltipDisabled]="release.blockedFromSale && channel.type !== 'discogs'">
+                [disabled]="(release.status === 'Draft' || release.blockedFromSale) && channel.type === 'discogs'">
+              <span matTooltip="Cannot be sold in Discogs Marketplace ({{ release.blockedFromSale ? 'Blocked' : 'Draft' }} Release)"
+                    [matTooltipDisabled]="release.status !== 'Draft' && !release.blockedFromSale || channel.type !== 'discogs'"
+                    [matTooltipPosition]="'above'">
                 {{ channel.name | titlecase }}
               </span>
             </mat-checkbox>
