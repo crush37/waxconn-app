@@ -33,6 +33,7 @@ export class Release extends Resource {
   public want!: number;
   public have!: number;
   public blockedFromSale!: boolean;
+  public status!: string;
 }
 
 @Injectable({
@@ -72,6 +73,7 @@ export class ReleaseSerializer implements Serializer {
     resource.want = json.want;
     resource.have = json.have;
     resource.blockedFromSale = json.blocked_from_sale;
+    resource.status = json.status;
 
     return resource;
   }
