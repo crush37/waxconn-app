@@ -15,6 +15,14 @@ export class PartListingOverviewComponent implements OnInit {
   formGroup!: FormGroup;
   appName!: string;
 
+  imagePlaceholder: { type: string, src: string, thumb: string, width: string, height: string }[] = [{
+    type: '',
+    src: './assets/default-placeholder.png',
+    thumb: './assets/default-placeholder.png',
+    width: '1500',
+    height: '1500',
+  }];
+
   constructor(private activatedRoute: ActivatedRoute) {
   }
 

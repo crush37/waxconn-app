@@ -21,7 +21,8 @@
       <td class="p-4 text-left border-b">
         <div class="flex items-center">
           <div class="mr-4">
-            <img alt="" height="60" src="{{ g(row).thumb }}" style="height: 60px; width: 60px">
+            <img alt="" height="60" src="{{ g(row).thumb || imagePlaceholder }}"
+                 style="height: 60px; width: 60px">
           </div>
           <div>
             <span class="mat-body-strong">{{ g(row).title }}</span><br>

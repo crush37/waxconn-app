@@ -27,6 +27,8 @@ export class ReleaseListComponent implements OnInit {
   };
   enabled = false;
 
+  imagePlaceholder = './assets/default-placeholder.png';
+
   constructor(private activatedRoute: ActivatedRoute) {
   }
 
