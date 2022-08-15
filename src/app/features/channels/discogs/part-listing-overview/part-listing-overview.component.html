@@ -127,20 +127,20 @@
 
       <mat-form-field appearance="outline" class="col-span-2">
         <mat-label>Item Condition Comments</mat-label>
-        <input formControlName="comments" matInput maxlength="500"/>
-        <mat-hint align="end">{{formGroup.get('comments')?.value?.length}} / 500</mat-hint>
+        <input formControlName="comments" matInput maxLength="500"/>
+        <mat-hint align="end">{{ formGroup.get('comments')?.value?.length || 0 }} / 500</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="col-span-2">
         <mat-label>Private Comments</mat-label>
-        <textarea formControlName="privateComments" matInput maxlength="500" rows="5"></textarea>
-        <mat-hint align="end">{{formGroup.get('privateComments')?.value?.length}} / 255</mat-hint>
+        <textarea formControlName="privateComments" matInput maxLength="255" rows="5"></textarea>
+        <mat-hint align="end">{{ formGroup.get('privateComments')?.value?.length || 0 }} / 255</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="col-span-2">
         <mat-label>Location</mat-label>
-        <input formControlName="location" matInput maxlength="500"/>
-        <mat-hint align="end">{{formGroup.get('location')?.value?.length}} / 255</mat-hint>
+        <input formControlName="location" matInput maxLength="255"/>
+        <mat-hint align="end">{{ formGroup.get('location')?.value?.length || 0 }} / 255</mat-hint>
       </mat-form-field>
     </div>
   </mat-card>
