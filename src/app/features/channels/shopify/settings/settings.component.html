@@ -16,10 +16,6 @@
       <mat-card class="grid grid-cols-2 gap-4 mb-4">
         <div class="col-span-full">
           <h3 class="inline-flex">General</h3>
-          <mat-slide-toggle formControlName="isActive" class="float-right">
-            <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
-            <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
-          </mat-slide-toggle>
           <mat-divider></mat-divider>
         </div>
 
@@ -79,6 +75,10 @@
       <mat-card class="mb-4">
         <div class="col-span-full">
           <h3 class="inline-flex">Credentials</h3>
+          <mat-slide-toggle formControlName="isActive" class="float-right">
+            <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
+            <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
+          </mat-slide-toggle>
           <!--        <a [routerLink]="" class="float-right pt-0.5 link">Need help?</a>-->
           <mat-divider></mat-divider>
           <p class="pt-4 pb-2 text-primary-300">
