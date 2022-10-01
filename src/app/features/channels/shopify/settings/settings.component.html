@@ -9,64 +9,17 @@
 <mat-card *ngIf="loading">Loading..</mat-card>
 
 <form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid grid-cols-4 gap-4">
 
     <!--  Left Side -->
-    <div class="col-span-full lg:col-span-2 order-last lg:order-first">
-      <mat-card class="grid grid-cols-2 gap-4 mb-4">
-        <div class="col-span-full">
-          <h3 class="inline-flex">General</h3>
-          <mat-divider></mat-divider>
-        </div>
-
-        <div class="col-span-full lg:col-span-1">
-          <p class="pt-4 pb-2 text-primary-300">
-            A short and unique name for internal usage (optional).
-          </p>
-          <mat-form-field appearance="outline">
-            <mat-label>Channel name</mat-label>
-            <input formControlName="name" matInput type="text">
-          </mat-form-field>
-        </div>
-
-        <div class="col-span-full lg:col-span-1">
-          <p class="pt-4 pb-2 text-primary-300">
-            Where you manage your inventory and fulfill orders.
-          </p>
-          <mat-form-field appearance="outline">
-            <mat-label>Location</mat-label>
-            <mat-select formControlName="locationId" required>
-              <mat-option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-card>
-
-      <!--  Product Updates -->
-      <mat-card class="grid grid-cols-2 gap-4 mb-4">
-        <div class="col-span-full">
-          <h3 class="inline-flex">Product Updates</h3>
-          <mat-divider></mat-divider>
-        </div>
-        <div class="col-span-full md:col-span-1">
-          <div class="mb-4">Sets the product updates policy.</div>
-          <mat-radio-group formControlName="productUpdatesPolicy" class="inline-flex flex-col" (change)="toggleProductPolicy($event)">
-            <mat-radio-button value="complete" class="pt-1">Complete</mat-radio-button>
-            <mat-radio-button value="partial" class="pt-1">Partial</mat-radio-button>
-          </mat-radio-group>
-        </div>
-        <div *ngIf="productUpdatesPolicy === 'complete'" class="col-span-full md:col-span-1 bg-gray-50 rounded-xl p-4 md:p-8">
-          <h4 class="font-bold">Complete Update Policy</h4>
-          <p>When this policy in enabled and a product is updated, all related data (images, descriptions,
-            tags, etc) are always restored and any customizations in Shopify are overwritten.</p>
-          <p>You should not use the polity if products are manually customized in Shopify.</p>
-        </div>
-        <div *ngIf="productUpdatesPolicy === 'partial'" class="col-span-full md:col-span-1 bg-gray-50 rounded-xl p-4 md:p-8">
-          <h4 class="font-bold">Partial Update Policy</h4>
-          <p>When this policy in enabled and a product is updated, only the modified fields
-            are updated in Shopify. No images, tags or other custom data is overwritten.</p>
-          <p>You should use the polity if you need to customize products in Shopify.</p>
-        </div>
+    <div class="col-span-3">
+      <mat-card>
+        <mat-tab-group mat-align-tabs="start" animationDuration="750ms" dynamicHeight>
+          <mat-tab>
+            <ng-template mat-tab-label>General</ng-template>
+            <ng-container *ngTemplateOutlet="general"></ng-container>
+          </mat-tab>
+        </mat-tab-group>
       </mat-card>
     </div>
 
@@ -92,13 +45,13 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-          <mat-label>API Key</mat-label>
-          <input formControlName="apiKey" matInput required type="text">
+          <mat-label>Admin API Token</mat-label>
+          <input formControlName="apiPassword" matInput required type="password">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-          <mat-label>Admin API Token</mat-label>
-          <input formControlName="apiPassword" matInput required type="password">
+          <mat-label>API Key</mat-label>
+          <input formControlName="apiKey" matInput required type="text">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
@@ -108,6 +61,57 @@
 
       </mat-card>
     </div>
+
+    <ng-template #general>
+      <div class="grid grid-cols-4 gap-4 mt-4">
+        <!--  General Settings -->
+        <div class="col-span-full lg:col-span-2">
+          <p class="pt-4 pb-2 text-primary-300">
+            A short and unique name for internal usage (optional).
+          </p>
+          <mat-form-field appearance="outline">
+            <mat-label>Channel name</mat-label>
+            <input formControlName="name" matInput type="text">
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-full lg:col-span-2">
+          <p class="pt-4 pb-2 text-primary-300">
+            Where you manage your inventory and fulfill orders.
+          </p>
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="locationId" required>
+              <mat-option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-full">
+          <h3 class="inline-flex">Product Updates</h3>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="col-span-full md:col-span-2">
+          <div class="mb-4">Sets the product updates policy.</div>
+          <mat-radio-group formControlName="productUpdatesPolicy" class="inline-flex flex-col" (change)="toggleProductPolicy($event)">
+            <mat-radio-button value="complete" class="pt-1">Complete</mat-radio-button>
+            <mat-radio-button value="partial" class="pt-1">Partial</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div *ngIf="productUpdatesPolicy === 'complete'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 md:p-8">
+          <h4 class="font-bold">Complete Update Policy</h4>
+          <p>When this policy in enabled and a product is updated, all related data (images, descriptions,
+            tags, etc) are always restored and any customizations in Shopify are overwritten.</p>
+          <p>You should not use the polity if products are manually customized in Shopify.</p>
+        </div>
+        <div *ngIf="productUpdatesPolicy === 'partial'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 md:p-8">
+          <h4 class="font-bold">Partial Update Policy</h4>
+          <p>When this policy in enabled and a product is updated, only the modified fields
+            are updated in Shopify. No images, tags or other custom data is overwritten.</p>
+          <p>You should use the polity if you need to customize products in Shopify.</p>
+        </div>
+      </div>
+    </ng-template>
   </div>
 
 </form>
