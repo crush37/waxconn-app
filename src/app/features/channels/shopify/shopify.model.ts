@@ -12,6 +12,7 @@ export class Setting extends Resource {
   public apiSharedSecret!: string;
   public isActive!: boolean;
   public productUpdatesPolicy!: string;
+  public deleteOutOfStockProducts!: boolean;
 }
 
 @Injectable({
@@ -28,8 +29,9 @@ export class SettingSerializer implements Serializer {
     resource.apiKey = json.settings.api_key;
     resource.apiPassword = json.settings.api_password;
     resource.apiSharedSecret = json.settings.api_shared_secret;
+    resource.productUpdatesPolicy = json.settings.product_updates.policy;
+    resource.deleteOutOfStockProducts = json.settings.delete_out_of_stock_products;
     resource.isActive = json.is_active;
-    resource.productUpdatesPolicy = json.settings.product_updates.policy
 
     return resource;
   }
@@ -48,8 +50,9 @@ export class SettingSerializer implements Serializer {
         product_updates: {
           policy: resource.productUpdatesPolicy,
         },
+        delete_out_of_stock_products: resource.deleteOutOfStockProducts,
       },
-      is_active: resource.isActive
+      is_active: resource.isActive,
     };
   }
 }
