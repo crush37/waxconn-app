@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "date": "January 1st, 2022",
+    "description": "Test update"
+  },
+  {
+    "id": 2,
+    "date": "Oct 1st, 2022",
+    "description": "Added - It is now possible to perform simple Customer exports from the Customers page. \n\n Added - Instead of keeping products Out Of Stock in Shopify when inventory reaches zero, it is now possible to set Waxconn to delete them. This option can be enabled in Shopify Channel settings."
+  }
+]

@@ -3,6 +3,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { first } from 'rxjs/operators';
 import { concat, interval } from 'rxjs';
 import { heartBeatAnimation } from 'angular-animations';
+import * as data from '../../update-notes.json';
 
 @Component({
   selector: 'app-update-notification',
@@ -13,6 +14,8 @@ export class UpdateNotificationComponent {
   updateAvailable = false;
   animate = true;
   animState = false;
+
+  news: any = (data as any).default;
 
   constructor(appRef: ApplicationRef, private updates: SwUpdate) {
     if (updates.isEnabled) {
@@ -26,7 +29,9 @@ export class UpdateNotificationComponent {
   }
 
   getTooltipText(): string {
-    return 'Update Available. \n Click to update Waxconn'
+    let update = this.news.slice(-1)[0];
+
+    return 'Update Available. What\'s new? \n\n ' + update.description + '\n\n Click to update Waxconn';
   }
 
   updateApp() {

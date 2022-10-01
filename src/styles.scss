@@ -109,5 +109,6 @@ button:focus{
 }
 
 .mat-tooltip {
-  font-size: 12px !important;   // default is 10px :-/
+  font-size: 0.875rem !important; /* 14px, default is 10px  */
+  line-height: 1.25rem !important; /* 20px */
 }
