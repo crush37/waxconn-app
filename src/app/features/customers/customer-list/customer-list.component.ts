@@ -4,6 +4,8 @@ import { Customer as BaseCustomer, CustomerSerializer as BaseCustomerSerializer 
 import { CustomerAddress, CustomerAddressSerializer } from '@core/models/customer-address.model';
 import { DataListService } from '@shared/data-list/data-list.service';
 import { SearchConfig } from '@shared/data-list/data-list.component';
+import { ApiMetaService } from '@core/services/api-meta.service';
+import { saveAs } from 'file-saver';
 
 export class Customer extends BaseCustomer {
   public defaultAddress!: CustomerAddress | null;
@@ -50,6 +52,22 @@ export class CustomerListComponent {
       }
     ]
   };
+  exporting = false;
+
+  constructor(
+    private apiMetaService: ApiMetaService) {
+  }
 
   g = (row: Customer) => row;
+
+  getExport() {
+    this.exporting = true;
+    this.apiMetaService.getCustomersExport().subscribe(
+      data => {
+        let blob = new Blob([data], { type: 'application/text' });
+        saveAs(blob, 'customers.csv');
+        this.exporting = false;
+      }
+    );
+  }
 }

@@ -1,6 +1,9 @@
 <app-page-header [title]="title" [subTitle]="subTitle">
   <ng-template #actions>
-    <button color="primary" mat-flat-button disabled class="ml-2">Export</button>
+    <button color="primary" mat-flat-button class="ml-2" (click)="getExport()" [disabled]="exporting">
+      <ng-container *ngIf="!exporting">Export</ng-container>
+      <ng-container *ngIf="exporting">Please wait</ng-container>
+    </button>
   </ng-template>
 </app-page-header>
 

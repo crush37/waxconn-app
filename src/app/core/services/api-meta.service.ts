@@ -55,4 +55,8 @@ export class ApiMetaService {
       return payload.data;
     }));
   }
+
+  getCustomersExport(): Observable<Blob> {
+    return this.httpClient.get('api/v1/exports/customers', { responseType: 'blob' });
+  }
 }
