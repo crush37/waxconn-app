@@ -59,4 +59,18 @@ export class ApiMetaService {
   getCustomersExport(): Observable<Blob> {
     return this.httpClient.get('api/v1/exports/customers', { responseType: 'blob' });
   }
+
+  getDiscogsComments(): Observable<any> {
+    return this.httpClient.get<string[]>('api/v1/meta/discogs-comments').pipe(map((payload: any) => {
+      payload.data = payload.data.map((data: any) => { return data.value });
+      return payload.data;
+    }));
+  }
+
+  getDiscogsLocations(): Observable<any> {
+    return this.httpClient.get<string[]>('api/v1/meta/discogs-locations').pipe(map((payload: any) => {
+      payload.data = payload.data.map((data: any) => { return data.value });
+      return payload.data;
+    }));
+  }
 }

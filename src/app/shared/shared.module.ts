@@ -9,6 +9,7 @@ import { DeleteButtonComponent } from '@shared/delete-button/delete-button.compo
 import { GalleryModule } from 'ng-gallery';
 import { LightboxComponent } from './lightbox/lightbox.component';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
@@ -79,6 +80,7 @@ import { UpdateNotificationComponent } from './update-notification/update-notifi
     DataListComponent,
     DatePipe,
     DeleteButtonComponent,
+    MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,
     MatButtonModule,

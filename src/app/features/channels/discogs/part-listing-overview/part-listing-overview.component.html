@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup" autocomplete="off">
+<form [formGroup]="formGroup" autocomplete="off" xmlns="http://www.w3.org/1999/html">
   <mat-card>
     <h3 class="inline-flex">Discogs Release #{{ release.id }}</h3>
     <div class="float-right">
@@ -127,19 +127,29 @@
 
       <mat-form-field appearance="outline" class="col-span-2">
         <mat-label>Item Condition Comments</mat-label>
-        <input formControlName="comments" matInput maxLength="500"/>
+        <textarea formControlName="comments" matInput maxLength="500" rows="3" style="resize: none;" [matAutocomplete]="autoComment"></textarea>
+        <mat-autocomplete #autoComment="matAutocomplete">
+          <mat-option *ngFor="let option of filteredCommentsOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
         <mat-hint align="end">{{ formGroup.get('comments')?.value?.length || 0 }} / 500</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="col-span-2">
         <mat-label>Private Comments</mat-label>
-        <textarea formControlName="privateComments" matInput maxLength="255" rows="5"></textarea>
+        <textarea formControlName="privateComments" matInput maxLength="255" rows="2" style="resize: none;"></textarea>
         <mat-hint align="end">{{ formGroup.get('privateComments')?.value?.length || 0 }} / 255</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="col-span-2">
         <mat-label>Location</mat-label>
-        <input formControlName="location" matInput maxLength="255"/>
+        <input formControlName="location" matInput maxLength="255" [matAutocomplete]="autoLocation"/>
+        <mat-autocomplete #autoLocation="matAutocomplete">
+          <mat-option *ngFor="let option of filteredLocationsOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
         <mat-hint align="end">{{ formGroup.get('location')?.value?.length || 0 }} / 255</mat-hint>
       </mat-form-field>
     </div>
