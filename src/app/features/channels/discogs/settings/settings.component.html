@@ -116,7 +116,13 @@
         <ul>
           <li>
             <mat-checkbox formControlName="syncReleases">
-              <span class="font-bold">Sync Release Updates?</span>
+              <span class="font-bold inline-flex">
+                Sync Release Updates?
+                <mat-icon class="text-gray-400 pl-1" style="transform: scale(0.6);" matTooltip="By default, When a release
+                  is updated in Discogs it is also be updated in Waxconn and any enabled sales channels
+                  (like Shopify). Uncheck this option to disable this behaviour." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
             </mat-checkbox>
           </li>
         </ul>
