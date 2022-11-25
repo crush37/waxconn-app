@@ -13,10 +13,6 @@
     <mat-card class="col-span-full grid grid-cols-2 gap-x-4">
       <div class="col-span-full">
         <h3 class="inline-flex">Details</h3>
-        <mat-slide-toggle formControlName="isActive" class="float-right">
-          <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
-          <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
-        </mat-slide-toggle>
         <mat-divider></mat-divider>
       </div>
 
@@ -40,6 +36,14 @@
             <mat-option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
+
+      <div class="col-span-full md:col-span-2 pb-4">
+        <div class="mb-4">Is this channel enabled or disabled?</div>
+        <mat-slide-toggle formControlName="isActive">
+          <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
+          <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
+        </mat-slide-toggle>
       </div>
     </mat-card>
 
