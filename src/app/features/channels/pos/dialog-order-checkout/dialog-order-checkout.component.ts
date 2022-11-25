@@ -5,7 +5,6 @@ import { ApiService } from '@core/services/api.service';
 import { Order as BaseOrder, OrderSerializer as BaseOrderSerializer } from '@core/models/order.model';
 import { Customer } from '@core/models/customer.model';
 import { OrderItem, OrderItemSerializer } from '@core/models/order-item.model';
-import { bounceInOnEnterAnimation, fadeInOnEnterAnimation, } from 'angular-animations';
 
 export class Order extends BaseOrder {
   public customer!: Customer | null;
@@ -32,10 +31,6 @@ export class OrderSerializer extends BaseOrderSerializer {
     { provide: 'apiServiceEndpoint', useValue: 'orders' },
     { provide: 'apiServiceOptions', useValue: {} },
     { provide: 'apiServiceSerializer', useClass: OrderSerializer },
-  ],
-  animations: [
-    fadeInOnEnterAnimation(),
-    bounceInOnEnterAnimation()
   ]
 })
 export class DialogOrderCheckoutComponent implements OnInit {

@@ -3,7 +3,6 @@ import { ApiService } from '@core/services/api.service';
 import { Billing, BillingSerializer } from '@core/models/billing.model';
 import { ApiPaypalService } from '@core/services/api-paypal.service';
 import { Invoice } from '@core/models/invoice.model';
-import { bounceInOnEnterAnimation, fadeInOnEnterAnimation, } from 'angular-animations';
 
 declare var paypal: any;
 
@@ -15,10 +14,6 @@ declare var paypal: any;
     { provide: 'apiServiceEndpoint', useValue: 'billing' },
     { provide: 'apiServiceOptions', useValue: {} },
     { provide: 'apiServiceSerializer', useClass: BillingSerializer },
-  ],
-  animations: [
-    fadeInOnEnterAnimation(),
-    bounceInOnEnterAnimation()
   ]
 })
 export class BillingComponent implements OnInit {

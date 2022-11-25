@@ -2,13 +2,11 @@ import { ApplicationRef, Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { first } from 'rxjs/operators';
 import { concat, interval } from 'rxjs';
-import { heartBeatAnimation } from 'angular-animations';
 import * as data from '../../update-notes.json';
 
 @Component({
   selector: 'app-update-notification',
-  templateUrl: './update-notification.component.html',
-  animations: [heartBeatAnimation({ duration: 1000, delay: 5000 })]
+  templateUrl: './update-notification.component.html'
 })
 export class UpdateNotificationComponent {
   updateAvailable = false;

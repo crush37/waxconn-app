@@ -21,7 +21,6 @@
     "@angular/platform-browser-dynamic": "^14.2.12",
     "@angular/router": "^14.2.12",
     "@angular/service-worker": "^14.2.12",
-    "angular-animations": "^0.11.0",
     "file-saver": "^2.0.5",
     "ng-gallery": "^6.0.1",
     "rxjs": "^7.4.0",

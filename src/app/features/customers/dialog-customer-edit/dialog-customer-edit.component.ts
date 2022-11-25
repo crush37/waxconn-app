@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { bounceInOnEnterAnimation, fadeInOnEnterAnimation, } from 'angular-animations';
 import { ApiService } from '@core/services/api.service';
 import { Customer, CustomerSerializer } from '@core/models/customer.model';
 
@@ -13,10 +12,6 @@ import { Customer, CustomerSerializer } from '@core/models/customer.model';
     { provide: 'apiServiceEndpoint', useValue: 'customers' },
     { provide: 'apiServiceOptions', useValue: {} },
     { provide: 'apiServiceSerializer', useClass: CustomerSerializer },
-  ],
-  animations: [
-    fadeInOnEnterAnimation(),
-    bounceInOnEnterAnimation()
   ]
 })
 export class DialogCustomerEditComponent implements OnInit {
