@@ -52,6 +52,7 @@ export class PartListingSummaryComponent implements OnInit {
     this.formGroup = new FormGroup({
       quantity: new FormControl({value: 1, disabled: this.disableQuantities}, Validators.required),
       price: new FormControl(null, Validators.required),
+      allowOffers: new FormControl(false, Validators.required),
       taxable: new FormControl(false, Validators.required),
       barcode: new FormControl(this.release.barcode),
       sku: new FormControl(null),

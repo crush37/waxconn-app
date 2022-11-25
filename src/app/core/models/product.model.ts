@@ -35,6 +35,7 @@ export class Product extends Resource {
       location: string,
       price: number,
       quantity: number,
+      allowOffers: number,
     }
   };
 }
@@ -84,6 +85,7 @@ export class ProductSerializer implements Serializer {
           location: element.properties.location,
           price: element.properties.price,
           quantity: element.properties.quantity,
+          allowOffers: element.properties.allow_offers,
         }
       }
     })
