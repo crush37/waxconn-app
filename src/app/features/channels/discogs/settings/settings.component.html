@@ -13,7 +13,7 @@
   <div class="grid grid-cols-4 gap-4">
 
     <!--  Left Side -->
-    <div class="col-span-3">
+    <div class="col-span-full lg:col-span-3">
       <mat-card>
         <mat-tab-group mat-align-tabs="start" animationDuration="750ms" dynamicHeight>
           <mat-tab>
@@ -21,9 +21,13 @@
             <ng-container *ngTemplateOutlet="general"></ng-container>
           </mat-tab>
           <mat-tab>
-            <ng-template mat-tab-label>Templates</ng-template>
-            <ng-container *ngTemplateOutlet="templates"></ng-container>
+            <ng-template mat-tab-label>Settings</ng-template>
+            <ng-container *ngTemplateOutlet="settings"></ng-container>
           </mat-tab>
+<!--          <mat-tab>-->
+<!--            <ng-template mat-tab-label>Templates</ng-template>-->
+<!--            <ng-container *ngTemplateOutlet="templates"></ng-container>-->
+<!--          </mat-tab>-->
         </mat-tab-group>
       </mat-card>
     </div>
@@ -33,10 +37,6 @@
       <!--  Credentials -->
       <mat-card class="mb-4">
         <h3 class="inline-flex">Credentials</h3>
-        <mat-slide-toggle formControlName="isActive" class="float-right">
-          <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
-          <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
-        </mat-slide-toggle>
         <mat-divider></mat-divider>
         <p class="pt-5 pb-2">
           Required to connect to Discogs and manage your inventory and orders.
@@ -54,7 +54,7 @@
   </div>
 
   <ng-template #general>
-    <div class="grid grid-cols-4 gap-4 mt-4">
+    <div class="grid grid-cols-4 gap-4 mt-4 lg:mt-8">
       <!--  General Settings -->
       <div class="col-span-full md:col-span-2">
         <div class="mb-4">A short and unique name for internal usage (optional).</div>
@@ -74,6 +74,18 @@
         </mat-form-field>
       </div>
 
+      <div class="col-span-full md:col-span-2 pb-4">
+        <div class="mb-4">Is this channel enabled or disabled?</div>
+        <mat-slide-toggle formControlName="isActive">
+          <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
+          <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #settings>
+    <div class="grid grid-cols-4 gap-4 mt-4">
       <!--  Auto Relistings -->
       <div class="col-span-full">
         <h3 class="inline-flex">Auto Relistings</h3>
@@ -81,8 +93,7 @@
       </div>
       <div class="col-span-full md:col-span-2">
         <div class="mb-4">Sets the auto relisting policy.</div>
-        <mat-radio-group formControlName="listingPolicy" class="inline-flex flex-col"
-                         (change)="toggleListingPolicy($event)">
+        <mat-radio-group formControlName="listingPolicy" class="inline-flex flex-col" (change)="toggleListingPolicy($event)">
           <mat-radio-button value="all" class="pt-1">Publish all</mat-radio-button>
           <mat-radio-button value="amount" class="pt-1">Number of copies</mat-radio-button>
         </mat-radio-group>
@@ -93,11 +104,11 @@
           </mat-form-field>
         </div>
       </div>
-      <div *ngIf="listingPolicy === 'all'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 md:p-8">
+      <div *ngIf="listingPolicy === 'all'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 lg:p-8">
         <h4 class="font-bold">Publish all policy</h4>
         <p>Creates a listing for each copy of the product available in stock.</p>
       </div>
-      <div *ngIf="listingPolicy === 'amount'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 md:p-8">
+      <div *ngIf="listingPolicy === 'amount'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 lg:p-8">
         <h4 class="font-bold">Number of copies policy</h4>
         <p>Creates a number of listings for every product, according to the value set here and the
           product available inventory.</p>
@@ -130,60 +141,60 @@
     </div>
   </ng-template>
 
-  <ng-template #templates>
-    <div class="grid grid-cols-1 gap-4 mt-4">
-      <!--  Shipment Template -->
-      <div class="col-span-full">
-        <mat-accordion class="expansion-panel">
-          <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Tracked Shipment Email</mat-panel-title>
-              <mat-panel-description>The confirmation email on your Discogs order shipments.</mat-panel-description>
-            </mat-expansion-panel-header>
-            <div class="grid grid-cols-5 gap-4 mt-4">
-              <!--  Shipment Template -->
-              <div class="col-span-full md:col-span-3 pb-4">
-                <textarea formControlName="trackedShipmentTemplate" class="resize-none border rounded-md p-4" style="height: 300px; width: 100%;"></textarea>
-              </div>
-              <div class="col-span-full lg:col-span-2">
-                <p class="font-bold">Available Params</p>
-                <div class="border-gray-200 border-b mb-4"></div>
-                <table class="table w-full" ngNonBindable>
-                  <tbody>
-                  <tr>
-                    <td class="font-bold">{{shop}}</td>
-                    <td>Your shop name</td>
-                  </tr>
-                  <tr>
-                    <td class="font-bold">{{first_name}}</td>
-                    <td>The customer first name</td>
-                  </tr>
-                  <tr>
-                    <td class="font-bold">{{last_name}}</td>
-                    <td>The customer last name</td>
-                  </tr>
-                  <tr>
-                    <td class="font-bold">{{courier}}</td>
-                    <td>The courier name (eg. DHL)</td>
-                  </tr>
-                  <tr>
-                    <td class="font-bold">{{tracking_url}}</td>
-                    <td>The tracking url</td>
-                  </tr>
-                  <tr>
-                    <td class="font-bold">{{tracking_number}}</td>
-                    <td>The tracking number</td>
-                  </tr>
-                  </tbody>
-                </table>
+<!--  <ng-template #templates>-->
+<!--    <div class="grid grid-cols-1 gap-4 mt-4">-->
+<!--      &lt;!&ndash;  Shipment Template &ndash;&gt;-->
+<!--      <div class="col-span-full">-->
+<!--        <mat-accordion class="expansion-panel">-->
+<!--          <mat-expansion-panel hideToggle>-->
+<!--            <mat-expansion-panel-header>-->
+<!--              <mat-panel-title>Tracked Shipment Email</mat-panel-title>-->
+<!--              <mat-panel-description>The confirmation email on your Discogs order shipments.</mat-panel-description>-->
+<!--            </mat-expansion-panel-header>-->
+<!--            <div class="grid grid-cols-5 gap-4 mt-4">-->
+<!--              &lt;!&ndash;  Shipment Template &ndash;&gt;-->
+<!--              <div class="col-span-full md:col-span-3 pb-4">-->
+<!--                <textarea formControlName="trackedShipmentTemplate" class="resize-none border rounded-md p-4" style="height: 300px; width: 100%;"></textarea>-->
+<!--              </div>-->
+<!--              <div class="col-span-full lg:col-span-2">-->
+<!--                <p class="font-bold">Available Params</p>-->
+<!--                <div class="border-gray-200 border-b mb-4"></div>-->
+<!--                <table class="table w-full" ngNonBindable>-->
+<!--                  <tbody>-->
+<!--                  <tr>-->
+<!--                    <td class="font-bold">{{shop}}</td>-->
+<!--                    <td>Your shop name</td>-->
+<!--                  </tr>-->
+<!--                  <tr>-->
+<!--                    <td class="font-bold">{{first_name}}</td>-->
+<!--                    <td>The customer first name</td>-->
+<!--                  </tr>-->
+<!--                  <tr>-->
+<!--                    <td class="font-bold">{{last_name}}</td>-->
+<!--                    <td>The customer last name</td>-->
+<!--                  </tr>-->
+<!--                  <tr>-->
+<!--                    <td class="font-bold">{{courier}}</td>-->
+<!--                    <td>The courier name (eg. DHL)</td>-->
+<!--                  </tr>-->
+<!--                  <tr>-->
+<!--                    <td class="font-bold">{{tracking_url}}</td>-->
+<!--                    <td>The tracking url</td>-->
+<!--                  </tr>-->
+<!--                  <tr>-->
+<!--                    <td class="font-bold">{{tracking_number}}</td>-->
+<!--                    <td>The tracking number</td>-->
+<!--                  </tr>-->
+<!--                  </tbody>-->
+<!--                </table>-->
 <!--                <div class="mt-6">-->
 <!--                  <button color="primary" mat-stroked-button routerLink="" disabled>-->
 <!--                    <span> Preview </span>-->
 <!--                  </button>-->
 <!--                </div>-->
-              </div>
-            </div>
-          </mat-expansion-panel>
+<!--              </div>-->
+<!--            </div>-->
+<!--          </mat-expansion-panel>-->
 
 <!--          <mat-expansion-panel hideToggle>-->
 <!--            <mat-expansion-panel-header>-->
@@ -280,9 +291,9 @@
 <!--              </div>-->
 <!--            </div>-->
 <!--          </mat-expansion-panel>-->
-        </mat-accordion>
-      </div>
-    </div>
+<!--        </mat-accordion>-->
+<!--      </div>-->
+<!--    </div>-->
 
-  </ng-template>
+<!--  </ng-template>-->
 </form>
