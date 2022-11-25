@@ -4,12 +4,7 @@
   <div class="pt-4 mb-4 h-48">
     <ng-container *ngIf="loading" class="p-4">Loading..</ng-container>
     <ng-container *ngIf="!loading && sales">
-      <ngx-charts-bar-vertical
-          [scheme]="colorScheme"
-          [results]="sales"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis">
-      </ngx-charts-bar-vertical>
+
     </ng-container>
   </div>
 </mat-card>
