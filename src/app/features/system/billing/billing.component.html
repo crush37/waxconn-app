@@ -33,7 +33,7 @@
             {{ billing.settings.companyName }}<br>
             {{ billing.settings.address1 }}<br>
             <ng-container *ngIf="billing.settings.address2">{{ billing.settings.address2 }}<br></ng-container>
-            {{ billing?.settings?.city }}, {{ billing.settings.country }}, {{ billing.settings.postcode }}
+            {{ billing.settings.city }}, {{ billing.settings.country }}, {{ billing.settings.postcode }}
           </p>
           <p *ngIf="!billing.settings.address1 && !billing.settings.country" class="pt-3">Not available</p>
           <h3 class="pt-4 mb-1">Tax ID</h3>
@@ -113,7 +113,7 @@
             <p class="mb-0">
               <ng-container *ngIf="billing?.trial">First invoice is generated in</ng-container>
               <ng-container *ngIf="!billing?.trial">Next invoice is generated in</ng-container>
-              {{ billing?.nextInvoiceAt | date: 'LLLL d, yyyy' }}.<br>
+              {{ billing.nextInvoiceAt | date: 'LLLL d, yyyy' }}.<br>
               If you have any question please <a href="https://waxconn.com/contact-us" target="_blank" class="link">contact us</a>.
             </p>
           </div>

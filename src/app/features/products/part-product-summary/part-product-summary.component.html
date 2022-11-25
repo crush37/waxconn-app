@@ -19,7 +19,7 @@
           </mat-select>
         </mat-form-field>
 
-        <p [ngClass]="{'mat-error': formGroup.controls.channels?.hasError('required')}">Where the product is available for sale.</p>
+        <p [ngClass]="{'mat-error': formGroup.controls.channels.hasError('required')}">Where the product is available for sale.</p>
         <ul *ngIf="channels">
           <li *ngFor="let channel of channels">
             <mat-checkbox (change)="selectChannel(channel.id, $event)" [checked]="isChannelChecked(channel.id)" [disabled]="disableEdits">
