@@ -12,12 +12,16 @@
   <div class="grid grid-cols-4 gap-2 md:gap-4">
 
     <!--  Left Side -->
-    <div class="col-span-3">
+    <div class="col-span-full lg:col-span-3">
       <mat-card>
         <mat-tab-group mat-align-tabs="start" animationDuration="750ms" dynamicHeight>
           <mat-tab>
             <ng-template mat-tab-label>General</ng-template>
             <ng-container *ngTemplateOutlet="general"></ng-container>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>Settings</ng-template>
+            <ng-container *ngTemplateOutlet="settings"></ng-container>
           </mat-tab>
         </mat-tab-group>
       </mat-card>
@@ -28,10 +32,6 @@
       <mat-card class="mb-4">
         <div class="col-span-full">
           <h3 class="inline-flex">Credentials</h3>
-          <mat-slide-toggle formControlName="isActive" class="float-right">
-            <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
-            <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
-          </mat-slide-toggle>
           <!--        <a [routerLink]="" class="float-right pt-0.5 link">Need help?</a>-->
           <mat-divider></mat-divider>
           <p class="pt-4 pb-2 text-primary-300">
@@ -87,6 +87,19 @@
           </mat-form-field>
         </div>
 
+        <div class="col-span-full md:col-span-2 pb-4">
+          <div class="mb-4">Is this channel enabled or disabled?</div>
+          <mat-slide-toggle formControlName="isActive">
+            <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
+            <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #settings>
+      <div class="grid grid-cols-4 gap-4 mt-4">
+        <!-- Product Updates -->
         <div class="col-span-full">
           <h3 class="inline-flex">Product Updates</h3>
           <mat-divider></mat-divider>
