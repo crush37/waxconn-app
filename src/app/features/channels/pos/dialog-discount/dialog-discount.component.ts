@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { getCurrencySymbol } from '@angular/common';
 import { OrderItem } from '@core/models/order-item.model';
@@ -14,10 +14,10 @@ export class DialogDiscountComponent implements OnInit {
   paid = false;
   currencyCode!: string;
 
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { formGroup: FormGroup },
+    @Inject(MAT_DIALOG_DATA) public data: { formGroup: UntypedFormGroup },
     private activatedRoute: ActivatedRoute,
     private dialogRef: MatDialogRef<DialogDiscountComponent>) {
   }

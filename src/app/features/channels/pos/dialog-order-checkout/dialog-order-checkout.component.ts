@@ -1,5 +1,5 @@
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '@core/services/api.service';
 import { Order as BaseOrder, OrderSerializer as BaseOrderSerializer } from '@core/models/order.model';
@@ -44,7 +44,7 @@ export class DialogOrderCheckoutComponent implements OnInit {
   paid = false;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { formGroup: FormGroup },
+    @Inject(MAT_DIALOG_DATA) public data: { formGroup: UntypedFormGroup },
     private apiService: ApiService<Order>,
     private dialogRef: MatDialogRef<DialogOrderCheckoutComponent>) {
   }

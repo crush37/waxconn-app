@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { PasswordValidator } from '../password.validator';
@@ -10,7 +10,7 @@ import { concat } from 'rxjs';
   templateUrl: './activate.component.html'
 })
 export class ActivateComponent implements OnInit {
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
   activated = false;
   id!: string | null;
   hash!: string | null;
@@ -30,15 +30,15 @@ export class ActivateComponent implements OnInit {
       this.expires = params.get('expires');
       this.signature = params.get('signature');
 
-      this.formGroup = new FormGroup({
-        password: new FormControl(null, Validators.compose([
+      this.formGroup = new UntypedFormGroup({
+        password: new UntypedFormControl(null, Validators.compose([
           Validators.required,
           PasswordValidator.patternValidator(/\d/, { hasNumber: true }),
           PasswordValidator.patternValidator(/[A-Z]/, { hasUpperCase: true }),
           PasswordValidator.patternValidator(/[a-z]/, { hasLowerCase: true }),
           Validators.minLength(8)
         ])),
-        passwordConfirmation: new FormControl(null, Validators.compose([
+        passwordConfirmation: new UntypedFormControl(null, Validators.compose([
           Validators.required,
           PasswordValidator.matchValidator
         ]))

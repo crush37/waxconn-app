@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { ApiMetaService } from '@core/services/api-meta.service';
 import { Location } from '@core/models/location.model';
@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
 
   id!: string;
   settings!: Setting;
-  formGroup = new FormGroup({});
+  formGroup = new UntypedFormGroup({});
 
   locations!: Location[];
   listingPolicy!: string;
@@ -61,18 +61,18 @@ export class SettingsComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
-      name: new FormControl(this.settings?.name || 'Discogs'),
-      locationId: new FormControl(this.settings?.locationId, Validators.required),
-      apiUsername: new FormControl(this.settings?.apiUsername, Validators.required),
-      apiToken: new FormControl(this.settings?.apiToken, Validators.required),
-      trackedShipmentTemplate: new FormControl(this.settings?.trackedShipmentTemplate, Validators.required),
-      productDescriptionTemplate: new FormControl(this.settings?.productDescriptionTemplate, Validators.required),
-      isActive: new FormControl(this.settings?.isActive || false),
-      syncReleases: new FormControl(this.settings?.syncReleases || false),
-      listingPolicy: new FormControl(this.settings?.listingPolicy, Validators.required),
-      listingPolicyQuantity: new FormControl(this.settings?.listingPolicyQuantity ?? 1, Validators.required)
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
+      name: new UntypedFormControl(this.settings?.name || 'Discogs'),
+      locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
+      apiUsername: new UntypedFormControl(this.settings?.apiUsername, Validators.required),
+      apiToken: new UntypedFormControl(this.settings?.apiToken, Validators.required),
+      trackedShipmentTemplate: new UntypedFormControl(this.settings?.trackedShipmentTemplate, Validators.required),
+      productDescriptionTemplate: new UntypedFormControl(this.settings?.productDescriptionTemplate, Validators.required),
+      isActive: new UntypedFormControl(this.settings?.isActive || false),
+      syncReleases: new UntypedFormControl(this.settings?.syncReleases || false),
+      listingPolicy: new UntypedFormControl(this.settings?.listingPolicy, Validators.required),
+      listingPolicyQuantity: new UntypedFormControl(this.settings?.listingPolicyQuantity ?? 1, Validators.required)
     });
   }
 

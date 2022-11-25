@@ -1,13 +1,12 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import {
   Repricing as BaseRepricing,
   RepricingSerializer as BaseRepricingSerializer
 } from '@core/models/repricing.model';
 import { RepricingChannel, RepricingChannelSerializer } from '@core/models/repricing-channel.model';
-import { OrderItem } from '@core/models/order-item.model';
 
 export class Repricing extends BaseRepricing {
   public channels!: RepricingChannel[] | null;
@@ -42,7 +41,7 @@ export class RepricingDetailsComponent implements OnInit {
   id!: string;
   repricing?: Repricing;
   repricingChannels: { data: RepricingChannel[] | null } = { data: null };
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -66,8 +65,8 @@ export class RepricingDetailsComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
     });
   }
 }

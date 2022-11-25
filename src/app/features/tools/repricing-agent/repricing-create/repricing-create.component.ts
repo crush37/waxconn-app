@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { RepricingSerializer } from '@core/models/repricing.model';
 import { ActivatedRoute } from '@angular/router';
@@ -21,7 +21,7 @@ export class RepricingCreateComponent implements OnInit {
   title = 'Repricing';
   subTitle = 'Create';
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   channels?: any;
   selectedChannels: string[] = [];
 
@@ -32,14 +32,14 @@ export class RepricingCreateComponent implements OnInit {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       this.channels = response.app.channels;
     });
-    this.form = new FormGroup({
-      operation: new FormControl('create', Validators.required),
-      type: new FormControl(null, Validators.required),
-      channels: new FormControl(this.selectedChannels),
-      operator: new FormControl(null, Validators.required),
-      value: new FormControl(null, Validators.required),
-      discountType: new FormControl(null, Validators.required),
-      rounding: new FormControl(false)
+    this.form = new UntypedFormGroup({
+      operation: new UntypedFormControl('create', Validators.required),
+      type: new UntypedFormControl(null, Validators.required),
+      channels: new UntypedFormControl(this.selectedChannels),
+      operator: new UntypedFormControl(null, Validators.required),
+      value: new UntypedFormControl(null, Validators.required),
+      discountType: new UntypedFormControl(null, Validators.required),
+      rounding: new UntypedFormControl(false)
     });
   }
 

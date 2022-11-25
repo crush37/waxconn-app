@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Setting, SettingSerializer } from '../pos.model';
 import { Location } from '@core/models/location.model';
@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit {
 
   id!: string;
   settings!: Setting;
-  formGroup = new FormGroup({});
+  formGroup = new UntypedFormGroup({});
 
   locations!: Location[];
 
@@ -55,11 +55,11 @@ export class SettingsComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
-      name: new FormControl(this.settings?.name || 'Store'),
-      locationId: new FormControl(this.settings?.locationId, Validators.required),
-      isActive: new FormControl(this.settings?.isActive || false)
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
+      name: new UntypedFormControl(this.settings?.name || 'Store'),
+      locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
+      isActive: new UntypedFormControl(this.settings?.isActive || false)
     });
   }
 }

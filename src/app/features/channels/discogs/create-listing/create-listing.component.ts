@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { DataListService } from '@shared/data-list/data-list.service';
 import { Release, ReleaseSerializer } from '../discogs.model';
@@ -25,7 +25,7 @@ export class CreateListingComponent implements OnInit {
 
   id!: string;
   release!: Release;
-  formGroup = new FormGroup({});
+  formGroup = new UntypedFormGroup({});
 
   mediaCondition = new EventEmitter<string>();
   skuError = false;
@@ -43,7 +43,7 @@ export class CreateListingComponent implements OnInit {
         this.loading = true;
         this.apiService.get(this.id).subscribe((release: Release) => {
           this.release = release;
-          this.formGroup.setControl('releaseId', new FormControl(release.id));
+          this.formGroup.setControl('releaseId', new UntypedFormControl(release.id));
           this.loading = false;
         }, (error) => {
           if (error.status === 423) {
@@ -55,8 +55,8 @@ export class CreateListingComponent implements OnInit {
     });
   }
 
-  onPartChanges(formGroup: FormGroup): void {
-    this.formGroup = new FormGroup({ ...this.formGroup.controls, ...formGroup.controls });
+  onPartChanges(formGroup: UntypedFormGroup): void {
+    this.formGroup = new UntypedFormGroup({ ...this.formGroup.controls, ...formGroup.controls });
   }
 
   onMediaConditionChange(value: string): void {

@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ApiService } from '@core/services/api.service';
 import { Page } from '@core/models/page.model';
 import { DataListService } from '@shared/data-list/data-list.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 export interface SearchConfig {
@@ -26,7 +26,7 @@ export interface SearchConfig {
 export class DataListComponent implements OnInit, AfterViewInit {
   loading = false;
   importing = false;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   @Input() page!: any;
   @Input() searchConfig?: SearchConfig;
@@ -78,13 +78,13 @@ export class DataListComponent implements OnInit, AfterViewInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      q: new FormControl(this.query)
+    this.formGroup = new UntypedFormGroup({
+      q: new UntypedFormControl(this.query)
     });
     if (this.searchConfig?.selects) {
       this.searchConfig.selects.forEach(select => {
         this.formGroup.addControl(
-          select.name, new FormControl(this.dataListService.getStored(select.name) ?? select.default)
+          select.name, new UntypedFormControl(this.dataListService.getStored(select.name) ?? select.default)
         );
       });
     }

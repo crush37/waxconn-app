@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { getCurrencySymbol } from '@angular/common';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ApiService } from '@core/services/api.service';
@@ -19,11 +19,11 @@ import { PriceSuggestion, PriceSuggestionSerializer, Release } from '../discogs.
 export class PartListingSummaryComponent implements OnInit {
   @Input() release!: Release;
   @Input() mediaCondition!: EventEmitter<string>;
-  @Output() values = new EventEmitter<FormGroup>();
+  @Output() values = new EventEmitter<UntypedFormGroup>();
 
   channels!: any;
   selectedChannels: string[] = [];
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   currencyCode!: string;
   priceSuggestion: { currency: string, value: number } | null = null;
@@ -49,17 +49,17 @@ export class PartListingSummaryComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      quantity: new FormControl({value: 1, disabled: this.disableQuantities}, Validators.required),
-      price: new FormControl(null, Validators.required),
-      allowOffers: new FormControl(false, Validators.required),
-      taxable: new FormControl(false, Validators.required),
-      barcode: new FormControl(this.release.barcode),
-      sku: new FormControl(null),
-      formatQuantity: new FormControl(this.release.formatQuantity),
-      weight: new FormControl(this.release.estimatedWeight),
-      status: new FormControl('active', Validators.required),
-      listings: new FormControl(this.selectedChannels, Validators.required)
+    this.formGroup = new UntypedFormGroup({
+      quantity: new UntypedFormControl({value: 1, disabled: this.disableQuantities}, Validators.required),
+      price: new UntypedFormControl(null, Validators.required),
+      allowOffers: new UntypedFormControl(false, Validators.required),
+      taxable: new UntypedFormControl(false, Validators.required),
+      barcode: new UntypedFormControl(this.release.barcode),
+      sku: new UntypedFormControl(null),
+      formatQuantity: new UntypedFormControl(this.release.formatQuantity),
+      weight: new UntypedFormControl(this.release.estimatedWeight),
+      status: new UntypedFormControl('active', Validators.required),
+      listings: new UntypedFormControl(this.selectedChannels, Validators.required)
     });
     this.formGroup.valueChanges.subscribe(() => {
       this.values.emit(this.formGroup);

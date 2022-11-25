@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Setting, SettingSerializer } from '@core/models/setting.model';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +24,7 @@ export class GeneralComponent implements OnInit {
 
   id!: string;
   setting!: Setting;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   countries!: Country[];
   timezones!: Timezone[];
@@ -66,22 +66,22 @@ export class GeneralComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
-      name: new FormControl(this.setting?.name, Validators.required),
-      companyName: new FormControl(this.setting?.companyName, Validators.required),
-      taxNumber: new FormControl(this.setting?.taxNumber),
-      address1: new FormControl(this.setting?.address1, Validators.required),
-      address2: new FormControl(this.setting?.address2),
-      country: new FormControl(this.setting?.country, Validators.required),
-      region: new FormControl(this.setting?.region),
-      city: new FormControl(this.setting?.city, Validators.required),
-      postcode: new FormControl(this.setting?.postcode, Validators.required),
-      email: new FormControl(this.setting?.email, Validators.required),
-      phone: new FormControl(this.setting?.phone),
-      language: new FormControl(this.setting?.language, Validators.required),
-      currency: new FormControl(this.setting?.currency, Validators.required),
-      timezone: new FormControl(this.setting?.timezone, Validators.required)
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
+      name: new UntypedFormControl(this.setting?.name, Validators.required),
+      companyName: new UntypedFormControl(this.setting?.companyName, Validators.required),
+      taxNumber: new UntypedFormControl(this.setting?.taxNumber),
+      address1: new UntypedFormControl(this.setting?.address1, Validators.required),
+      address2: new UntypedFormControl(this.setting?.address2),
+      country: new UntypedFormControl(this.setting?.country, Validators.required),
+      region: new UntypedFormControl(this.setting?.region),
+      city: new UntypedFormControl(this.setting?.city, Validators.required),
+      postcode: new UntypedFormControl(this.setting?.postcode, Validators.required),
+      email: new UntypedFormControl(this.setting?.email, Validators.required),
+      phone: new UntypedFormControl(this.setting?.phone),
+      language: new UntypedFormControl(this.setting?.language, Validators.required),
+      currency: new UntypedFormControl(this.setting?.currency, Validators.required),
+      timezone: new UntypedFormControl(this.setting?.timezone, Validators.required)
     });
   }
 }

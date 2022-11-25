@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
@@ -11,7 +11,7 @@ export class SettingsComponent implements OnInit {
   title = 'Settings';
   subTitle = 'System';
 
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor() {
     this.setFormGroup();
@@ -21,6 +21,6 @@ export class SettingsComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({});
+    this.formGroup = new UntypedFormGroup({});
   }
 }

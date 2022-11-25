@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Injectable, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Customer as BaseCustomer, CustomerSerializer as BaseCustomerSerializer } from '@core/models/customer.model';
 import { CustomerAddress, CustomerAddressSerializer } from '@core/models/customer-address.model';
@@ -41,7 +41,7 @@ export class OrderCustomerComponent implements OnInit {
     appearance: 'outline',
     showFilterInput: true
   };
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   @Output() customer = new EventEmitter<Customer>();
   @Output() hide = new EventEmitter<boolean>();
@@ -52,13 +52,13 @@ export class OrderCustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      channelId: new FormControl(),
-      firstName: new FormControl(null),
-      lastName: new FormControl(null),
-      email: new FormControl(null, Validators.required),
-      phone: new FormControl(null),
-      acceptsMarketing: new FormControl(false)
+    this.formGroup = new UntypedFormGroup({
+      channelId: new UntypedFormControl(),
+      firstName: new UntypedFormControl(null),
+      lastName: new UntypedFormControl(null),
+      email: new UntypedFormControl(null, Validators.required),
+      phone: new UntypedFormControl(null),
+      acceptsMarketing: new UntypedFormControl(false)
     });
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       this.formGroup.controls.channelId.setValue(
@@ -83,7 +83,7 @@ export class OrderCustomerComponent implements OnInit {
       return;
     }
     this.formGroup.disable();
-    this.apiService.create(this.formGroup.getRawValue()).subscribe((customer: Customer) => {
+    this.apiService.create(this.formGroup.getRawValue()).subscribe(() => {
       // this.dialogRef.close(customer);
     });
   }

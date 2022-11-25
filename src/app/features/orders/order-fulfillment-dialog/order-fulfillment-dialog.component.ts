@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { ApiService } from '@core/services/api.service';
@@ -26,7 +26,7 @@ export interface DialogData {
 })
 export class OrderFulfillmentDialogComponent implements OnInit {
   loading = false;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
   showOtherTrackingUrl = false;
   couriers!: Courier[];
 
@@ -43,12 +43,12 @@ export class OrderFulfillmentDialogComponent implements OnInit {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       this.getCouriers(response.app.location.countryCode);
     });
-    this.formGroup = new FormGroup({
-      courier: new FormControl(),
-      trackingUrl: new FormControl(),
-      otherTrackingUrl: new FormControl(),
-      trackingNumber: new FormControl(),
-      notifyCustomer: new FormControl(true)
+    this.formGroup = new UntypedFormGroup({
+      courier: new UntypedFormControl(),
+      trackingUrl: new UntypedFormControl(),
+      otherTrackingUrl: new UntypedFormControl(),
+      trackingNumber: new UntypedFormControl(),
+      notifyCustomer: new UntypedFormControl(true)
     });
   }
 

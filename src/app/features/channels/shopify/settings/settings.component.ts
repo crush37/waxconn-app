@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Setting, SettingSerializer } from '../shopify.model';
 import { Location } from '@core/models/location.model';
@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit {
 
   id!: string;
   settings!: Setting;
-  formGroup = new FormGroup({});
+  formGroup = new UntypedFormGroup({});
 
   locations!: Location[];
   productUpdatesPolicy!: string;
@@ -58,17 +58,17 @@ export class SettingsComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
-      name: new FormControl(this.settings?.name || 'Shopify'),
-      locationId: new FormControl(this.settings?.locationId, Validators.required),
-      hostname: new FormControl(this.settings?.hostname, Validators.required),
-      apiKey: new FormControl(this.settings?.apiKey, Validators.required),
-      apiPassword: new FormControl(this.settings?.apiPassword, Validators.required),
-      apiSharedSecret: new FormControl(this.settings?.apiSharedSecret, Validators.required),
-      isActive: new FormControl(this.settings?.isActive || false),
-      productUpdatesPolicy: new FormControl(this.settings?.productUpdatesPolicy, Validators.required),
-      deleteOutOfStockProducts: new FormControl(this.settings?.deleteOutOfStockProducts || false),
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
+      name: new UntypedFormControl(this.settings?.name || 'Shopify'),
+      locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
+      hostname: new UntypedFormControl(this.settings?.hostname, Validators.required),
+      apiKey: new UntypedFormControl(this.settings?.apiKey, Validators.required),
+      apiPassword: new UntypedFormControl(this.settings?.apiPassword, Validators.required),
+      apiSharedSecret: new UntypedFormControl(this.settings?.apiSharedSecret, Validators.required),
+      isActive: new UntypedFormControl(this.settings?.isActive || false),
+      productUpdatesPolicy: new UntypedFormControl(this.settings?.productUpdatesPolicy, Validators.required),
+      deleteOutOfStockProducts: new UntypedFormControl(this.settings?.deleteOutOfStockProducts || false),
     });
   }
 

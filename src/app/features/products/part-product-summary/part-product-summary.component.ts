@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { getCurrencySymbol } from '@angular/common';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Listing } from '@core/models/listing.model';
@@ -13,7 +13,7 @@ import { Product } from '../product/product.component';
 })
 export class PartProductSummaryComponent implements OnInit {
   @Input() product!: Product;
-  @Input() formGroup!: FormGroup;
+  @Input() formGroup!: UntypedFormGroup;
 
   channels!: any;
   selectedChannels: string[] = [];
@@ -56,16 +56,16 @@ export class PartProductSummaryComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup.addControl('quantity', new FormControl(this.product.inventoryCount, Validators.min(1)));
-    this.formGroup.addControl('price', new FormControl(this.product.price));
-    this.formGroup.addControl('allowOffers', new FormControl(this.product.options.discogs?.allowOffers ?? false));
-    this.formGroup.addControl('taxable', new FormControl(this.product.taxable ?? false));
-    this.formGroup.addControl('barcode', new FormControl(this.product.barcode));
-    this.formGroup.addControl('sku', new FormControl(this.product.sku));
-    this.formGroup.addControl('formatQuantity', new FormControl(this.product.options.discogs?.formatQuantity));
-    this.formGroup.addControl('weight', new FormControl(this.product.weight));
-    this.formGroup.addControl('status', new FormControl(this.product.status));
-    this.formGroup.addControl('channels', new FormControl(this.selectedChannels, Validators.required));
+    this.formGroup.addControl('quantity', new UntypedFormControl(this.product.inventoryCount, Validators.min(1)));
+    this.formGroup.addControl('price', new UntypedFormControl(this.product.price));
+    this.formGroup.addControl('allowOffers', new UntypedFormControl(this.product.options.discogs?.allowOffers ?? false));
+    this.formGroup.addControl('taxable', new UntypedFormControl(this.product.taxable ?? false));
+    this.formGroup.addControl('barcode', new UntypedFormControl(this.product.barcode));
+    this.formGroup.addControl('sku', new UntypedFormControl(this.product.sku));
+    this.formGroup.addControl('formatQuantity', new UntypedFormControl(this.product.options.discogs?.formatQuantity));
+    this.formGroup.addControl('weight', new UntypedFormControl(this.product.weight));
+    this.formGroup.addControl('status', new UntypedFormControl(this.product.status));
+    this.formGroup.addControl('channels', new UntypedFormControl(this.selectedChannels, Validators.required));
   }
 
   setSelectedChannels(): void {

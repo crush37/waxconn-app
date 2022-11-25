@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ApiService } from '@core/services/api.service';
 import { OrderTransaction, OrderTransactionSerializer } from '@core/models/order-transaction.model';
@@ -23,7 +23,7 @@ export interface DialogData {
 })
 export class OrderPaymentDialogComponent implements OnInit {
   loading = false;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor(
     private apiService: ApiService<OrderTransaction>,
@@ -33,8 +33,8 @@ export class OrderPaymentDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      amount: new FormControl(this.data.total)
+    this.formGroup = new UntypedFormGroup({
+      amount: new UntypedFormControl(this.data.total)
     });
   }
 

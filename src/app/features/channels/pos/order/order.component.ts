@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Customer } from '@core/models/customer.model';
 import { OrderItem } from '@core/models/order-item.model';
@@ -16,7 +16,7 @@ export class OrderComponent implements OnInit {
   loading = false;
   title = 'POS Terminal';
   subTitle = 'New Order';
-  formGroup = new FormGroup({});
+  formGroup = new UntypedFormGroup({});
   customer?: Customer;
   orderItems: OrderItem[] = [];
   totalDiscounts: number = 0;
@@ -35,16 +35,16 @@ export class OrderComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      channelId: new FormControl(),
-      customerId: new FormControl(),
-      email: new FormControl(),
-      items: new FormControl(this.orderItems, Validators.minLength(1)),
-      totalShipping: new FormControl(0),
-      totalDiscounts: new FormControl(0),
-      message: new FormControl(''),
-      paymentStatus: new FormControl('paid'),
-      fulfillmentStatus: new FormControl('fulfilled')
+    this.formGroup = new UntypedFormGroup({
+      channelId: new UntypedFormControl(),
+      customerId: new UntypedFormControl(),
+      email: new UntypedFormControl(),
+      items: new UntypedFormControl(this.orderItems, Validators.minLength(1)),
+      totalShipping: new UntypedFormControl(0),
+      totalDiscounts: new UntypedFormControl(0),
+      message: new UntypedFormControl(''),
+      paymentStatus: new UntypedFormControl('paid'),
+      fulfillmentStatus: new UntypedFormControl('fulfilled')
     });
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       this.formGroup.controls.channelId.setValue(

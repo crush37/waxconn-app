@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiMetaService } from "@core/services/api-meta.service";
 import { Product } from '../product/product.component';
 import { getCurrencySymbol } from '@angular/common';
@@ -13,7 +13,7 @@ import {map} from "rxjs/operators";
 })
 export class PartProductOverviewComponent implements OnInit {
   @Input() product!: Product;
-  @Input() formGroup!: FormGroup;
+  @Input() formGroup!: UntypedFormGroup;
 
   currencyCode!: string;
   disableQuantities: boolean = true;
@@ -74,7 +74,7 @@ export class PartProductOverviewComponent implements OnInit {
   }
 
   get listings() {
-    return this.formGroup.controls['listings'] as FormArray;
+    return this.formGroup.controls['listings'] as UntypedFormArray;
   }
 
   isListedOn(channel: string): boolean {
@@ -84,30 +84,30 @@ export class PartProductOverviewComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup.addControl('title', new FormControl(this.product.title));
-    this.formGroup.addControl('vendor', new FormControl(this.product.vendor));
-    this.formGroup.addControl('description', new FormControl(this.product.description));
-    this.formGroup.addControl('mediaCondition', new FormControl(this.product.options.discogs?.mediaCondition));
-    this.formGroup.addControl('sleeveCondition', new FormControl(this.product.options.discogs?.sleeveCondition));
-    this.formGroup.addControl('comments', new FormControl(this.product.options.discogs?.comments));
-    this.formGroup.addControl('privateComments', new FormControl(this.product.options.discogs?.privateComments));
-    this.formGroup.addControl('location', new FormControl(this.product.options.discogs?.location));
+    this.formGroup.addControl('title', new UntypedFormControl(this.product.title));
+    this.formGroup.addControl('vendor', new UntypedFormControl(this.product.vendor));
+    this.formGroup.addControl('description', new UntypedFormControl(this.product.description));
+    this.formGroup.addControl('mediaCondition', new UntypedFormControl(this.product.options.discogs?.mediaCondition));
+    this.formGroup.addControl('sleeveCondition', new UntypedFormControl(this.product.options.discogs?.sleeveCondition));
+    this.formGroup.addControl('comments', new UntypedFormControl(this.product.options.discogs?.comments));
+    this.formGroup.addControl('privateComments', new UntypedFormControl(this.product.options.discogs?.privateComments));
+    this.formGroup.addControl('location', new UntypedFormControl(this.product.options.discogs?.location));
 
-    this.formGroup.addControl('metaTitle', new FormControl(this.product.metaTitle));
-    this.formGroup.addControl('metaDescription', new FormControl(this.product.metaDescription));
+    this.formGroup.addControl('metaTitle', new UntypedFormControl(this.product.metaTitle));
+    this.formGroup.addControl('metaDescription', new UntypedFormControl(this.product.metaDescription));
   }
 
   setFormGroupListings(): void {
     this.product.listings?.sort((a, b) => (a.channelType > b.channelType) ? 1 : -1);
     this.product.listings?.forEach((listing: any) => {
       if (!listing.unpublishedAt) {
-        this.listings.push(new FormGroup({
-          channelName: new FormControl(listing.channelName),
-          channelType: new FormControl(listing.channelType),
-          productId: new FormControl(listing.productId),
-          channelId: new FormControl(listing.channelId),
-          available: new FormControl(listing.available),
-          price: new FormControl(listing.price),
+        this.listings.push(new UntypedFormGroup({
+          channelName: new UntypedFormControl(listing.channelName),
+          channelType: new UntypedFormControl(listing.channelType),
+          productId: new UntypedFormControl(listing.productId),
+          channelId: new UntypedFormControl(listing.channelId),
+          available: new UntypedFormControl(listing.available),
+          price: new UntypedFormControl(listing.price),
         }));
       }
     });

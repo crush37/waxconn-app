@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Channel, ChannelSerializer } from '@core/models/channel.model';
 
@@ -22,7 +22,7 @@ export class ChannelComponent implements OnInit {
 
   id!: string;
   channel?: Channel;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,6 +45,6 @@ export class ChannelComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({});
+    this.formGroup = new UntypedFormGroup({});
   }
 }

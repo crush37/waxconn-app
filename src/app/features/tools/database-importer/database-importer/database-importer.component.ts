@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Import, ImportSerializer } from '@core/models/import.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -23,7 +23,7 @@ export class DatabaseImporterComponent implements OnInit {
   channels!: any;
   isImporting = false;
   lastImportAt?: string;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   selectedChannels: string[] = [];
 
@@ -52,10 +52,10 @@ export class DatabaseImporterComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      channelDiscogs: new FormControl(null),
-      channelShopify: new FormControl(null),
-      channels: new FormControl(null)
+    this.formGroup = new UntypedFormGroup({
+      channelDiscogs: new UntypedFormControl(null),
+      channelShopify: new UntypedFormControl(null),
+      channels: new UntypedFormControl(null)
     });
   }
 

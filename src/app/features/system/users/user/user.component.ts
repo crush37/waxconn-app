@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { User, UserSerializer } from '@core/models/user.model';
 
@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
 
   id!: string;
   user?: User;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,15 +45,15 @@ export class UserComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
-      role: new FormControl(this.user?.role, Validators.required),
-      firstName: new FormControl(this.user?.firstName, Validators.required),
-      lastName: new FormControl(this.user?.lastName, Validators.required),
-      email: new FormControl(this.user?.email, Validators.required),
-      phone: new FormControl(this.user?.phone),
-      newOrderNotification: new FormControl(this.user?.newOrderNotification ?? false),
-      paidOrderNotification: new FormControl(this.user?.paidOrderNotification ?? false),
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
+      role: new UntypedFormControl(this.user?.role, Validators.required),
+      firstName: new UntypedFormControl(this.user?.firstName, Validators.required),
+      lastName: new UntypedFormControl(this.user?.lastName, Validators.required),
+      email: new UntypedFormControl(this.user?.email, Validators.required),
+      phone: new UntypedFormControl(this.user?.phone),
+      newOrderNotification: new UntypedFormControl(this.user?.newOrderNotification ?? false),
+      paidOrderNotification: new UntypedFormControl(this.user?.paidOrderNotification ?? false),
     });
   }
 }

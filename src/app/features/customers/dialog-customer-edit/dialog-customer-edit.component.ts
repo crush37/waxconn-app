@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { bounceInOnEnterAnimation, fadeInOnEnterAnimation, } from 'angular-animations';
 import { ApiService } from '@core/services/api.service';
@@ -20,7 +20,7 @@ import { Customer, CustomerSerializer } from '@core/models/customer.model';
   ]
 })
 export class DialogCustomerEditComponent implements OnInit {
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   constructor(
     private apiService: ApiService<Customer>,
@@ -29,12 +29,12 @@ export class DialogCustomerEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      firstName: new FormControl(this.data.firstName),
-      lastName: new FormControl(this.data.lastName),
-      email: new FormControl(this.data.email, Validators.required),
-      phone: new FormControl(this.data.phone),
-      acceptsMarketing: new FormControl(this.data.acceptsMarketing)
+    this.formGroup = new UntypedFormGroup({
+      firstName: new UntypedFormControl(this.data.firstName),
+      lastName: new UntypedFormControl(this.data.lastName),
+      email: new UntypedFormControl(this.data.email, Validators.required),
+      phone: new UntypedFormControl(this.data.phone),
+      acceptsMarketing: new UntypedFormControl(this.data.acceptsMarketing)
     });
   }
 

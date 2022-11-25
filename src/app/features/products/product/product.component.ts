@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Product as BaseProduct, ProductSerializer as BaseProductSerializer } from '@core/models/product.model';
 import { Listing, ListingSerializer } from '@core/models/listing.model';
@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit {
 
   id!: string;
   product!: Product;
-  formGroup = new FormGroup({});
+  formGroup = new UntypedFormGroup({});
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -61,8 +61,8 @@ export class ProductComponent implements OnInit {
         this.loading = true;
         this.apiService.get(this.id).subscribe((product: Product) => {
           this.product = product;
-          this.formGroup.setControl('id', new FormControl(product.id));
-          this.formGroup.setControl('listings', new FormArray([]));
+          this.formGroup.setControl('id', new UntypedFormControl(product.id));
+          this.formGroup.setControl('listings', new UntypedFormArray([]));
           this.loading = false;
         });
         this.formGroup.valueChanges.subscribe(form => {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiMetaService } from '@core/services/api-meta.service';
 import { Release } from '@features/channels/discogs/discogs.model';
 import { Observable } from 'rxjs';
@@ -12,10 +12,10 @@ import { map } from 'rxjs/operators';
 })
 export class PartListingOverviewComponent implements OnInit {
   @Input() release!: Release;
-  @Output() values = new EventEmitter<FormGroup>();
+  @Output() values = new EventEmitter<UntypedFormGroup>();
   @Output() mediaCondition = new EventEmitter<string>();
 
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
   appName!: string;
 
   imagePlaceholder: { type: string, src: string, thumb: string, width: string, height: string }[] = [{
@@ -80,14 +80,14 @@ export class PartListingOverviewComponent implements OnInit {
   }
 
   setFromGroup(): void {
-    this.formGroup = new FormGroup({
-      mediaCondition: new FormControl(null, Validators.required),
-      sleeveCondition: new FormControl(null),
-      comments: new FormControl(null),
-      privateComments: new FormControl(null),
-      location: new FormControl(null),
-      metaTitle: new FormControl(this.release.metaTitle),
-      metaDescription: new FormControl(this.release.metaDescription)
+    this.formGroup = new UntypedFormGroup({
+      mediaCondition: new UntypedFormControl(null, Validators.required),
+      sleeveCondition: new UntypedFormControl(null),
+      comments: new UntypedFormControl(null),
+      privateComments: new UntypedFormControl(null),
+      location: new UntypedFormControl(null),
+      metaTitle: new UntypedFormControl(this.release.metaTitle),
+      metaDescription: new UntypedFormControl(this.release.metaDescription)
     });
     this.formGroup.valueChanges.subscribe(() => {
       this.values.emit(this.formGroup);

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { ApiMetaService } from '@core/services/api-meta.service';
 import { Location, LocationSerializer } from '@core/models/location.model';
-import { Country, Courier } from '@core/models/meta.model';
+import { Country } from '@core/models/meta.model';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -24,7 +24,7 @@ export class LocationComponent implements OnInit {
 
   id!: string;
   location?: Location;
-  formGroup!: FormGroup;
+  formGroup!: UntypedFormGroup;
 
   countries!: Country[];
   // couriers?: Courier[];
@@ -65,18 +65,18 @@ export class LocationComponent implements OnInit {
   // }
 
   setFormGroup(): void {
-    this.formGroup = new FormGroup({
-      id: new FormControl(this.id),
-      name: new FormControl(this.location?.name, Validators.required),
-      address1: new FormControl(this.location?.address1, Validators.required),
-      address2: new FormControl(this.location?.address2),
-      country: new FormControl(this.location?.country, Validators.required),
-      countryCode: new FormControl(this.location?.countryCode, Validators.required),
-      region: new FormControl(this.location?.region),
-      city: new FormControl(this.location?.city, Validators.required),
-      postcode: new FormControl(this.location?.postcode, Validators.required),
-      phone: new FormControl(this.location?.phone),
-      default: new FormControl(this.location?.default || true, Validators.required)
+    this.formGroup = new UntypedFormGroup({
+      id: new UntypedFormControl(this.id),
+      name: new UntypedFormControl(this.location?.name, Validators.required),
+      address1: new UntypedFormControl(this.location?.address1, Validators.required),
+      address2: new UntypedFormControl(this.location?.address2),
+      country: new UntypedFormControl(this.location?.country, Validators.required),
+      countryCode: new UntypedFormControl(this.location?.countryCode, Validators.required),
+      region: new UntypedFormControl(this.location?.region),
+      city: new UntypedFormControl(this.location?.city, Validators.required),
+      postcode: new UntypedFormControl(this.location?.postcode, Validators.required),
+      phone: new UntypedFormControl(this.location?.phone),
+      default: new UntypedFormControl(this.location?.default || true, Validators.required)
     });
   }
 
