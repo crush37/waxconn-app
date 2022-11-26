@@ -10,7 +10,7 @@ import * as data from '../../update-notes.json';
   templateUrl: './update-notification.component.html'
 })
 export class UpdateNotificationComponent {
-  updateAvailable = true;
+  updateAvailable = false;
   animate = true;
 
   constructor(public dialog: MatDialog, appRef: ApplicationRef, private updates: SwUpdate) {
