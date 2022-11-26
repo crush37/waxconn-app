@@ -1,5 +1,6 @@
 import { ApplicationRef, Component } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { MatDialog } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { concat, interval } from 'rxjs';
 import * as data from '../../update-notes.json';
@@ -9,13 +10,10 @@ import * as data from '../../update-notes.json';
   templateUrl: './update-notification.component.html'
 })
 export class UpdateNotificationComponent {
-  updateAvailable = false;
+  updateAvailable = true;
   animate = true;
-  animState = false;
 
-  news: any = (data as any).default;
-
-  constructor(appRef: ApplicationRef, private updates: SwUpdate) {
+  constructor(public dialog: MatDialog, appRef: ApplicationRef, private updates: SwUpdate) {
     if (updates.isEnabled) {
       const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable));
       const everyThreeHours$ = interval(3 * 60 * 60 * 1000);
@@ -26,27 +24,32 @@ export class UpdateNotificationComponent {
     }
   }
 
-  getTooltipText(): string {
-    let update = this.news.slice(-1)[0];
+  openDialog() {
+    const dialogRef = this.dialog.open(UpdateNotificationDialogComponent, {
+      width: '550px',
+      disableClose: false,
+      autoFocus: false
+    });
 
-    return 'Update Available. What\'s new? \n\n ' + update.description + '\n\n Click to update Waxconn';
+    dialogRef.afterClosed().subscribe(next => {
+      if (next) {
+        this.updates.activateUpdate().then(() => document.location.reload());
+      }
+    });
   }
+}
 
-  updateApp() {
-    if (this.updates.isEnabled) {
-      this.updates.activateUpdate().then(() => document.location.reload());
-    }
-  }
+@Component({
+  selector: 'app-update-notification-dialog',
+  templateUrl: './update-notification-dialog.component.html'
+})
+export class UpdateNotificationDialogComponent {
+  news: any = (data as any).default;
+  updateDate: string;
+  updateDescription: string;
 
-  stopAnimation(event: any) {
-    if (event.type === 'show') {
-      this.animate = false;
-    }
-  }
-
-  animDone() {
-    if (this.animate) {
-      this.animState = !this.animState;
-    }
+  constructor() {
+    this.updateDate = this.news.slice(-1)[0].date;
+    this.updateDescription = this.news.slice(-1)[0].description;
   }
 }

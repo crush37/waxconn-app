@@ -39,7 +39,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RemoveUnderscorePipe } from '@shared/pipes/remove-underscore.pipe';
 import { RouterModule } from '@angular/router';
 import { SubmitButtonComponent } from './submit-button/submit-button.component';
-import { UpdateNotificationComponent } from './update-notification/update-notification.component';
+import {
+  UpdateNotificationComponent,
+  UpdateNotificationDialogComponent
+} from './update-notification/update-notification.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,7 @@ import { UpdateNotificationComponent } from './update-notification/update-notifi
     RemoveUnderscorePipe,
     SubmitButtonComponent,
     UpdateNotificationComponent,
+    UpdateNotificationDialogComponent
   ],
   imports: [
     CommonModule,

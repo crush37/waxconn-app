@@ -1,0 +1,9 @@
+<div class="grid mx-4 gap-x-4">
+  <h2>Update Available <div class="text-sm font-normal float-right">{{ updateDate }}</div></h2>
+  <p class="pb-4">
+    <span class="font-bold">What's new?</span><br><br>
+    <span [innerHTML]="updateDescription"></span>
+  </p>
+
+  <button mat-flat-button color="accent" mat-dialog-close="true">Update Now</button>
+</div>
