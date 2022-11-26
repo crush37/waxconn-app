@@ -116,7 +116,8 @@ export class ProductSerializer implements Serializer {
           format_quantity: resource.formatQuantity,
           comments: resource.comments,
           private_comments: resource.privateComments,
-          location: resource.location
+          location: resource.location,
+          allow_offers: resource.allowOffers
         }
       },
       inventory: {
