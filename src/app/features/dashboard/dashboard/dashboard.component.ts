@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   loading = false;
   totalSales!: any;
   channelSales!: any[];
-  chartSales!: any[];
+  chartData!: any;
   topCustomers!: any[];
 
   range!: string;
@@ -57,7 +57,31 @@ export class DashboardComponent implements OnInit {
       localStorage.setItem(this.storageKey, JSON.stringify(range));
       this.totalSales = dashboard.totalSales;
       this.channelSales = dashboard.channelSales;
-      this.chartSales = dashboard.chartSales;
+      this.chartData = {
+        datasets: [{
+          label: '',
+          data: dashboard.chartSales,
+          parsing: {
+            xAxisKey: 'key',
+            yAxisKey: 'value'
+          },
+          borderRadius: 4,
+          backgroundColor: [
+            '#2B1B5A',
+            '#501356',
+            '#183356',
+            '#28203F',
+            '#391B3C',
+            '#1E2B3C',
+            '#120634',
+            '#051932',
+            '#453080',
+            '#2C507D',
+            '#4B3880',
+            '#752F7D'
+          ],
+        }],
+      };
       this.topCustomers = dashboard.topCustomers;
       this.loading = false;
     });

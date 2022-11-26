@@ -32,6 +32,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgChartsModule } from 'ng2-charts';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -102,6 +103,7 @@ import { UpdateNotificationComponent } from './update-notification/update-notifi
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+    NgChartsModule,
     NotificationsComponent,
     PageHeaderComponent,
     ReactiveFormsModule,

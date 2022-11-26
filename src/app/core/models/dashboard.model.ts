@@ -6,7 +6,7 @@ export class Dashboard extends Resource {
   public id!: string;
   public totalSales!: { count: string, total: number };
   public channelSales!: { name: string, count: string, total: number }[];
-  public chartSales!: { name: string, value: number }[];
+  public chartSales!: { key: string, value: number }[];
   public topCustomers!: {
     id: number,
     fullName: string,
@@ -34,7 +34,7 @@ export class DashboardSerializer implements Serializer {
     resource.chartSales = [];
     json.chart_sales?.forEach((day: any) => {
       resource.chartSales.push({
-        name: day.label,
+        key: day.label,
         value: day.total
       });
     });

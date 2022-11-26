@@ -1,10 +1,16 @@
 <mat-card class="mb-4">
   <h3>Sales Over Time</h3>
   <mat-divider></mat-divider>
-  <div class="pt-4 mb-4 h-48">
+  <div class="h-48">
     <ng-container *ngIf="loading" class="p-4">Loading..</ng-container>
-    <ng-container *ngIf="!loading && sales">
-
+    <ng-container *ngIf="!loading && barChartData">
+      <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [legend]="barChartLegend"
+              [type]="'bar'">
+      </canvas>
     </ng-container>
   </div>
 </mat-card>
