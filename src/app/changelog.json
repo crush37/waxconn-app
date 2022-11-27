@@ -16,7 +16,18 @@
   },
   {
     "id": 4,
+    "version": "1.73.34",
     "date": "Nov 26, 2022",
-    "description": "- The Discogs allow offers option is now available in the system. <br> - The dashboard sales chart was replaced and revamped. <br> - Some minor layout improvements on Channel setting panels were added."
+    "changelog": {
+      "added": [
+        "Added Discogs 'allow offers' to products",
+        "Added new Updates notifier"
+      ],
+      "changed": [
+        "Replaced Dashboard Sales Chart",
+        "Minor layout changes in System channel settings"
+      ],
+      "fixed": []
+    }
   }
 ]
