@@ -1,9 +1,38 @@
 <div class="grid mx-4 gap-x-4">
-  <h2>Update Available <div class="text-sm font-normal float-right">{{ updateDate }}</div></h2>
-  <p class="pb-4">
-    <span class="font-bold">What's new?</span><br><br>
-    <span [innerHTML]="updateDescription"></span>
-  </p>
+  <h2>Update Installed Successfully <div class="font-normal text-sm float-right">{{ update.version }}</div></h2>
+  <span>What is new?</span>
+  <div class="my-2">
+    <ng-container *ngIf="update.changelog.added.length > 0">
+      <div class="my-2">
+        <span class="font-bold"># Added</span>
+        <ul>
+          <li *ngFor="let added of update.changelog.added">
+            {{ added }}
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="update.changelog.changed.length > 0">
+      <div class="my-2">
+        <span class="font-bold"># Changed</span>
+        <ul>
+          <li *ngFor="let changed of update.changelog.changed">
+            {{ changed }}
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="update.changelog.fixed.length > 0">
+      <div class="my-2">
+        <span class="font-bold"># Fixed</span>
+        <ul>
+          <li *ngFor="let fixed of update.changelog.fixed">
+            {{ fixed }}
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
 
-  <button mat-flat-button color="accent" mat-dialog-close="true">Update Now</button>
+  <button mat-flat-button color="accent" mat-dialog-close="true" class="mt-4">Close</button>
 </div>

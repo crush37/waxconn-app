@@ -1,39 +1,60 @@
-import { ApplicationRef, Component } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
+import {SwUpdate, VersionEvent} from '@angular/service-worker';
 import { MatDialog } from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 import { concat, interval } from 'rxjs';
-import * as data from '../../update-notes.json';
+import * as data from '../../changelog.json';
 
 @Component({
   selector: 'app-update-notification',
   templateUrl: './update-notification.component.html'
 })
-export class UpdateNotificationComponent {
+export class UpdateNotificationComponent implements OnInit {
   updateAvailable = false;
-  animate = true;
 
-  constructor(public dialog: MatDialog, appRef: ApplicationRef, private updates: SwUpdate) {
-    if (updates.isEnabled) {
-      const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable));
-      const everyThreeHours$ = interval(3 * 60 * 60 * 1000);
-      const everyThreeHoursOnceAppIsStable$ = concat(appIsStable$, everyThreeHours$);
+  constructor(public dialog: MatDialog, public appRef: ApplicationRef, private swUpdate: SwUpdate) {
+  }
 
-      everyThreeHoursOnceAppIsStable$.subscribe(() => updates.checkForUpdate());
-      updates.versionUpdates.subscribe(() => this.updateAvailable = true);
+  public ngOnInit(): void {
+    if (this.swUpdate.isEnabled) {
+      const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable));
+      const everyHour = interval(60 * 60 * 1000);
+      const everyHoursOnceAppIsStable$ = concat(appIsStable$, everyHour);
+
+      everyHoursOnceAppIsStable$.subscribe(() => this.swUpdate.checkForUpdate());
+      this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
+        if (event.type === 'VERSION_READY') {
+          this.updateAvailable = true;
+        }
+      });
+    }
+
+    if (localStorage.getItem('changelogDialog')) {
+      this.openDialog();
+    }
+  }
+
+  getTooltipText(): string {
+    return 'Update Available. \n Click to update Waxconn'
+  }
+
+  updateApp() {
+    if (this.swUpdate.isEnabled) {
+      localStorage.setItem('changelogDialog', 'show');
+      this.swUpdate.activateUpdate().then(() => document.location.reload());
     }
   }
 
   openDialog() {
     const dialogRef = this.dialog.open(UpdateNotificationDialogComponent, {
       width: '550px',
-      disableClose: false,
+      disableClose: true,
       autoFocus: false
     });
 
-    dialogRef.afterClosed().subscribe(next => {
-      if (next) {
-        this.updates.activateUpdate().then(() => document.location.reload());
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.swUpdate.isEnabled) {
+        localStorage.removeItem('changelogDialog');
       }
     });
   }
@@ -44,12 +65,10 @@ export class UpdateNotificationComponent {
   templateUrl: './update-notification-dialog.component.html'
 })
 export class UpdateNotificationDialogComponent {
-  news: any = (data as any).default;
-  updateDate: string;
-  updateDescription: string;
+  data: any = (data as any).default;
+  update: { version: string, changelog: { added: string[], changed: string[], fixed: string[]} };
 
   constructor() {
-    this.updateDate = this.news.slice(-1)[0].date;
-    this.updateDescription = this.news.slice(-1)[0].description;
+    this.update = this.data.slice(-1)[0];
   }
 }
