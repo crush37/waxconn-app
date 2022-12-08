@@ -5,6 +5,14 @@
     </a>
   </div>
 
+  <a mat-list-item *ngIf="path === 'tools'" routerLink="/system">
+    <mat-icon class="mr-3">arrow_back</mat-icon>
+  </a>
+
+  <a mat-list-item *ngIf="path === 'system'" routerLink="/">
+    <mat-icon class="mr-3">arrow_back</mat-icon>
+  </a>
+
   <a *ngIf="!['system', 'tools'].includes(path)"
      (click)="listItemClick.emit()"
      [routerLinkActiveOptions]="{ exact: true }"
@@ -36,12 +44,6 @@
 
   <div class="flex-grow"></div>
 
-  <a mat-list-item *ngIf="path === 'tools'" routerLink="/system">
-    <mat-icon class="mr-3">arrow_back</mat-icon>
-  </a>
-  <a mat-list-item *ngIf="path === 'system'" routerLink="/">
-    <mat-icon class="mr-3">arrow_back</mat-icon>
-  </a>
   <a mat-list-item *ngIf="!['system', 'tools'].includes(path) && isAdmin" routerLink="/system">
     <mat-icon class="mr-3">settings</mat-icon>
     <span>System</span>
