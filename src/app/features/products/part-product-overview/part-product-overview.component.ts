@@ -17,6 +17,7 @@ export class PartProductOverviewComponent implements OnInit {
 
   currencyCode!: string;
   disableQuantities: boolean = true;
+  latestRepricing!: { operation: string, channels: string[]|string, createdAt: string };
 
   commentsOptions: string[] = [];
   locationsOptions: string[] = [];
@@ -32,6 +33,7 @@ export class PartProductOverviewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       this.disableQuantities = !response.app.quantities;
+      this.latestRepricing = response.app.repricing;
       this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
     });
 
@@ -102,12 +104,15 @@ export class PartProductOverviewComponent implements OnInit {
     this.product.listings?.forEach((listing: any) => {
       if (!listing.unpublishedAt) {
         this.listings.push(new UntypedFormGroup({
+          id: new UntypedFormControl(listing.id),
           channelName: new UntypedFormControl(listing.channelName),
           channelType: new UntypedFormControl(listing.channelType),
+          externalId: new UntypedFormControl(listing.externalId),
           productId: new UntypedFormControl(listing.productId),
           channelId: new UntypedFormControl(listing.channelId),
           available: new UntypedFormControl(listing.available),
           price: new UntypedFormControl(listing.price),
+          isLocked: new UntypedFormControl(listing.isLocked),
         }));
       }
     });
@@ -115,5 +120,13 @@ export class PartProductOverviewComponent implements OnInit {
 
   getMaxAvailable(): number {
     return this.formGroup.controls.quantity?.value;
+  }
+
+  wasModifiedByRepricing(channelId: string): boolean {
+    let includedInRepricing = this.latestRepricing.channels === 'all'
+        || this.latestRepricing.channels.includes(channelId);
+
+    return includedInRepricing && this.latestRepricing.operation === 'create'
+        && new Date(this.latestRepricing.createdAt) > new Date(this.product.createdAt);
   }
 }

@@ -48,6 +48,7 @@ export class ListingSerializer implements Serializer {
 
   toJson(resource: Listing): {} {
     return {
+      id: resource.id,
       product_id: resource.productId,
       channel_id: resource.channelId,
       available: resource.available,
