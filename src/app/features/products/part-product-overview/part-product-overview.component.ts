@@ -112,7 +112,7 @@ export class PartProductOverviewComponent implements OnInit {
           channelId: new UntypedFormControl(listing.channelId),
           available: new UntypedFormControl(listing.available),
           price: new UntypedFormControl(listing.price),
-          isLocked: new UntypedFormControl(listing.isLocked),
+          isLocked: new UntypedFormControl(listing.isLocked || false),
         }));
       }
     });
@@ -122,11 +122,11 @@ export class PartProductOverviewComponent implements OnInit {
     return this.formGroup.controls.quantity?.value;
   }
 
-  wasModifiedByRepricing(channelId: string): boolean {
+  wasModifiedByRepricing(channelId: string, isLocked: boolean): boolean {
     let includedInRepricing = this.latestRepricing.channels === 'all'
         || this.latestRepricing.channels.includes(channelId);
 
-    return includedInRepricing && this.latestRepricing.operation === 'create'
+    return includedInRepricing && !isLocked && this.latestRepricing.operation === 'create'
         && new Date(this.latestRepricing.createdAt) > new Date(this.product.createdAt);
   }
 }

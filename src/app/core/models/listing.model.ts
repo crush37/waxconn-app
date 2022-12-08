@@ -11,6 +11,7 @@ export class Listing extends Resource {
   public externalId!: string;
   public available!: number | null;
   public price!: number | null;
+  public isLocked!: boolean;
   public policy!: boolean;
   public publishedAt!: string;
   public unpublishedAt!: string;
@@ -35,6 +36,7 @@ export class ListingSerializer implements Serializer {
     resource.externalId = json.external_id;
     resource.available = json.available;
     resource.price = json.price;
+    resource.isLocked = json.is_locked;
     resource.policy = json.policy;
     resource.publishedAt = json.published_at;
     resource.unpublishedAt = json.unpublished_at;
@@ -52,7 +54,8 @@ export class ListingSerializer implements Serializer {
       product_id: resource.productId,
       channel_id: resource.channelId,
       available: resource.available,
-      price: resource.price
+      price: resource.price,
+      is_locked: resource.isLocked,
     };
   }
 }

@@ -131,9 +131,23 @@
           <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
         </mat-form-field>
       </div>
+      <ul class="pb-6 col-span-full">
+        <li>
+          <mat-checkbox formControlName="isLocked">
+            <span class="inline-flex">
+              Lock Price
+              <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
+                locked it is not affected by Auto Repricing operations." matTooltipPosition="above">
+              help</mat-icon>
+            </span>
+          </mat-checkbox>
+        </li>
+      </ul>
+
     </div>
 
-    <div *ngIf="wasModifiedByRepricing(listingForm.get('channelId')?.value)" class="col-span-full text-xs text-amber-700">
+    <div *ngIf="wasModifiedByRepricing(listingForm.get('channelId')?.value, listingForm.get('isLocked')?.value)"
+         class="col-span-full text-xs text-amber-700">
       Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
     </div>
   </ng-template>
@@ -289,8 +303,22 @@
           <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
         </mat-form-field>
       </div>
+      <ul class="pb-6 col-span-full">
+        <li>
+          <mat-checkbox formControlName="isLocked">
+            <span class="inline-flex">
+              Lock Price
+              <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
+                locked it is not affected by Auto Repricing operations." matTooltipPosition="above">
+              help</mat-icon>
+            </span>
+          </mat-checkbox>
+        </li>
+      </ul>
     </div>
-    <div *ngIf="wasModifiedByRepricing(listingForm.get('channelId')?.value)" class="col-span-full text-xs text-amber-700">
+
+    <div *ngIf="wasModifiedByRepricing(listingForm.get('channelId')?.value, listingForm.get('isLocked')?.value)"
+         class="col-span-full text-xs text-amber-700">
       Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
     </div>
   </ng-template>
