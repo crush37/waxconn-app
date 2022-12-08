@@ -70,10 +70,11 @@ export class PartProductSummaryComponent implements OnInit {
 
   setSelectedChannels(): void {
     this.product.listings?.forEach((listing: Listing) => {
-      if (!listing.unpublishedAt) {
+      if (!listing.unpublishedAt && !listing.cancelledAt) {
         this.selectedChannels.push(listing.channelId);
       }
     });
+    this.selectedChannels = [...new Set(this.selectedChannels)];
   }
 
   selectChannel(id: string, event: MatCheckboxChange): void {
