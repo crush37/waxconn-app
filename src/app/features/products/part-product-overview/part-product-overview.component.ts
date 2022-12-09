@@ -17,7 +17,7 @@ export class PartProductOverviewComponent implements OnInit {
 
   currencyCode!: string;
   disableQuantities: boolean = true;
-  latestRepricing!: { operation: string, channels: string[]|string, createdAt: string };
+  latestRepricing!: { operation: string, channels: string[]|string, createdAt: string }|null;
 
   commentsOptions: string[] = [];
   locationsOptions: string[] = [];
@@ -122,9 +122,15 @@ export class PartProductOverviewComponent implements OnInit {
     return this.formGroup.controls.quantity?.value;
   }
 
-  wasModifiedByRepricing(channelId: string, isLocked: boolean): boolean {
-    let includedInRepricing = this.latestRepricing.channels === 'all'
-        || this.latestRepricing.channels.includes(channelId);
+  wasModifiedByRepricing(listingForm: UntypedFormGroup): boolean {
+    if (!this.latestRepricing) {
+      return false;
+    }
+
+    let channelId = listingForm.get('channelId')?.value;
+    let isLocked = listingForm.get('isLocked')?.value;
+    let includedInRepricing = this.latestRepricing?.channels === 'all'
+        || this.latestRepricing?.channels.includes(channelId);
 
     return includedInRepricing && !isLocked && this.latestRepricing.operation === 'create'
         && new Date(this.latestRepricing.createdAt) > new Date(this.product.createdAt);

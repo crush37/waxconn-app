@@ -146,7 +146,7 @@
 
     </div>
 
-    <div *ngIf="wasModifiedByRepricing(listingForm.get('channelId')?.value, listingForm.get('isLocked')?.value)"
+    <div *ngIf="latestRepricing && wasModifiedByRepricing(listingForm)"
          class="col-span-full text-xs text-amber-700">
       Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
     </div>
@@ -317,7 +317,7 @@
       </ul>
     </div>
 
-    <div *ngIf="wasModifiedByRepricing(listingForm.get('channelId')?.value, listingForm.get('isLocked')?.value)"
+    <div *ngIf="latestRepricing && wasModifiedByRepricing(listingForm)"
          class="col-span-full text-xs text-amber-700">
       Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
     </div>

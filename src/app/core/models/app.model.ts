@@ -29,7 +29,7 @@ export class App extends Resource {
     operation: string,
     channels: string[]|string;
     createdAt: string;
-  };
+  }|null;
 }
 
 @Injectable({
@@ -62,11 +62,11 @@ export class AppSerializer implements Serializer {
     };
     resource.ready = json.ready;
     resource.quantities = json.quantities;
-    resource.repricing = {
+    resource.repricing = json.repricing ? {
       operation: json.repricing.operation,
       channels: json.repricing.channels,
       createdAt: json.repricing.created_at,
-    };
+    } : null;
 
     return resource;
   }
