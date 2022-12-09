@@ -29,5 +29,21 @@
       ],
       "fixed": []
     }
+  },
+  {
+    "id": 5,
+    "version": "1.74.00",
+    "date": "Dec 08, 2022",
+    "changelog": {
+      "added": [
+        "Added 'Advanced Settings' (price and available) on Discogs products detail page",
+        "Added option to 'lock' channel prices and exclude products from bulk repricing operations",
+        "Added notes to products about prices overwritten by bulk repricing operations"
+      ],
+      "changed": [
+        "Minor layout changes in System navigation"
+      ],
+      "fixed": []
+    }
   }
 ]
