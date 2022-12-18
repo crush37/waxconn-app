@@ -1,0 +1,25 @@
+<mat-card>
+  <div class="grid grid-cols-2 gap-x-4">
+
+    <div class="col-span-full my-2">
+      <span class="font-bold">SKU (Stock Keeping Unit):</span><br>
+      {{ product.sku || '-' }}
+    </div>
+
+    <div class="col-span-full my-2">
+      <span class="font-bold">Barcode (ISBN, UPC, GTIN, etc):</span><br>
+      {{ product.barcode || '-' }}
+    </div>
+
+    <div class="col-span-1 my-2">
+      <span class="font-bold">Weight:</span><br>
+      {{ product.weight || '-' }}
+    </div>
+
+    <div class="col-span-1 my-2">
+      <span class="font-bold">Counts as:</span><br>
+      {{ product.options.discogs?.formatQuantity || '-' }}
+    </div>
+
+  </div>
+</mat-card>

@@ -11,6 +11,9 @@ import { PartOrderSummaryComponent } from './part-order-summary/part-order-summa
 import { PartOrderTotalsComponent } from './part-order-totals/part-order-totals.component';
 import { OrderFulfillmentDialogComponent } from './order-fulfillment-dialog/order-fulfillment-dialog.component';
 import { OrderPaymentDialogComponent } from './order-payment-dialog/order-payment-dialog.component';
+import { OrderItemComponent } from "./order-item/order-item.component";
+import { PartOrderItemOverviewComponent } from "./part-order-item-overview/part-order-item-overview.component";
+import { PartOrderItemSummaryComponent } from "./part-order-item-summary/part-order-item-summary.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { OrderPaymentDialogComponent } from './order-payment-dialog/order-paymen
     PartOrderSummaryComponent,
     PartOrderTotalsComponent,
     OrderFulfillmentDialogComponent,
-    OrderPaymentDialogComponent
+    OrderPaymentDialogComponent,
+    OrderItemComponent,
+    PartOrderItemOverviewComponent,
+    PartOrderItemSummaryComponent,
   ],
   imports: [
     SharedModule,

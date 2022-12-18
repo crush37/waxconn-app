@@ -16,7 +16,7 @@
     </ng-template>
 
     <ng-template #row let-row="row">
-      <tr [routerLink]="['/', 'products', item(row).productId]" [ngClass]="item(row).productId ? 'cursor-pointer hover:bg-gray-50' : 'pointer-events-none bg-gray-50'" class="border-b">
+      <tr [routerLink]="['items', item(row).id]" [ngClass]="item(row).productId ? 'cursor-pointer hover:bg-gray-50' : 'pointer-events-none bg-gray-50'" class="border-b">
         <td class="p-4 sm:pr-0 flex items-center">
           <img src="{{ item(row).thumb  || imagePlaceholder }}" style="height: 60px; width: 60px; min-width: 60px;"
                height="60" width="60" (error)="onImgError($event)" class="mr-4" alt="">

@@ -1,0 +1,28 @@
+<app-page-header [subTitle]="subTitle" [title]="title">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<div *ngIf="!loading && orderItem" class="grid lg:grid-cols-8 gap-4">
+
+  <div class="lg:col-span-6">
+    <app-part-order-item-overview [orderItem]="orderItem"></app-part-order-item-overview>
+  </div>
+
+  <div class="lg:col-span-2">
+
+    <div class="mb-4">
+      <app-part-order-summary [order]="orderItem.order"></app-part-order-summary>
+    </div>
+
+    <div class="mb-4">
+      <app-part-order-item-summary [product]="orderItem.product"></app-part-order-item-summary>
+    </div>
+
+  </div>
+
+
+</div>

@@ -1,0 +1,71 @@
+<mat-card>
+  <h3 *ngIf="orderItem.fulfillmentStatus === 'fulfilled'" class="flex items-center"> Fulfilled
+    <mat-icon class="ml-2 text-green-600">check_circle</mat-icon>
+  </h3>
+  <h3 *ngIf="orderItem.fulfillmentStatus !== 'fulfilled'" class="flex items-center">
+    <mat-icon class="mr-2 text-red-600">error</mat-icon>
+    {{ orderItem.fulfillmentStatus | removeUnderscore | titlecase }}
+  </h3>
+  <mat-divider></mat-divider>
+
+  <div class="grid grid-cols-4 gap-x-4">
+    <div class="col-span-full block md:hidden">
+      <app-lightbox [imageData]="orderItem.product.images" classes="float-left py-4"></app-lightbox>
+    </div>
+    <div class="col-span-full block md:hidden">
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="col-span-full mb-4">
+      <app-lightbox [imageData]="orderItem.product.images" thumbSize="150" classes="float-left p-1 mt-4 mr-4 hidden md:block border rounded"></app-lightbox>
+      <p class="pt-4 mb-1" *ngIf="orderItem.product.options?.discogs">
+        Release #
+        <a (click)="$event.stopPropagation()"
+           href="https://www.discogs.com/release/{{ orderItem.product.options.discogs?.releaseId }}"
+           rel="noopener noreferrer" class="link content-center" target="_blank">
+          {{ orderItem.product.options.discogs?.releaseId }}
+        </a>
+<!--        <ng-container *ngIf="orderItem.externalId">-->
+<!--          | Listing #-->
+<!--          <a (click)="$event.stopPropagation()"-->
+<!--             href="https://www.discogs.com/sell/item/{{ orderItem.externalId }}"-->
+<!--             rel="noopener noreferrer" class="link content-center" target="_blank">-->
+<!--            {{ orderItem.externalId }}-->
+<!--          </a>-->
+<!--        </ng-container>-->
+      </p>
+      <h3 class="mb-0">{{ orderItem.product.vendor }} - {{ orderItem.product.title }}</h3>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="grid grid-cols-2 gap-x-4 mt-6">
+    <div class="col-span-2 mb-2">
+      <span class="font-bold">Media Condition:</span><br>
+      {{ orderItem.product.options.discogs?.mediaCondition || '-' }}
+    </div>
+
+    <div class="col-span-2 my-2">
+      <span class="font-bold">Sleeve Condition:</span><br>
+      {{ orderItem.product.options.discogs?.sleeveCondition || '-' }}
+    </div>
+
+    <div class="col-span-2 my-2">
+      <span class="font-bold">Item Condition Comments</span><br>
+      {{ orderItem.product.options.discogs?.comments || '-' }}
+    </div>
+
+    <div class="col-span-2 my-2">
+      <span class="font-bold">Private Comments</span><br>
+      {{ orderItem.product.options.discogs?.privateComments || '-' }}
+    </div>
+
+    <div class="col-span-2 my-2">
+      <span class="font-bold">Location</span><br>
+      {{ orderItem.product.options.discogs?.location || '-' }}
+    </div>
+
+  </div>
+
+</mat-card>
