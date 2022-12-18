@@ -45,5 +45,20 @@
       ],
       "fixed": []
     }
+  },
+  {
+    "id": 6,
+    "version": "1.75.00",
+    "date": "Dec 18, 2022",
+    "changelog": {
+      "added": [
+        "Added new Order Items detail page"
+      ],
+      "changed": [
+      ],
+      "fixed": [
+        "Fixed Order Items detail page loading issue"
+      ]
+    }
   }
 ]
