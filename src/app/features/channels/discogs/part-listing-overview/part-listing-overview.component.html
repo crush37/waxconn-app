@@ -50,44 +50,45 @@
         </div>
       </div>
     </div>
+
+    <mat-accordion>
+      <mat-expansion-panel class="mt-4">
+        <mat-expansion-panel-header class="bg-gray-50">
+          <mat-panel-title>
+            <h3 class="m-0">Details</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="grid mt-4">
+          <div *ngIf="release.companies">
+            <span class="mat-body-strong">Companies</span>
+            <p class="pt-2">
+              <ng-container *ngFor="let company of release.companies">
+                {{ company.type }} - {{ company.name }}<br>
+              </ng-container>
+            </p>
+          </div>
+
+          <div *ngIf="release.notes">
+            <span class="mat-body-strong">Notes</span>
+            <p class="pt-2" [innerHTML]="release.notes"></p>
+          </div>
+
+          <div *ngIf="release.identifiers">
+            <span class="mat-body-strong">Identifiers</span>
+            <p class="pt-2">
+              <ng-container *ngFor="let identifier of release.identifiers">
+                <ng-container *ngIf="identifier.type">{{ identifier.type }}</ng-container>
+                <ng-container *ngIf="identifier.description">({{ identifier.description }}):</ng-container>
+                <ng-container *ngIf="identifier.value">{{ identifier.value }}</ng-container>
+                <br>
+              </ng-container>
+            </p>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
   </mat-card>
-
-  <mat-accordion>
-    <mat-expansion-panel class="mt-4">
-      <mat-expansion-panel-header class="px-4">
-        <mat-panel-title>
-          <h3 class="m-0">Release Details</h3>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="grid">
-        <div *ngIf="release.companies">
-          <span class="mat-body-strong">Companies</span>
-          <p class="pt-2">
-            <ng-container *ngFor="let company of release.companies">
-              {{ company.type }} - {{ company.name }}<br>
-            </ng-container>
-          </p>
-        </div>
-
-        <div *ngIf="release.notes">
-          <span class="mat-body-strong">Notes</span>
-          <p class="pt-2" [innerHTML]="release.notes"></p>
-        </div>
-
-        <div *ngIf="release.identifiers">
-          <span class="mat-body-strong">Identifiers</span>
-          <p class="pt-2">
-            <ng-container *ngFor="let identifier of release.identifiers">
-              <ng-container *ngIf="identifier.type">{{ identifier.type }}</ng-container>
-              <ng-container *ngIf="identifier.description">({{ identifier.description }}):</ng-container>
-              <ng-container *ngIf="identifier.value">{{ identifier.value }}</ng-container>
-              <br>
-            </ng-container>
-          </p>
-        </div>
-      </div>
-    </mat-expansion-panel>
-  </mat-accordion>
 
   <mat-card class="mt-4">
     <h3>New Product</h3>
