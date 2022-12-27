@@ -18,10 +18,9 @@ export class UpdateNotificationComponent implements OnInit {
   public ngOnInit(): void {
     if (this.swUpdate.isEnabled) {
       const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable));
-      const everyHour = interval(60 * 60 * 1000);
-      const everyHoursOnceAppIsStable$ = concat(appIsStable$, everyHour);
+      const everyMinutesOnceAppIsStable$ = concat(appIsStable$, interval(60 * 10 * 1000));
 
-      everyHoursOnceAppIsStable$.subscribe(() => this.swUpdate.checkForUpdate());
+      everyMinutesOnceAppIsStable$.subscribe(() => this.swUpdate.checkForUpdate());
       this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
         if (event.type === 'VERSION_READY') {
           this.updateAvailable = true;
