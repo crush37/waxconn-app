@@ -58,7 +58,6 @@ export class PartProductSummaryComponent implements OnInit {
   setFormGroup(): void {
     this.formGroup.addControl('quantity', new UntypedFormControl(this.product.inventoryCount, Validators.min(1)));
     this.formGroup.addControl('price', new UntypedFormControl(this.product.price));
-    this.formGroup.addControl('allowOffers', new UntypedFormControl(this.product.options.discogs?.allowOffers ?? false));
     this.formGroup.addControl('taxable', new UntypedFormControl(this.product.taxable ?? false));
     this.formGroup.addControl('barcode', new UntypedFormControl(this.product.barcode));
     this.formGroup.addControl('sku', new UntypedFormControl(this.product.sku));

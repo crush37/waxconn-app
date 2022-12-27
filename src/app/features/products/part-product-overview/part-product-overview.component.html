@@ -2,52 +2,64 @@
 
   <mat-card>
     <mat-tab-group formArrayName="listings" mat-align-tabs="end" animationDuration="750ms" dynamicHeight>
-      <ng-container *ngFor="let listing of listings.controls; let i = index">
-        <mat-tab *ngIf="listing.get('channelType')?.value === 'discogs'">
+
+      <ng-container *ngFor="let channel of channels; let i = index">
+
+        <mat-tab *ngIf="channel.type === 'discogs'">
           <ng-template mat-tab-label>
             <img alt="" height="25" src="assets/discogs-25.png">
           </ng-template>
-          <ng-container *ngTemplateOutlet="discogsListing; context: { listing: listing }"></ng-container>
+          <ng-container *ngTemplateOutlet="discogsChannel"></ng-container>
         </mat-tab>
-        <mat-tab *ngIf="listing.get('channelType')?.value === 'shopify'">
+
+        <mat-tab *ngIf="channel.type === 'shopify'">
           <ng-template mat-tab-label>
             <img alt="" height="25" src="assets/shopify-25.png">
           </ng-template>
-          <ng-container *ngTemplateOutlet="shopifyListing; context: { listing: listing }"></ng-container>
+          <ng-container *ngTemplateOutlet="shopifyChannel"></ng-container>
         </mat-tab>
+
+        <mat-tab *ngIf="channel.type === 'pos'">
+          <ng-template mat-tab-label>
+            <img alt="" height="25" src="assets/pos-25.png">
+          </ng-template>
+          <ng-container *ngTemplateOutlet="posChannel"></ng-container>
+        </mat-tab>
+
       </ng-container>
+
     </mat-tab-group>
   </mat-card>
 
-  <ng-template #discogsListing let-listingForm="listing">
+  <ng-template #discogsChannel>
     <div class="grid grid-cols-4 gap-x-4">
+
       <div class="col-span-full block md:hidden">
         <app-lightbox [imageData]="product.images" classes="float-left py-4"></app-lightbox>
       </div>
+
       <div class="col-span-full block md:hidden">
         <mat-divider></mat-divider>
       </div>
 
       <div class="col-span-full mb-4">
         <app-lightbox [imageData]="product.images" thumbSize="150" classes="float-left p-1 mt-4 mr-4 hidden md:block border rounded"></app-lightbox>
+
         <p class="pt-4 mb-1" *ngIf="product.options.discogs">
+
           Release #
           <a (click)="$event.stopPropagation()"
              href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}"
              rel="noopener noreferrer" class="link content-center" target="_blank">
             {{ product.options.discogs.releaseId }}
           </a>
-          <ng-container *ngIf="listingForm.get('externalId').value">
-            | Listing #
-            <a (click)="$event.stopPropagation()"
-               href="https://www.discogs.com/sell/item/{{ listingForm.get('externalId')?.value }}"
-               rel="noopener noreferrer" class="link content-center" target="_blank">
-              {{ listingForm.get('externalId')?.value }}
-            </a>
-          </ng-container>
+
         </p>
+
         <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>
+
       </div>
+
     </div>
 
     <mat-divider></mat-divider>
@@ -114,140 +126,82 @@
 
     </div>
 
-    <h3>Advanced Settings</h3>
-    <mat-divider></mat-divider>
-    <p class="pt-4">Channel specific settings that overwrite the default settings.</p>
+    <mat-divider class="my-4"></mat-divider>
 
-    <div class="grid grid-cols-4 gap-x-4" [formGroup]="listingForm">
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ currencyCode }} Price</mat-label>
-          <input formControlName="price" matInput type="number" min="0.01">
-        </mat-form-field>
-      </div>
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>Available Quantity</mat-label>
-          <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
-        </mat-form-field>
-      </div>
-      <ul class="pb-6 col-span-full">
-        <li>
-          <mat-checkbox formControlName="isLocked">
-            <span class="inline-flex">
-              Lock Price
-              <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
-                locked it is excluded from Bulk Repricing operations." matTooltipPosition="above">
-              help</mat-icon>
-            </span>
-          </mat-checkbox>
-        </li>
-      </ul>
+    <mat-accordion>
+      <mat-expansion-panel class="mt-2">
+        <mat-expansion-panel-header class="bg-gray-50">
+          <mat-panel-title>
+            <h3 class="m-0">Advanced Settings</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-    </div>
+        <p class="pt-4">Channel specific settings that overwrite and expand the default settings.</p>
 
-    <div *ngIf="latestRepricing && wasModifiedByRepricing(listingForm)"
-         class="col-span-full text-xs text-amber-700">
-      Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
-    </div>
+        <ul>
+          <li>
+            <mat-checkbox formControlName="allowOffers">Allow offers</mat-checkbox>
+          </li>
+        </ul>
+
+        <div class="col-span-full my-4">
+          <mat-divider></mat-divider>
+        </div>
+
+        <ng-container formArrayName="listings" *ngFor="let listing of product.listings; let i = index">
+          <div *ngIf="listing.channelType === 'discogs'" [formGroupName]="i" class="grid grid-cols-4 gap-x-4 mt-4">
+
+            <div *ngIf="listing.externalId" class="col-span-full mb-4">
+              <span class="font-bold">Discogs Listing # </span>
+              <a (click)="$event.stopPropagation()"
+                 href="https://www.discogs.com/sell/item/{{ listing.externalId }}"
+                 rel="noopener noreferrer" class="link content-center" target="_blank">
+                {{ listing.externalId }}
+              </a>
+            </div>
+
+            <div class="col-span-full mb-4">
+              <mat-divider></mat-divider>
+            </div>
+
+            <div class="md:col-span-1 col-span-full">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ currencyCode }} Price</mat-label>
+                <input formControlName="price" matInput type="number" min="0.01">
+              </mat-form-field>
+            </div>
+            <div class="md:col-span-1 col-span-full">
+              <mat-form-field appearance="outline">
+                <mat-label>Available Quantity</mat-label>
+                <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
+              </mat-form-field>
+            </div>
+            <ul class="md:col-span-1 col-span-full">
+              <li>
+                <mat-checkbox formControlName="isLocked">
+              <span class="inline-flex">
+                Lock Price
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
+                  locked it is excluded from Bulk Repricing operations." matTooltipPosition="above">
+                help</mat-icon>
+              </span>
+                </mat-checkbox>
+              </li>
+            </ul>
+
+            <div *ngIf="latestRepricing && wasModifiedByRepricing(listing)"
+                 class="col-span-full text-xs text-amber-700">
+              Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
+            </div>
+          </div>
+        </ng-container>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
   </ng-template>
 
-  <ng-template #posListing let-listingForm="listing">
-    <div class="grid grid-cols-4 gap-x-4">
-      <div class="col-span-full block md:hidden">
-        <app-lightbox [imageData]="product.images" classes="float-left py-4"></app-lightbox>
-      </div>
-      <div class="col-span-full block md:hidden">
-        <mat-divider></mat-divider>
-      </div>
-
-      <div class="col-span-full mb-4">
-        <app-lightbox [imageData]="product.images" thumbSize="150" classes="float-left pt-4 pr-4 hidden md:block"></app-lightbox>
-        <p class="pt-4 mb-1" *ngIf="product.options.discogs">Discogs Release #
-          <a (click)="$event.stopPropagation()"
-             href="https://www.discogs.com/release/{{ product.options.discogs.releaseId }}"
-             rel="noopener noreferrer" class="link content-center" target="_blank">
-            {{ product.options.discogs.releaseId }}
-          </a>
-        </p>
-        <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>
-      </div>
-    </div>
-
-    <mat-divider></mat-divider>
-
-    <div class="grid grid-cols-2 gap-x-4 pt-4">
-      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
-        <mat-label>Media Condition</mat-label>
-        <mat-select formControlName="mediaCondition" required>
-          <mat-option value="Mint (M)">Mint (M)</mat-option>
-          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
-          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
-          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
-          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
-          <mat-option value="Good (G)">Good (G)</mat-option>
-          <mat-option value="Fair (F)">Fair (F)</mat-option>
-          <mat-option value="Poor (P)">Poor (P)</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
-        <mat-label>Sleeve Condition</mat-label>
-        <mat-select formControlName="sleeveCondition">
-          <mat-option value="Not Graded">Not Graded</mat-option>
-          <mat-option value="Generic">Generic</mat-option>
-          <mat-option value="No Cover">No Cover</mat-option>
-          <mat-option value="Mint (M)">Mint (M)</mat-option>
-          <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
-          <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
-          <mat-option value="Very Good (VG)">Very Good (VG)</mat-option>
-          <mat-option value="Good Plus (G+)">Good Plus (G+)</mat-option>
-          <mat-option value="Good (G)">Good (G)</mat-option>
-          <mat-option value="Fair (F)">Fair (F)</mat-option>
-          <mat-option value="Poor (P)">Poor (P)</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="col-span-2">
-        <mat-label>Item Condition Comments</mat-label>
-        <input formControlName="comments" matInput maxlength="500">
-        <mat-hint align="end">{{formGroup.get('comments')?.value?.length}} / 500</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="col-span-2">
-        <mat-label>Private Comments</mat-label>
-        <textarea formControlName="privateComments" matInput maxlength="500" rows="5"></textarea>
-        <mat-hint align="end">{{formGroup.get('privateComments')?.value?.length}} / 255</mat-hint>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="col-span-2">
-        <mat-label>Location</mat-label>
-        <input formControlName="location" matInput maxlength="500">
-        <mat-hint align="end">{{formGroup.get('location')?.value?.length}} / 255</mat-hint>
-      </mat-form-field>
-    </div>
-
-    <h3>Advanced Settings</h3>
-    <mat-divider></mat-divider>
-    <p class="pt-4">Channel specific settings that overwrite the default settings.</p>
-
-    <div class="grid grid-cols-4 gap-x-4" [formGroup]="listingForm">
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ currencyCode }} Price</mat-label>
-          <input formControlName="price" matInput type="number" min="0.01">
-        </mat-form-field>
-      </div>
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>Available Quantity</mat-label>
-          <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
-        </mat-form-field>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template #shopifyListing let-listingForm="listing">
+  <ng-template #shopifyChannel>
     <h3 class="pt-4">Details</h3>
     <mat-divider></mat-divider>
 
@@ -286,41 +240,142 @@
       <mat-hint align="end">{{formGroup.get('metaDescription')?.value?.length}} / 160</mat-hint>
     </mat-form-field>
 
-    <h3>Advanced Settings</h3>
-    <mat-divider></mat-divider>
-    <p class="pt-4">Channel specific settings that overwrite the default settings.</p>
+    <mat-divider class="my-4"></mat-divider>
 
-    <div class="grid grid-cols-4 gap-x-4" [formGroup]="listingForm">
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ currencyCode }} Price</mat-label>
-          <input formControlName="price" matInput type="number" min="0.01">
-        </mat-form-field>
-      </div>
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>Available Quantity</mat-label>
-          <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
-        </mat-form-field>
-      </div>
-      <ul class="pb-6 col-span-full">
-        <li>
-          <mat-checkbox formControlName="isLocked">
-            <span class="inline-flex">
-              Lock Price
-              <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
-                locked it is excluded from Bulk Repricing operations." matTooltipPosition="above">
-              help</mat-icon>
-            </span>
-          </mat-checkbox>
-        </li>
-      </ul>
-    </div>
+    <mat-accordion>
+      <mat-expansion-panel class="mt-2">
+        <mat-expansion-panel-header class="bg-gray-50">
+          <mat-panel-title>
+            <h3 class="m-0">Advanced Settings</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-    <div *ngIf="latestRepricing && wasModifiedByRepricing(listingForm)"
-         class="col-span-full text-xs text-amber-700">
-      Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
-    </div>
+        <p class="pt-4">Channel specific settings that overwrite and expand the default settings.</p>
+
+        <div class="col-span-full my-4">
+          <mat-divider></mat-divider>
+        </div>
+
+        <ng-container formArrayName="listings" *ngFor="let listing of product.listings; let i = index">
+          <div *ngIf="listing.channelType === 'shopify'" [formGroupName]="i" class="grid grid-cols-4 gap-x-4 mt-4">
+
+            <div *ngIf="listing.externalId" class="col-span-full mb-4 pl-1">
+              <span class="font-bold">Shopify Product #</span>
+              <!--          <a (click)="$event.stopPropagation()"-->
+              <!--             href="https://www.discogs.com/sell/item/{{ listing.externalId }}"-->
+              <!--             rel="noopener noreferrer" class="link content-center" target="_blank">-->
+              {{ listing.externalId }}
+              <!--          </a>-->
+            </div>
+
+            <div class="col-span-full mb-4">
+              <mat-divider></mat-divider>
+            </div>
+
+            <div class="col-span-1">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ currencyCode }} Price</mat-label>
+                <input formControlName="price" matInput type="number" min="0.01">
+              </mat-form-field>
+            </div>
+            <div class="col-span-1">
+              <mat-form-field appearance="outline">
+                <mat-label>Available Quantity</mat-label>
+                <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
+              </mat-form-field>
+            </div>
+            <ul class="col-span-2 inline-flex">
+              <li>
+                <mat-checkbox formControlName="isLocked">
+              <span class="inline-flex">
+                Lock Price
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
+                  locked it is excluded from Bulk Repricing operations." matTooltipPosition="above">
+                help</mat-icon>
+              </span>
+                </mat-checkbox>
+              </li>
+            </ul>
+
+            <div *ngIf="latestRepricing && wasModifiedByRepricing(listing)"
+                 class="col-span-full text-xs text-amber-700 pl-1">
+              Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
+            </div>
+          </div>
+        </ng-container>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </ng-template>
+
+  <ng-template #posChannel>
+
+    <mat-accordion>
+      <mat-expansion-panel expanded class="mt-4">
+        <mat-expansion-panel-header class="bg-gray-50">
+          <mat-panel-title>
+            <h3 class="m-0">Advanced Settings</h3>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <p class="pt-4">Channel specific settings that overwrite and expand the default settings.</p>
+
+        <div class="col-span-full my-4">
+          <mat-divider></mat-divider>
+        </div>
+
+        <ng-container formArrayName="listings" *ngFor="let listing of product.listings; let i = index">
+          <div *ngIf="listing.channelType === 'pos'" [formGroupName]="i" class="grid grid-cols-4 gap-x-4 mt-4">
+
+            <div *ngIf="listing.externalId" class="col-span-full mb-4 pl-1">
+              <span class="font-bold">Shopify Product #</span>
+              <!--          <a (click)="$event.stopPropagation()"-->
+              <!--             href="https://www.discogs.com/sell/item/{{ listing.externalId }}"-->
+              <!--             rel="noopener noreferrer" class="link content-center" target="_blank">-->
+              {{ listing.externalId }}
+              <!--          </a>-->
+            </div>
+
+            <div class="col-span-full mb-4">
+              <mat-divider></mat-divider>
+            </div>
+
+            <div class="col-span-1">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ currencyCode }} Price</mat-label>
+                <input formControlName="price" matInput type="number" min="0.01">
+              </mat-form-field>
+            </div>
+            <div class="col-span-1">
+              <mat-form-field appearance="outline">
+                <mat-label>Available Quantity</mat-label>
+                <input formControlName="available" matInput type="number" min="1" [max]="getMaxAvailable()">
+              </mat-form-field>
+            </div>
+            <ul class="col-span-2 inline-flex">
+              <li>
+                <mat-checkbox formControlName="isLocked">
+              <span class="inline-flex">
+                Lock Price
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When the price is
+                  locked it is excluded from Bulk Repricing operations." matTooltipPosition="above">
+                help</mat-icon>
+              </span>
+                </mat-checkbox>
+              </li>
+            </ul>
+
+            <div *ngIf="latestRepricing && wasModifiedByRepricing(listing)"
+                 class="col-span-full text-xs text-amber-700 pl-1">
+              Modified by Repricing Agent on {{ latestRepricing.createdAt | date }}
+            </div>
+          </div>
+        </ng-container>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
   </ng-template>
 
 </form>

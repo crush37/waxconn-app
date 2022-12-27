@@ -6,6 +6,7 @@ import { getCurrencySymbol } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs";
 import {map} from "rxjs/operators";
+import {Listing} from "@core/models/listing.model";
 
 @Component({
   selector: 'app-part-product-overview',
@@ -15,6 +16,7 @@ export class PartProductOverviewComponent implements OnInit {
   @Input() product!: Product;
   @Input() formGroup!: UntypedFormGroup;
 
+  channels!: any;
   currencyCode!: string;
   disableQuantities: boolean = true;
   latestRepricing!: { operation: string, channels: string[]|string, createdAt: string }|null;
@@ -32,9 +34,10 @@ export class PartProductOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
+      this.channels = response.app.channels?.sort((a: any, b: any) => (a.type > b.type) ? 1 : -1);
+      this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
       this.disableQuantities = !response.app.quantities;
       this.latestRepricing = response.app.repricing;
-      this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
     });
 
     this.getCommentsOptions();
@@ -97,6 +100,7 @@ export class PartProductOverviewComponent implements OnInit {
 
     this.formGroup.addControl('metaTitle', new UntypedFormControl(this.product.metaTitle));
     this.formGroup.addControl('metaDescription', new UntypedFormControl(this.product.metaDescription));
+    this.formGroup.addControl('allowOffers', new UntypedFormControl(this.product.options.discogs?.allowOffers ?? false));
   }
 
   setFormGroupListings(): void {
@@ -122,17 +126,15 @@ export class PartProductOverviewComponent implements OnInit {
     return this.formGroup.controls.quantity?.value;
   }
 
-  wasModifiedByRepricing(listingForm: UntypedFormGroup): boolean {
+  wasModifiedByRepricing(listing: Listing): boolean {
     if (!this.latestRepricing) {
       return false;
     }
 
-    let channelId = listingForm.get('channelId')?.value;
-    let isLocked = listingForm.get('isLocked')?.value;
     let includedInRepricing = this.latestRepricing?.channels === 'all'
-        || this.latestRepricing?.channels.includes(channelId);
+        || this.latestRepricing?.channels.includes(listing.channelId);
 
-    return includedInRepricing && !isLocked && this.latestRepricing.operation === 'create'
+    return includedInRepricing && !listing.isLocked && this.latestRepricing.operation === 'create'
         && new Date(this.latestRepricing.createdAt) > new Date(this.product.createdAt);
   }
 }
