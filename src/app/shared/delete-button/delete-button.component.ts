@@ -22,7 +22,13 @@ export class DeleteButtonComponent {
   }
 
   openConfirmDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, { disableClose: true });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      disableClose: true,
+      data: {
+        title: 'Are you sure?',
+        message: 'This operation cannot be undone.'
+      },
+    });
     dialogRef.afterClosed().subscribe(confirm => {
       if (confirm) {
         this.submit();

@@ -1,9 +1,9 @@
 <div class="px-4 text-center">
   <div class="grid">
-    <h3 class="mb-0 font-bold">Are you sure?</h3>
-    <p class="pb-2">This cannot be undone.</p>
+    <h3 class="mb-0 font-bold">{{ data.title }}</h3>
+    <p class="pb-2">{{ data.message }}</p>
     <div class="pb-0">
-      <button mat-stroked-button mat-dialog-close>Cancel</button>
+      <button mat-stroked-button [mat-dialog-close]="false">Cancel</button>
       <button mat-flat-button color="warn" class="ml-2" [mat-dialog-close]="true">Confirm</button>
     </div>
   </div>
