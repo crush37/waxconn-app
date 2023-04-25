@@ -7,10 +7,17 @@
 </app-page-header>
 
 <mat-card class="px-0">
-  <app-data-list [itemRoute]="['products']" [searchConfig]="searchConfig">
+  <app-data-list [itemRoute]="['products']" [searchConfig]="searchConfig" [selecting]="ids.length > 0">
 
-    <ng-template #header>
-      <th class="w-10/12 md:w-10/12 p-4 text-left">Product</th>
+    <ng-template #header let-ids="ids">
+      <th class="w-10/12 md:w-10/12 p-4 text-left">
+        <div class="flex items-center">
+          <div class="mr-4">
+            <mat-checkbox (change)="selectAll($event, ids)" [checked]="areAllSelected(ids)"></mat-checkbox>
+          </div>
+          Product
+        </div>
+      </th>
       <th class="w-1/12 p-4 text-right hidden md:table-cell">Inventory</th>
       <th class="w-1/12 p-4 text-right hidden md:table-cell">Type</th>
     </ng-template>
@@ -18,10 +25,12 @@
     <ng-template #row let-row="row">
       <td class="p-4 text-left border-b">
         <div class="flex items-center">
-          <img src="{{ g(row).thumb  || imagePlaceholder }}" style="height: 60px; width: 60px; min-width: 60px;"
-               height="60" width="60" (error)="onImgError($event)" class="mr-4" alt="">
+          <div class="mr-4">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="selectOne($event, g(row).id)" [checked]="isSelected(g(row).id)"></mat-checkbox>
+          </div>
+          <img src="{{ g(row).thumb  || imagePlaceholder }}" style="height: 60px; width: 60px; min-width: 60px;" height="60" width="60" class="border rounded p-1 mr-4" alt="" (error)="onImgError($event)">
           <div>
-            <span class="mat-body-strong">{{ g(row).vendor }} - {{ g(row).title }}</span><br>
+            <span class="mat-body-strong">{{ g(row).title }} - {{ g(row).vendor }}</span><br>
             <span *ngIf="g(row).status === 'active' && g(row).listings" class="mat-small">
               Available on
               <ng-container *ngFor="let channel of productChannels(g(row).listings ?? []); let i = index">
@@ -35,6 +44,23 @@
 
       <td class="p-4 text-right border-b"><strong>{{ g(row).inventoryCount }}</strong></td>
       <td class="p-4 text-right border-b hidden md:table-cell">{{ g(row).type }}</td>
+    </ng-template>
+
+    <ng-template #footer let-status="status">
+      <ng-container *ngIf="ids.length > 0">
+        <div class="lg:col-span-1 col-span-full flex items-center mt-4 px-4 py-2">
+            <span class="font-bold">{{ ids.length }} Items selected</span>
+        </div>
+        <div class="lg:col-span-1 col-span-full flex items-center mt-4 px-4 py-2 justify-end">
+          <div>
+            <span class="font-bold mr-2">Bulk actions:</span>
+            <button *ngIf="!['active','archived','all'].includes(status)" color="accent" (click)="openConfirmDialog('active')" mat-flat-button class="ml-2">Set as Active</button>
+            <button *ngIf="!['draft','archived','all'].includes(status)" color="accent" (click)="openConfirmDialog('draft')" mat-flat-button class="ml-2">Set as Draft</button>
+            <button *ngIf="!['archived','all'].includes(status)" color="accent" (click)="openConfirmDialog('archived')" mat-flat-button class="ml-2">Set as Archived</button>
+            <button (click)="openConfirmDialog('deleted')" color="warn" mat-flat-button class="ml-2">Delete</button>
+          </div>
+        </div>
+      </ng-container>
     </ng-template>
 
   </app-data-list>

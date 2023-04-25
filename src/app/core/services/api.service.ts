@@ -64,6 +64,10 @@ export class ApiService<T extends Resource> {
     return this.httpClient.put<boolean>('api/v1/' + this.endpoint + '/' + item.id, this.serializer.toJson(item));
   }
 
+  batchUpdate(ids: string[], data: any): Observable<boolean> {
+    return this.httpClient.patch<boolean>('api/v1/' + this.endpoint, {ids, data});
+  }
+
   delete(id: string): Observable<boolean> {
     return this.httpClient.delete<boolean>('api/v1/' + this.endpoint + '/' + id);
   }

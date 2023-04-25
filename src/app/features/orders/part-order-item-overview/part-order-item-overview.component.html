@@ -19,7 +19,7 @@
     <div class="col-span-full mb-4">
       <app-lightbox [imageData]="orderItem.product.images" thumbSize="150" classes="float-left p-1 mt-4 mr-4 hidden md:block border rounded"></app-lightbox>
       <p class="pt-4 mb-1" *ngIf="orderItem.product.options?.discogs">
-        Release #
+        Discogs Release #
         <a (click)="$event.stopPropagation()"
            href="https://www.discogs.com/release/{{ orderItem.product.options.discogs?.releaseId }}"
            rel="noopener noreferrer" class="link content-center" target="_blank">

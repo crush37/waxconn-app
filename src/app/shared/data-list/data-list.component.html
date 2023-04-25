@@ -21,9 +21,9 @@
       <ng-container *ngFor="let select of searchConfig.selects">
         <mat-form-field [appearance]="searchConfig.appearance" class="w-full lg:w-40 lg:pl-2">
           <mat-label>{{ select.header }}</mat-label>
-          <mat-select formControlName="{{select.name}}" [multiple]="select.multiple">
+          <mat-select formControlName="{{ select.name }}" [multiple]="select.multiple">
             <mat-option *ngIf="!select.multiple" value="all">All</mat-option>
-            <mat-option *ngFor="let option of select.options" value="{{option.value}}">{{option.text}}</mat-option>
+            <mat-option *ngFor="let option of select.options" value="{{ option.value }}">{{ option.text | titlecase }}</mat-option>
           </mat-select>
         </mat-form-field>
       </ng-container>
@@ -34,7 +34,7 @@
 <table *ngIf="!importing" class="table-fixed w-full">
   <thead>
   <tr class="border-collapse border-b">
-    <ng-container *ngTemplateOutlet="headerTemplateOutlet"></ng-container>
+    <ng-container *ngTemplateOutlet="headerTemplateOutlet; context: { ids: ids }"></ng-container>
   </tr>
   </thead>
 
@@ -67,7 +67,9 @@
 </table>
 
 <div *ngIf="!importing && paginated" class="grid grid-cols-2">
-  <mat-paginator
+  <ng-container *ngTemplateOutlet="footerTemplateOutlet; context: { status: getStatusFilterValue() }"></ng-container>
+
+  <mat-paginator *ngIf="!selecting"
       [length]="page?.total"
       [pageIndex]="page?.current"
       [pageSizeOptions]="pageSizeOptions"
@@ -76,5 +78,3 @@
       showFirstLastButtons>
   </mat-paginator>
 </div>
-
-<ng-container *ngTemplateOutlet="footerTemplateOutlet"></ng-container>

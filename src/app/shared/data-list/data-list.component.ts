@@ -33,6 +33,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
   @Input() itemRoute?: string[];
   @Input() paginated = true;
   @Input() pageSizeOptions = [15, 30, 50, 100];
+  @Input() selecting = false;
 
   @ContentChild('topActions', { static: false }) topActionsTemplateOutlet!: TemplateRef<any>;
   @ContentChild('header', { static: false }) headerTemplateOutlet!: TemplateRef<any>;
@@ -40,6 +41,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
   @ContentChild('footer', { static: false }) footerTemplateOutlet!: TemplateRef<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  ids!: string[];
   query = this.dataListService.getStored('q') ?? '';
   visitedRows: any = this.dataListService.getStored('visited') ?? [];
 
@@ -92,13 +94,17 @@ export class DataListComponent implements OnInit, AfterViewInit {
 
   loadData(params: {}): void {
     this.loading = true;
-    this.apiService.index(params).subscribe((page: Page) => {
-      this.page = page;
-      this.loading = false;
-    }, (error) => {
-      if (error.status === 423) {
-        this.importing = true;
+    this.apiService.index(params).subscribe({
+      next: (page: Page) => {
+        this.ids = page.data.map(item => item.id);
+        this.page = page;
         this.loading = false;
+      },
+      error: (error) => {
+        if (error.status === 423) {
+          this.importing = true;
+          this.loading = false;
+        }
       }
     });
   }
@@ -118,5 +124,18 @@ export class DataListComponent implements OnInit, AfterViewInit {
 
   wasVisited(id: string): boolean {
     return this.query && this.visitedRows.includes(id);
+  }
+
+  getStatusFilterValue(): string | null {
+    let status = null;
+    if (this.searchConfig?.selects) {
+      this.searchConfig.selects.forEach(select => {
+        if (select.name === 'status') {
+          status = this.dataListService.getStored(select.name) ?? select.default;
+        }
+      });
+    }
+
+    return status;
   }
 }

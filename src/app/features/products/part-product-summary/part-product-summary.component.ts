@@ -27,7 +27,7 @@ export class PartProductSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
-      this.channels = response.app.channels;
+      this.channels = response.app.channels.filter((channel: any) => !channel.salesDisabled);
       this.disableQuantities = !response.app.quantities;
       this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
     });
@@ -69,7 +69,7 @@ export class PartProductSummaryComponent implements OnInit {
 
   setSelectedChannels(): void {
     this.product.listings?.forEach((listing: Listing) => {
-      if (!listing.unpublishedAt && !listing.cancelledAt) {
+      if (!listing.cancelledAt) {
         this.selectedChannels.push(listing.channelId);
       }
     });

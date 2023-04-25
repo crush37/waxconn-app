@@ -23,6 +23,7 @@ export class PartListingSummaryComponent implements OnInit {
 
   channels!: any;
   selectedChannels: string[] = [];
+
   formGroup!: UntypedFormGroup;
 
   currencyCode!: string;
@@ -38,11 +39,19 @@ export class PartListingSummaryComponent implements OnInit {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
       this.disableQuantities = !response.app.quantities;
-      this.channels = response.app.channels;
+
+      this.channels = response.app.channels.filter((channel: any) => !channel.salesDisabled);
+
       if (!this.release.blockedFromSale && this.release.status !== 'Draft') {
-        this.selectedChannels = this.channels.map((channel: any) => channel.id);
+        this.selectedChannels = this.channels.map((channel: any) => {
+          if (channel.publishByDefault) {
+            return channel.id;
+          }
+        }).filter(Boolean);
       }
+
     });
+
     this.setFormGroup();
     this.values.emit(this.formGroup);
     this.onMediaConditionAdded();

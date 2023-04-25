@@ -60,5 +60,38 @@
         "Fixed Order Items detail page loading issue"
       ]
     }
+  },
+  {
+    "id": 7,
+    "version": "1.76.00",
+    "date": "Dec 27, 2022",
+    "changelog": {
+      "added": [
+      ],
+      "changed": [
+        "Minor improvements and layout changes in the product detail page and channel 'Advanced Settings'.",
+        "Discogs 'Allow Offer' checkbox was moved inside the channel 'Advanced Settings'."
+      ],
+      "fixed": [
+        "Fixed some display issues related to selected channels and product details pages."
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "version": "1.77.00",
+    "date": "Feb 08, 2022",
+    "changelog": {
+      "added": [
+        "New 'Bulk Actions' for Products allows selecting and changing statuses of multiple products per request",
+        "New 'Publish by Default' option allows enabling/disabling the pre selection of sales channel on product creation",
+        "New 'Disable Sales' option allows disabling sales on Discogs (when you use Discogs only to search and create products)"
+      ],
+      "changed": [
+        "Major release updates and system stability improvements and fixes"
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]

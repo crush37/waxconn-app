@@ -200,6 +200,8 @@ export class Setting extends Resource {
   public trackedShipmentTemplate!: string;
   public isActive!: boolean;
   public syncReleases!: boolean;
+  public salesDisabled!: boolean;
+  public publishByDefault!: boolean;
   public listingPolicy!: string;
   public listingPolicyQuantity!: number | null;
 }
@@ -220,6 +222,8 @@ export class SettingSerializer implements Serializer {
     resource.trackedShipmentTemplate = json.settings.templates.tracked_shipment;
     resource.isActive = json.is_active;
     resource.syncReleases = json.syncs[0].is_active;
+    resource.salesDisabled = json.settings.sales_disabled;
+    resource.publishByDefault = json.settings.publish_by_default;
     resource.listingPolicy = json.settings.listings.policy;
     resource.listingPolicyQuantity = json.settings.listings.quantity;
 
@@ -235,6 +239,8 @@ export class SettingSerializer implements Serializer {
       settings: {
         api_username: resource.apiUsername,
         api_token: resource.apiToken,
+        sales_disabled: resource.salesDisabled,
+        publish_by_default: resource.publishByDefault,
         listings: {
           policy: resource.listingPolicy,
           quantity: resource.listingPolicyQuantity

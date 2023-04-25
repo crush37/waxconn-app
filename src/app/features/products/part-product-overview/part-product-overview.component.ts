@@ -105,8 +105,7 @@ export class PartProductOverviewComponent implements OnInit {
 
   setFormGroupListings(): void {
     this.product.listings?.sort((a, b) => (a.channelType > b.channelType) ? 1 : -1);
-    this.product.listings?.forEach((listing: any) => {
-      if (!listing.unpublishedAt) {
+    this.product.listings?.forEach((listing: Listing, index, object) => {
         this.listings.push(new UntypedFormGroup({
           id: new UntypedFormControl(listing.id),
           channelName: new UntypedFormControl(listing.channelName),
@@ -118,7 +117,6 @@ export class PartProductOverviewComponent implements OnInit {
           price: new UntypedFormControl(listing.price),
           isLocked: new UntypedFormControl(listing.isLocked || false),
         }));
-      }
     });
   }
 

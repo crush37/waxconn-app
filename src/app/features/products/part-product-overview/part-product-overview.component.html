@@ -160,6 +160,10 @@
               </a>
             </div>
 
+            <div *ngIf="!listing.externalId" class="col-span-full mb-4">
+              <span class="font-bold">Discogs Listing # na</span>
+            </div>
+
             <div class="col-span-full mb-4">
               <mat-divider></mat-divider>
             </div>
@@ -266,6 +270,10 @@
               <!--             rel="noopener noreferrer" class="link content-center" target="_blank">-->
               {{ listing.externalId }}
               <!--          </a>-->
+            </div>
+
+            <div *ngIf="!listing.externalId" class="col-span-full mb-4">
+              <span class="font-bold">Shopify Product # na</span>
             </div>
 
             <div class="col-span-full mb-4">
