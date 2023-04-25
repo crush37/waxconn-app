@@ -59,10 +59,19 @@ const routes: Routes = [
     component: BlankLayoutComponent,
     loadChildren: () => import('./features/suspended/suspended.module').then(m => m.SuspendedModule)
   },
+  {
+    path: '**',
+    component: BlankLayoutComponent,
+    loadChildren: () => import('./features/not-found/not-found.module').then(m => m.NotFoundModule)
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: true,
+    }),
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
