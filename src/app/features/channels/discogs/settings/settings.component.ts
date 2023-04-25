@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') || this.id) {
-        this.id = params.get('id') || this.id;
+        this.id = params.get('id') ?? this.id;
         this.loading = true;
         this.getMetaData();
         this.apiService.get(this.id).subscribe((settings: Setting) => {
@@ -63,14 +63,16 @@ export class SettingsComponent implements OnInit {
   setFormGroup(): void {
     this.formGroup = new UntypedFormGroup({
       id: new UntypedFormControl(this.id),
-      name: new UntypedFormControl(this.settings?.name || 'Discogs'),
+      name: new UntypedFormControl(this.settings?.name ?? 'Discogs'),
       locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
       apiUsername: new UntypedFormControl(this.settings?.apiUsername, Validators.required),
       apiToken: new UntypedFormControl(this.settings?.apiToken, Validators.required),
       trackedShipmentTemplate: new UntypedFormControl(this.settings?.trackedShipmentTemplate, Validators.required),
       productDescriptionTemplate: new UntypedFormControl(this.settings?.productDescriptionTemplate, Validators.required),
-      isActive: new UntypedFormControl(this.settings?.isActive || false),
-      syncReleases: new UntypedFormControl(this.settings?.syncReleases || false),
+      isActive: new UntypedFormControl(this.settings?.isActive ?? false),
+      syncReleases: new UntypedFormControl({'value': this.settings?.syncReleases ?? false, 'disabled': this.settings?.salesDisabled ?? false}),
+      publishByDefault: new UntypedFormControl({'value': this.settings?.publishByDefault ?? true, 'disabled': this.settings?.salesDisabled ?? false}),
+      salesDisabled: new UntypedFormControl(this.settings?.salesDisabled ?? false),
       listingPolicy: new UntypedFormControl(this.settings?.listingPolicy, Validators.required),
       listingPolicyQuantity: new UntypedFormControl(this.settings?.listingPolicyQuantity ?? 1, Validators.required)
     });

@@ -126,18 +126,43 @@
         </p>
         <ul>
           <li>
+            <mat-checkbox formControlName="salesDisabled">
+              <span class="font-bold inline-flex">
+                Disable Sales?
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="If you only use Discogs to
+                search and create products in other channels and you do not wish to sale on Discogs at all,
+                check this box." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
+            </mat-checkbox>
+          </li>
+        </ul>
+        <ul class="mt-4">
+          <li>
             <mat-checkbox formControlName="syncReleases">
               <span class="font-bold inline-flex">
                 Sync Release Updates?
-                <mat-icon class="text-gray-400 pl-1" style="transform: scale(0.6);" matTooltip="By default, When a release
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="By default, When a release
                   is updated in Discogs it is also be updated in Waxconn and any enabled sales channels
                   (like Shopify). Uncheck this option to disable this behaviour." matTooltipPosition="above">
                   help</mat-icon>
               </span>
             </mat-checkbox>
           </li>
+          <li>
+            <mat-checkbox formControlName="publishByDefault">
+              <span class="font-bold inline-flex">
+                Publish by Default?
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
+                Discogs will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
+            </mat-checkbox>
+          </li>
         </ul>
+
       </div>
+
     </div>
   </ng-template>
 

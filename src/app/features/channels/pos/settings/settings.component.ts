@@ -36,7 +36,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') || this.id) {
-        this.id = params.get('id') || this.id;
+        this.id = params.get('id') ?? this.id;
         this.loading = true;
         this.getMetaData();
         this.apiService.get(this.id).subscribe((settings: Setting) => {
@@ -57,9 +57,10 @@ export class SettingsComponent implements OnInit {
   setFormGroup(): void {
     this.formGroup = new UntypedFormGroup({
       id: new UntypedFormControl(this.id),
-      name: new UntypedFormControl(this.settings?.name || 'Store'),
+      name: new UntypedFormControl(this.settings?.name ?? 'Store'),
       locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
-      isActive: new UntypedFormControl(this.settings?.isActive || false)
+      isActive: new UntypedFormControl(this.settings?.isActive ?? false),
+      publishByDefault: new UntypedFormControl(this.settings?.publishByDefault ?? true),
     });
   }
 }

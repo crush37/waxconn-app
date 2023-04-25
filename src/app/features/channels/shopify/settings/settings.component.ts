@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') || this.id) {
-        this.id = params.get('id') || this.id;
+        this.id = params.get('id') ?? this.id;
         this.loading = true;
         this.getMetaData();
         this.apiService.get(this.id).subscribe((settings: Setting) => {
@@ -60,15 +60,16 @@ export class SettingsComponent implements OnInit {
   setFormGroup(): void {
     this.formGroup = new UntypedFormGroup({
       id: new UntypedFormControl(this.id),
-      name: new UntypedFormControl(this.settings?.name || 'Shopify'),
+      name: new UntypedFormControl(this.settings?.name ?? 'Shopify'),
       locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
       hostname: new UntypedFormControl(this.settings?.hostname, Validators.required),
       apiKey: new UntypedFormControl(this.settings?.apiKey, Validators.required),
       apiPassword: new UntypedFormControl(this.settings?.apiPassword, Validators.required),
       apiSharedSecret: new UntypedFormControl(this.settings?.apiSharedSecret, Validators.required),
-      isActive: new UntypedFormControl(this.settings?.isActive || false),
+      isActive: new UntypedFormControl(this.settings?.isActive ?? false),
+      publishByDefault: new UntypedFormControl(this.settings?.publishByDefault ?? true),
+      deleteOutOfStockProducts: new UntypedFormControl(this.settings?.deleteOutOfStockProducts ?? false),
       productUpdatesPolicy: new UntypedFormControl(this.settings?.productUpdatesPolicy, Validators.required),
-      deleteOutOfStockProducts: new UntypedFormControl(this.settings?.deleteOutOfStockProducts || false),
     });
   }
 

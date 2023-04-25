@@ -11,6 +11,7 @@ export class Setting extends Resource {
   public apiPassword!: string;
   public apiSharedSecret!: string;
   public isActive!: boolean;
+  public publishByDefault!: boolean;
   public productUpdatesPolicy!: string;
   public deleteOutOfStockProducts!: boolean;
 }
@@ -32,6 +33,7 @@ export class SettingSerializer implements Serializer {
     resource.productUpdatesPolicy = json.settings.product_updates.policy;
     resource.deleteOutOfStockProducts = json.settings.delete_out_of_stock_products;
     resource.isActive = json.is_active;
+    resource.publishByDefault = json.settings.publish_by_default;
 
     return resource;
   }
@@ -51,6 +53,7 @@ export class SettingSerializer implements Serializer {
           policy: resource.productUpdatesPolicy,
         },
         delete_out_of_stock_products: resource.deleteOutOfStockProducts,
+        publish_by_default: resource.publishByDefault,
       },
       is_active: resource.isActive,
     };

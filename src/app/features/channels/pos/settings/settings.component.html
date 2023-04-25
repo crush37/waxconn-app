@@ -1,51 +1,95 @@
 <app-page-header [title]="title" [subTitle]="subTitle">
   <ng-template #actions>
     <app-back-button></app-back-button>
-    <app-submit-button [formGroup]="formGroup" [goTo]="'system/channels'" [reload]="true"></app-submit-button>
+    <app-submit-button [formGroup]="formGroup" [goTo]="'system/channels'"
+                       [reload]="true"></app-submit-button>
   </ng-template>
 </app-page-header>
 
 <mat-card *ngIf="loading">Loading..</mat-card>
 
 <form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
-  <div class="grid grid-cols-1 gap-4">
+  <div class="grid grid-cols-4 gap-2 md:gap-4">
 
-    <mat-card class="col-span-full grid grid-cols-2 gap-x-4">
-      <div class="col-span-full">
-        <h3 class="inline-flex">Details</h3>
-        <mat-divider></mat-divider>
+    <!--  Left Side -->
+    <div class="col-span-full">
+      <mat-card>
+        <mat-tab-group mat-align-tabs="start" animationDuration="750ms" dynamicHeight>
+          <mat-tab>
+            <ng-template mat-tab-label>General</ng-template>
+            <ng-container *ngTemplateOutlet="general"></ng-container>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>Settings</ng-template>
+            <ng-container *ngTemplateOutlet="settings"></ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
+
+    <ng-template #general>
+      <div class="grid grid-cols-4 gap-4 mt-4">
+        <!--  General Settings -->
+        <div class="col-span-full lg:col-span-2">
+          <p class="pt-4 pb-2 text-primary-300">
+            A short and unique name for internal usage (optional).
+          </p>
+          <mat-form-field appearance="outline">
+            <mat-label>Channel name</mat-label>
+            <input formControlName="name" matInput type="text">
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-full lg:col-span-2">
+          <p class="pt-4 pb-2 text-primary-300">
+            Where you manage your inventory and fulfill orders.
+          </p>
+          <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="locationId" required>
+              <mat-option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-span-full md:col-span-2 pb-4">
+          <div class="mb-4">Is this channel enabled or disabled?</div>
+          <mat-slide-toggle formControlName="isActive">
+            <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
+            <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
+          </mat-slide-toggle>
+        </div>
       </div>
+    </ng-template>
 
-      <div class="col-span-full lg:col-span-1">
-        <p class="pt-4 pb-2 text-primary-300">
-          A short and unique name for internal usage (optional).
-        </p>
-        <mat-form-field appearance="outline">
-          <mat-label>Channel name</mat-label>
-          <input formControlName="name" matInput type="text">
-        </mat-form-field>
+    <ng-template #settings>
+      <div class="grid grid-cols-4 gap-4 mt-4">
+
+        <!--  Other Settings -->
+        <div class="col-span-full">
+          <h3 class="inline-flex">Other Settings</h3>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="pb-2 col-span-full">
+          <p class="text-primary-300">
+            System-wide settings that affect how Waxconn relates with POS Terminal.
+          </p>
+          <ul>
+            <li>
+              <mat-checkbox formControlName="publishByDefault">
+              <span class="font-bold inline-flex">
+                Publish by Default?
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
+                POS Terminal will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
+              </mat-checkbox>
+            </li>
+          </ul>
+        </div>
+
       </div>
-
-      <div class="col-span-full lg:col-span-1">
-        <p class="pt-4 pb-2 text-primary-300">
-          Where you sell your products.
-        </p>
-        <mat-form-field appearance="outline">
-          <mat-label>Location</mat-label>
-          <mat-select formControlName="locationId" required>
-            <mat-option *ngFor="let location of locations" value="{{ location.id }}">{{ location.name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="col-span-full md:col-span-2 pb-4">
-        <div class="mb-4">Is this channel enabled or disabled?</div>
-        <mat-slide-toggle formControlName="isActive">
-          <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
-          <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
-        </mat-slide-toggle>
-      </div>
-    </mat-card>
-
+    </ng-template>
   </div>
+
 </form>

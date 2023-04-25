@@ -129,8 +129,8 @@
           <h3 class="inline-flex">Other Settings</h3>
           <mat-divider></mat-divider>
         </div>
-        <div class="col-span-full">
-          <p class="pb-2 text-primary-300">
+        <div class="pb-2 col-span-full">
+          <p class="text-primary-300">
             System-wide settings that affect how Waxconn relates with Shopify.
           </p>
           <ul>
@@ -138,11 +138,21 @@
               <mat-checkbox formControlName="deleteOutOfStockProducts">
                 <span class="font-bold inline-flex">
                   Delete Products When Out of Stock?
-                  <mat-icon class="text-gray-400 pl-1" style="transform: scale(0.6);" matTooltip="By default, when a
+                  <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="By default, when a
                   product available inventory reaches 0 it is kept as an Out of Stock item in Shopify. Enable this
                   option to instead delete these products from Shopify." matTooltipPosition="above">
                     help</mat-icon>
                 </span>
+              </mat-checkbox>
+            </li>
+            <li>
+              <mat-checkbox formControlName="publishByDefault">
+              <span class="font-bold inline-flex">
+                Publish by Default?
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
+                Shopify will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
               </mat-checkbox>
             </li>
           </ul>
