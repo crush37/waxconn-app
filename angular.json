@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "waxconn-admin": {
+    "waxconn-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/waxconn-admin",
+            "outputPath": "dist/waxconn-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -79,10 +79,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "waxconn-admin:build:production"
+              "browserTarget": "waxconn-app:build:production"
             },
             "development": {
-              "browserTarget": "waxconn-admin:build:development"
+              "browserTarget": "waxconn-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -90,7 +90,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "waxconn-admin:build"
+            "browserTarget": "waxconn-app:build"
           }
         },
         "test": {

@@ -6,7 +6,7 @@ import { environment } from '@environments/environment';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'waxconn-admin';
+  title = 'waxconn-app';
 
   constructor() {
     this.loadPaypalSDK();
