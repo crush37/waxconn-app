@@ -5,6 +5,7 @@ import { Serializer } from '@core/models/serializer.interface';
 export class Setting extends Resource {
   public id!: string;
   public name!: string;
+  public companyName!: string;
   public taxNumber!: string;
   public address1!: string;
   public address2!: string;
@@ -26,6 +27,7 @@ export class SettingSerializer implements Serializer {
   fromJson(json: any): Setting {
     const resource = new Setting();
     resource.name = json.data.name;
+    resource.companyName = json.data.company_name;
     resource.taxNumber = json.data.tax_number;
     resource.address1 = json.data.address_1;
     resource.address2 = json.data.address_2;
@@ -45,6 +47,7 @@ export class SettingSerializer implements Serializer {
   toJson(resource: any): any {
     return {
       name: resource.name,
+      company_name: resource.companyName,
       tax_number: resource.taxNumber,
       address_1: resource.address1,
       address_2: resource.address2,
