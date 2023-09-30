@@ -26,20 +26,20 @@ export class Setting extends Resource {
 export class SettingSerializer implements Serializer {
   fromJson(json: any): Setting {
     const resource = new Setting();
-    resource.name = json.data.name;
-    resource.companyName = json.data.company_name;
-    resource.taxNumber = json.data.tax_number;
-    resource.address1 = json.data.address_1;
-    resource.address2 = json.data.address_2;
-    resource.country = json.data.country;
-    resource.region = json.data.region;
-    resource.city = json.data.city;
-    resource.postcode = json.data.postcode;
-    resource.email = json.data.email;
-    resource.phone = json.data.phone;
-    resource.language = json.data.language;
-    resource.timezone = json.data.timezone;
-    resource.currency = json.data.currency;
+    resource.name = json.name;
+    resource.companyName = json.company_name;
+    resource.taxNumber = json.tax_number;
+    resource.address1 = json.address_1;
+    resource.address2 = json.address_2;
+    resource.country = json.country;
+    resource.region = json.region;
+    resource.city = json.city;
+    resource.postcode = json.postcode;
+    resource.email = json.email;
+    resource.phone = json.phone;
+    resource.language = json.language;
+    resource.timezone = json.timezone;
+    resource.currency = json.currency;
 
     return resource;
   }
