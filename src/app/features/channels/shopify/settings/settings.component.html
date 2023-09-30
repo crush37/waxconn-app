@@ -135,6 +135,26 @@
           </p>
           <ul>
             <li>
+              <mat-checkbox formControlName="publishByDefault">
+              <span class="font-bold inline-flex">
+                Publish by Default?
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
+                Shopify will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
+              </mat-checkbox>
+            </li>
+            <li>
+              <mat-checkbox formControlName="taxable">
+              <span class="font-bold inline-flex">
+                Charge Tax by Default?
+                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
+                'charge tax' will be pre-selected by default." matTooltipPosition="above">
+                  help</mat-icon>
+              </span>
+              </mat-checkbox>
+            </li>
+            <li>
               <mat-checkbox formControlName="deleteOutOfStockProducts">
                 <span class="font-bold inline-flex">
                   Delete Products When Out of Stock?
@@ -143,16 +163,6 @@
                   option to instead delete these products from Shopify." matTooltipPosition="above">
                     help</mat-icon>
                 </span>
-              </mat-checkbox>
-            </li>
-            <li>
-              <mat-checkbox formControlName="publishByDefault">
-              <span class="font-bold inline-flex">
-                Publish by Default?
-                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
-                Shopify will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
-                  help</mat-icon>
-              </span>
               </mat-checkbox>
             </li>
           </ul>
