@@ -67,6 +67,7 @@ export class SettingsComponent implements OnInit {
       apiPassword: new UntypedFormControl(this.settings?.apiPassword, Validators.required),
       apiSharedSecret: new UntypedFormControl(this.settings?.apiSharedSecret, Validators.required),
       isActive: new UntypedFormControl(this.settings?.isActive ?? false),
+      taxable: new UntypedFormControl(this.settings?.taxable ?? false),
       publishByDefault: new UntypedFormControl(this.settings?.publishByDefault ?? true),
       deleteOutOfStockProducts: new UntypedFormControl(this.settings?.deleteOutOfStockProducts ?? false),
       productUpdatesPolicy: new UntypedFormControl(this.settings?.productUpdatesPolicy, Validators.required),

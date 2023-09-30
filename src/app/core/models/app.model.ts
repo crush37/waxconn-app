@@ -17,6 +17,7 @@ export class App extends Resource {
     name: string;
     salesDisabled: boolean;
     publishByDefault: boolean;
+    taxable: boolean;
     isActive: boolean;
   }[];
   public user!: {
@@ -55,6 +56,7 @@ export class AppSerializer implements Serializer {
         name: channel.name,
         salesDisabled: channel.sales_disabled,
         publishByDefault: channel.publish_by_default,
+        taxable: channel.taxable,
         isActive: channel.is_active
       });
     });

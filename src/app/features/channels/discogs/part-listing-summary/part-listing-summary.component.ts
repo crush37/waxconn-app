@@ -29,6 +29,7 @@ export class PartListingSummaryComponent implements OnInit {
   currencyCode!: string;
   priceSuggestion: { currency: string, value: number } | null = null;
   disableQuantities: boolean = true;
+  taxable: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,6 +42,12 @@ export class PartListingSummaryComponent implements OnInit {
       this.disableQuantities = !response.app.quantities;
 
       this.channels = response.app.channels.filter((channel: any) => !channel.salesDisabled);
+
+      this.channels.map((channel: any) => {
+        if (channel.type === 'shopify') {
+          this.taxable = channel.taxable;
+        }
+      });
 
       if (!this.release.blockedFromSale && this.release.status !== 'Draft') {
         this.selectedChannels = this.channels.map((channel: any) => {
@@ -62,7 +69,7 @@ export class PartListingSummaryComponent implements OnInit {
       quantity: new UntypedFormControl({value: 1, disabled: this.disableQuantities}, Validators.required),
       price: new UntypedFormControl(null, Validators.required),
       allowOffers: new UntypedFormControl(false, Validators.required),
-      taxable: new UntypedFormControl(false, Validators.required),
+      taxable: new UntypedFormControl(this.taxable, Validators.required),
       barcode: new UntypedFormControl(this.release.barcode),
       sku: new UntypedFormControl(null),
       formatQuantity: new UntypedFormControl(this.release.formatQuantity),
