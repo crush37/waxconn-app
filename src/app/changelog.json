@@ -93,5 +93,19 @@
       "fixed": [
       ]
     }
+  },
+  {
+    "id": 9,
+    "version": "1.78.00",
+    "date": "Jun 12, 2023",
+    "changelog": {
+      "added": [
+        "New 'Charge Tax by Default' option allows enabling/disabling the pre selection of charge tax on product creation"
+      ],
+      "changed": [
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]
