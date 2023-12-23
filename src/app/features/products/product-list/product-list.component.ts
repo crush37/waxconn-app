@@ -50,27 +50,28 @@ export class ProductListComponent implements OnInit {
       {
         name: 'status', header: 'Status', default: 'active', multiple: false,
         options: [
+          { text: 'All', value: 'all' },
           { text: 'Active', value: 'active' },
           { text: 'Draft', value: 'draft' },
           { text: 'Archived', value: 'archived' },
         ]
       },
-      // {
-      //   name: 'sort_by', header: 'Sort By', default: 'created_at', multiple: false,
-      //   options: [
-      //     { text: 'Title', value: 'title' },
-      //     { text: 'Created', value: 'created_at' },
-      //     { text: 'Updated', value: 'updated_at' },
-      //     { text: 'Price', value: 'price' },
-      //   ]
-      // },
-      // {
-      //   name: 'sort_order', header: 'Sort Order', default: 'desc', multiple: false,
-      //   options: [
-      //     { text: 'Asc', value: 'asc' },
-      //     { text: 'Desc', value: 'desc' },
-      //   ]
-      // }
+      {
+        name: 'sort_by', header: 'Sort By', default: 'created_at', multiple: false,
+        options: [
+          { text: 'Title', value: 'title' },
+          { text: 'Created', value: 'created_at' },
+          { text: 'Updated', value: 'updated_at' },
+          { text: 'Price', value: 'price' },
+        ]
+      },
+      {
+        name: 'sort_order', header: 'Sort Order', default: 'desc', multiple: false,
+        options: [
+          { text: 'Asc', value: 'asc' },
+          { text: 'Desc', value: 'desc' },
+        ]
+      }
     ],
   };
   imagePlaceholder = './assets/default-placeholder.png';
