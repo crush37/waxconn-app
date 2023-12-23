@@ -45,7 +45,7 @@ export class PartListingSummaryComponent implements OnInit {
 
       this.channels.map((channel: any) => {
         if (channel.type === 'shopify') {
-          this.taxable = channel.taxable;
+          this.taxable = channel.taxable || false;
         }
       });
 
