@@ -8,7 +8,11 @@ module.exports = {
         "./projects/**/*.{html,ts}"
     ],
     theme: {
-        extend: {},
+        extend: {
+            scale: {
+                '200': '2',
+            }
+        },
     },
     variants: {
         scrollbar: ['dark'],
