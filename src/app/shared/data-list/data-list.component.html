@@ -22,7 +22,7 @@
         <mat-form-field [appearance]="searchConfig.appearance" class="w-full lg:w-40 lg:pl-2">
           <mat-label>{{ select.header }}</mat-label>
           <mat-select formControlName="{{ select.name }}" [multiple]="select.multiple">
-            <mat-option *ngIf="!select.multiple" value="all">All</mat-option>
+<!--            <mat-option *ngIf="!select.multiple" value="all">All</mat-option>-->
             <mat-option *ngFor="let option of select.options" value="{{ option.value }}">{{ option.text | titlecase }}</mat-option>
           </mat-select>
         </mat-form-field>

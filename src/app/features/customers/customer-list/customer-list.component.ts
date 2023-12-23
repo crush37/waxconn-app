@@ -46,6 +46,7 @@ export class CustomerListComponent {
       {
         name: 'accepts_marketing', header: 'Type', default: 'all', multiple: false,
         options: [
+          { text: 'All', value: 'all' },
           { text: 'Subscribers', value: 1 },
           { text: 'Non Subscribers', value: 0 }
         ]

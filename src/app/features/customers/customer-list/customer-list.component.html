@@ -13,7 +13,7 @@
     <ng-template #header>
       <th class="w-9/12 lg:w-10/12 p-4 text-left">Customer</th>
       <th class="w-3/12 lg:w-1/12 p-4 text-right">Orders</th>
-      <th class="w-1/12 p-4 text-right hidden lg:table-cell">Spent</th>
+      <th class="w-1/12 p-4 pr-6 text-right hidden lg:table-cell">Spent</th>
     </ng-template>
 
     <ng-template #row let-row="row">
@@ -27,7 +27,7 @@
         </span>
       </td>
       <td class="p-4 text-right border-b">{{ g(row).ordersCount }}</td>
-      <td class="p-4 text-right border-b hidden lg:table-cell">{{ g(row).amountSpent | currency }}</td>
+      <td class="p-4 pr-6 text-right border-b hidden lg:table-cell">{{ g(row).amountSpent | currency }}</td>
     </ng-template>
 
   </app-data-list>
