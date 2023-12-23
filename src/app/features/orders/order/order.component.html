@@ -9,6 +9,9 @@
       <button mat-flat-button *ngIf="order.paymentStatus === 'paid' && order.fulfillmentStatus === 'unfulfilled'"
               (click)="openFulfillmentDialog()" color="accent" class="ml-2">Mark as Fulfilled
       </button>
+      <button printSectionId="print-order" mat-flat-button color="primary" class="ml-2" ngxPrint>
+        Print
+      </button>
     </ng-container>
   </ng-template>
 </app-page-header>
@@ -17,7 +20,7 @@
 
 <div *ngIf="!loading && order" class="grid lg:grid-cols-8 gap-x-4">
 
-  <div class="lg:order-last lg:col-span-2">
+  <div id="print-order" class="lg:order-last lg:col-span-2">
     <div class="grid grid-flow-row gap-x-4">
       <div class="mb-4">
         <app-part-order-summary [order]="order"></app-part-order-summary>

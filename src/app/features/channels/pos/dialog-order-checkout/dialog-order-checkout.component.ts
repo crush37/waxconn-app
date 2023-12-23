@@ -37,6 +37,7 @@ export class DialogOrderCheckoutComponent implements OnInit {
   total!: number;
   itemsCount!: number;
   paid = false;
+  submitting =  false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { formGroup: UntypedFormGroup },
@@ -55,12 +56,18 @@ export class DialogOrderCheckoutComponent implements OnInit {
     if (!this.data.formGroup.valid) {
       return;
     }
-    this.apiService.save(this.data.formGroup.getRawValue()).subscribe(() => {
-      this.data.formGroup.markAsPristine();
-      this.data.formGroup.enable();
-      this.paid = true;
-    }, () => {
-      this.data.formGroup.enable();
+
+    this.submitting = true;
+    this.apiService.save(this.data.formGroup.getRawValue()).subscribe({
+      next: () => {
+        this.data.formGroup.markAsPristine();
+        this.data.formGroup.enable();
+        this.paid = true;
+      },
+      error: () => {
+        this.data.formGroup.enable();
+      },
+      complete: () => { this.submitting = false; }
     });
   }
 

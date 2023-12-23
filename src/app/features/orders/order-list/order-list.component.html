@@ -8,10 +8,10 @@
   <app-data-list [itemRoute]="['orders']" [searchConfig]="searchConfig">
 
     <ng-template #header>
-      <th class="w-6/12 p-4 text-left">Order</th>
-      <th class="w-4/12 p-4 text-right">Payment / Fulfillment</th>
-      <th class="w-1/12 p-4 text-right">Items</th>
-      <th class="w-1/12 p-4 text-right">Total</th>
+      <th class="w-9/12 md:w-6/12 p-4 text-left">Order</th>
+      <th class="w-4/12 p-4 text-right hidden md:table-cell">Payment / Fulfillment</th>
+      <th class="w-1/12 p-4 text-right hidden md:table-cell">Items</th>
+      <th class="w-3/12 md:w-1/12 p-4 md:pr-6 text-right">Total</th>
     </ng-template>
 
     <ng-template #row let-row="row">
@@ -30,7 +30,7 @@
               <span class="mat-body-strong">#{{ g(row).id }}</span>
             </ng-container>
           </div>
-          <div class="border-l pl-4">
+          <div class="border-l pl-4 hidden md:block">
             <span *ngIf="g(row).customerName" class="mat-body-strong">{{ g(row).customerName }}</span>
             <span *ngIf="!g(row).customerName" class="mat-body-strong">Generic Customer</span><br>
             <ng-container *ngIf="g(row).channelType !== 'pos' && g(row).shippingAddress">
@@ -41,7 +41,7 @@
         </div>
       </td>
 
-      <td class="p-4 text-right border-b">
+      <td class="p-4 text-right border-b hidden md:table-cell">
         <div *ngIf="!g(row).cancelledAt" class="flex justify-end">
           <div class="pr-4">
             <span [class]="'rounded py-1 px-3 ' + (g(row).paymentStatus === 'paid' ? 'bg-gray-300' : 'bg-yellow-300')">
@@ -55,16 +55,15 @@
           </div>
         </div>
 
-        <div *ngIf="g(row).cancelledAt" class="flex justify-end">
+        <div *ngIf="g(row).cancelledAt" class="flex justify-end md:block">
           <div>
             <span class="rounded py-1 px-3 bg-gray-300">Cancelled</span>
           </div>
         </div>
       </td>
 
-      <td class="p-4 text-right border-b">{{ g(row).itemsCount }}</td>
-
-      <td class="p-4 text-right border-b">{{ g(row).total | currency }}</td>
+      <td class="p-4 text-right border-b hidden md:table-cell">{{ g(row).itemsCount }}</td>
+      <td class="p-4 pr-6 text-right border-b">{{ g(row).total | currency }}</td>
     </ng-template>
 
   </app-data-list>

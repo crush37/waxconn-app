@@ -49,6 +49,7 @@ export class OrderListComponent {
       {
         name: 'payment_status', header: 'Payment', default: 'all', multiple: false,
         options: [
+          { text: 'All', value: 'all' },
           { text: 'Pending', value: 'pending' },
           { text: 'Requires Confirmation', value: 'requires_confirmation' },
           { text: 'Authorized', value: 'authorized' },
@@ -62,6 +63,7 @@ export class OrderListComponent {
       {
         name: 'fulfillment_status', header: 'Fulfillment', default: 'all', multiple: false,
         options: [
+          { text: 'All', value: 'all' },
           { text: 'Unfulfilled', value: 'unfulfilled' },
           { text: 'Fulfilled', value: 'fulfilled' },
           { text: 'Partially Fulfilled', value: 'partially_fulfilled' },

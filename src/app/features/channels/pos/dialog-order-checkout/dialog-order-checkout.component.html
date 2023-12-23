@@ -8,14 +8,14 @@
       </div>
 
       <div *ngIf="paid" class="text-center">
-        <div>
-          <mat-icon class="text-green-800">check_circle</mat-icon>
+        <div class="mb-3">
+          <mat-icon class="text-green-800 scale-200">check_circle</mat-icon>
         </div>
         <strong class="sm:text-xl">Order Created</strong>
       </div>
     </div>
 
-    <button *ngIf="!paid" (click)="submit()" class="w-full p-4" color="primary" mat-flat-button>
+    <button *ngIf="!paid" (click)="submit()" [disabled]="submitting" class="w-full p-4" color="primary" mat-flat-button>
       Save & Pay
     </button>
 
