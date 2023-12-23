@@ -107,5 +107,21 @@
       "fixed": [
       ]
     }
+  },
+  {
+    "id": 10,
+    "version": "1.79.00",
+    "date": "Oct 24, 2023",
+    "changelog": {
+      "added": [
+        "New Product Search Filters allows sorting products by title, creation and update dates, and price"
+      ],
+      "changed": [
+        "Price is now displayed by default in the products listing",
+        "Minor improvements and listing changes for mobile view."
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]
