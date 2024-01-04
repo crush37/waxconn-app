@@ -29,11 +29,10 @@ export class AuthService {
   activate(
     id: string,
     hash: string,
-    expires: string,
     signature: string,
     params: { password: string, passwordConfirmation: string }
   ): Observable<any> {
-    const url = 'auth/activate/' + id + '/' + hash + '?expires=' + expires + '&signature=' + signature;
+    const url = 'auth/activate/' + id + '/' + hash + '?signature=' + signature;
     return this.httpClient.post<boolean>(url, {
       password: params.password,
       password_confirmation: params.passwordConfirmation
