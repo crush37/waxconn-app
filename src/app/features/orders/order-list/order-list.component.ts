@@ -73,6 +73,7 @@ export class OrderListComponent {
       {
         name: 'status', header: 'Status', default: 'open', multiple: false,
         options: [
+          { text: 'All', value: 'all' },
           { text: 'Open', value: 'open' },
           { text: 'Archived', value: 'archived' },
           { text: 'Cancelled', value: 'cancelled' },
@@ -87,7 +88,8 @@ export class OrderListComponent {
   ngOnInit(): void {
     this.activatedRoute.root.firstChild?.data.subscribe((response: any) => {
       if (response.app.channels.length > 0) {
-        const options: { text: string, value: number }[] = [];
+        const options: { text: string, value: any }[] = [];
+        options.push({ text: 'All', value: 'all' })
         response.app.channels.forEach((channel: any) => {
           options.push({ text: channel.name, value: channel.id })
         });
