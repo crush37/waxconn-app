@@ -7,6 +7,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { BasicLayoutComponent } from './basic-layout/basic-layout.component';
 import { BlankLayoutComponent } from './blank-layout/blank-layout.component';
+import { PrintLayoutComponent } from "./print-layout/print-layout.component";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { BlankLayoutComponent } from './blank-layout/blank-layout.component';
     NavigationComponent,
     MainLayoutComponent,
     BasicLayoutComponent,
-    BlankLayoutComponent
+    BlankLayoutComponent,
+    PrintLayoutComponent,
   ],
   imports: [
     RouterModule,

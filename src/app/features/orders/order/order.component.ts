@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '@core/services/api.service';
 import { Order as BaseOrder, OrderSerializer as BaseOrderSerializer } from '@core/models/order.model';
@@ -50,6 +50,7 @@ export class OrderSerializer extends BaseOrderSerializer {
   ]
 })
 export class OrderComponent implements OnInit {
+  appName!: string;
   title = 'Order';
   subTitle = 'View';
 
@@ -59,9 +60,10 @@ export class OrderComponent implements OnInit {
   orderItems: { data: OrderItem[] | null } = { data: null };
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    protected activatedRoute: ActivatedRoute,
+    protected dialog: MatDialog,
     private apiService: ApiService<Order>,
-    protected dialog: MatDialog) {
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -115,5 +117,13 @@ export class OrderComponent implements OnInit {
         this.loadData();
       }
     });
+  }
+
+  printOrder(): void {
+    const url = '/print/order/' + this.id;
+
+    window.open(
+      this.router.serializeUrl(this.router.createUrlTree([url])), '_blank'
+    );
   }
 }

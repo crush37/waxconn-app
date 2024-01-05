@@ -8,5 +8,6 @@ import { Order } from '@features/orders/order/order.component';
 })
 export class PartOrderCustomerOverviewComponent {
   @Input() order!: Order;
+  @Input() mode: string = 'vertical';
   itemPluralMapping = itemPluralMapping;
 }

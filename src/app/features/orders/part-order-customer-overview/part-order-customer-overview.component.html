@@ -1,9 +1,9 @@
-<mat-card>
-  <h3>Customer</h3>
+<mat-card class="p-0">
+  <h3 class="px-4 pt-4">Customer</h3>
   <mat-divider></mat-divider>
 
   <ng-container *ngIf="!order.customerId">
-    <div class="pt-5 text-primary-400">
+    <div class="p-4 text-primary-400">
       <p>
         Generic customer.
       </p>
@@ -11,53 +11,55 @@
   </ng-container>
 
   <ng-container *ngIf="order.customerId">
-    <div class="pt-5 pb-3">
-      <a [routerLink]="['/', 'customers', order.customerId]" class="link">{{ order.customerName || 'Generic Customer' }}</a><br>
-      {{ order.customer?.ordersCount | i18nPlural: itemPluralMapping['order']}}<br><br>
-      <div class="flex items-center">
-        <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">email</mat-icon>
-        <a href="mailto:{{ order.customer?.email }}" class="link">{{ order.customer?.email }}</a>
-      </div>
-      <div *ngIf="order.customer?.phone" class="flex items-center mt-1">
-        <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">phone</mat-icon>
-        <a href="tel:{{ order.customer?.phone }}" class="link">{{ order.customer?.phone }}</a>
-      </div>
-    </div>
-
-    <mat-divider></mat-divider>
-    <div class="py-3">
-      <h3> Shipping Address </h3>
-      <p *ngIf="!order.shippingAddress" class="text-primary-300">Not provided.</p>
-      <ng-container *ngIf="order.shippingAddress">
-        <span> {{ order.shippingAddress.fullName }} </span><br>
-        <span> {{ order.shippingAddress.address1 }} </span><br>
-        <span *ngIf="order.shippingAddress.address2"> {{ order.shippingAddress.address2 }} <br></span>
-        <span> {{ order.shippingAddress.city }}, {{ order.shippingAddress.postcode }} </span><br>
-        <span *ngIf="order.shippingAddress.region"> {{ order.shippingAddress.region }} <br></span>
-        <span> {{ order.shippingAddress.country }} </span>
-        <div *ngIf="order.shippingAddress.phone" class="flex items-center mt-4">
-          <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">phone</mat-icon>
-          <a href="tel:{{ order.shippingAddress.phone }}" class="link">{{ order.shippingAddress.phone }}</a>
+    <div [ngClass]="{'grid grid-flow-col': mode === 'horizontal'}">
+      <div class="p-4">
+        <a [routerLink]="['/', 'customers', order.customerId]" class="link">{{ order.customerName || 'Generic Customer' }}</a><br>
+        {{ order.customer?.ordersCount | i18nPlural: itemPluralMapping['order']}}<br><br>
+        <div class="flex items-center">
+          <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">email</mat-icon>
+          <a href="mailto:{{ order.customer?.email }}" class="link">{{ order.customer?.email }}</a>
         </div>
-      </ng-container>
-    </div>
-
-    <mat-divider></mat-divider>
-    <div class="py-3">
-      <h3> Billing Address </h3>
-      <p *ngIf="!order.billingAddress" class="text-primary-300">Not provided.</p>
-      <ng-container *ngIf="order.billingAddress">
-        <span> {{ order.billingAddress.fullName }} </span><br>
-        <span> {{ order.billingAddress.address1 }} </span><br>
-        <span *ngIf="order.billingAddress.address2"> {{ order.billingAddress.address2 }} <br></span>
-        <span> {{ order.billingAddress.city }}, {{ order.billingAddress.postcode }} </span><br>
-        <span *ngIf="order.billingAddress.region"> {{ order.billingAddress.region }} <br></span>
-        <span> {{ order.billingAddress.country }} </span>
-        <div *ngIf="order.billingAddress.phone" class="flex items-center mt-4">
+        <div *ngIf="order.customer?.phone" class="flex items-center mt-1">
           <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">phone</mat-icon>
-          <a href="tel:{{ order.billingAddress.phone }}" class="link">{{ order.billingAddress.phone }}</a>
+          <a href="tel:{{ order.customer?.phone }}" class="link">{{ order.customer?.phone }}</a>
         </div>
-      </ng-container>
+      </div>
+
+      <mat-divider *ngIf="mode === 'vertical'"></mat-divider>
+      <div class="p-4">
+        <h3> Shipping Address </h3>
+        <p *ngIf="!order.shippingAddress" class="text-primary-300">Not provided.</p>
+        <ng-container *ngIf="order.shippingAddress">
+          <span> {{ order.shippingAddress.fullName }} </span><br>
+          <span> {{ order.shippingAddress.address1 }} </span><br>
+          <span *ngIf="order.shippingAddress.address2"> {{ order.shippingAddress.address2 }} <br></span>
+          <span> {{ order.shippingAddress.city }}, {{ order.shippingAddress.postcode }} </span><br>
+          <span *ngIf="order.shippingAddress.region"> {{ order.shippingAddress.region }} <br></span>
+          <span> {{ order.shippingAddress.country }} </span>
+          <div *ngIf="order.shippingAddress.phone" class="flex items-center mt-4">
+            <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">phone</mat-icon>
+            <a href="tel:{{ order.shippingAddress.phone }}" class="link">{{ order.shippingAddress.phone }}</a>
+          </div>
+        </ng-container>
+      </div>
+
+      <mat-divider *ngIf="mode === 'vertical'"></mat-divider>
+      <div class="p-4">
+        <h3> Billing Address </h3>
+        <p *ngIf="!order.billingAddress" class="text-primary-300">Not provided.</p>
+        <ng-container *ngIf="order.billingAddress">
+          <span> {{ order.billingAddress.fullName }} </span><br>
+          <span> {{ order.billingAddress.address1 }} </span><br>
+          <span *ngIf="order.billingAddress.address2"> {{ order.billingAddress.address2 }} <br></span>
+          <span> {{ order.billingAddress.city }}, {{ order.billingAddress.postcode }} </span><br>
+          <span *ngIf="order.billingAddress.region"> {{ order.billingAddress.region }} <br></span>
+          <span> {{ order.billingAddress.country }} </span>
+          <div *ngIf="order.billingAddress.phone" class="flex items-center mt-4">
+            <mat-icon class="text-sm h-4 w-4 mr-1 mb-1">phone</mat-icon>
+            <a href="tel:{{ order.billingAddress.phone }}" class="link">{{ order.billingAddress.phone }}</a>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </ng-container>
 

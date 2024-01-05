@@ -30,6 +30,13 @@ import { PartOrderItemSummaryComponent } from "./part-order-item-summary/part-or
     PartOrderItemOverviewComponent,
     PartOrderItemSummaryComponent,
   ],
+  exports: [
+    PartOrderItemListComponent,
+    PartOrderNotesComponent,
+    PartOrderCustomerOverviewComponent,
+    PartOrderTotalsComponent,
+    PartOrderSummaryComponent
+  ],
   imports: [
     SharedModule,
     OrdersRoutingModule,

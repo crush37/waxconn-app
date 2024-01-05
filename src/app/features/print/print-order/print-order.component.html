@@ -1,0 +1,34 @@
+<div class="hidden print:block print:h-auto">
+
+  <ng-container *ngIf="order">
+
+    <h2>{{ appName }}</h2>
+
+    <div class="grid grid-cols-2 gap-4">
+
+      <div class="col-span-2 break-inside-avoid">
+        <app-part-order-summary [order]="order"></app-part-order-summary>
+      </div>
+
+      <div class="col-span-2 break-inside-avoid">
+        <app-part-order-customer-overview [order]="order" mode="horizontal"></app-part-order-customer-overview>
+      </div>
+
+      <div class="col-span-2 break-inside-avoid">
+        <app-part-order-item-list [loading]="loading" [order]="order"
+                                  [orderItems]="orderItems"></app-part-order-item-list>
+      </div>
+
+      <div class="col-span-1 break-inside-avoid">
+        <app-part-order-notes [notes]="order.message"></app-part-order-notes>
+      </div>
+
+      <div class="col-span-1 break-inside-avoid">
+        <app-part-order-totals [order]="order"></app-part-order-totals>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

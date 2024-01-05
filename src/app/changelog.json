@@ -123,5 +123,20 @@
       "fixed": [
       ]
     }
+  },
+  {
+    "id": 11,
+    "version": "1.80.00",
+    "date": "Dec 28, 2023",
+    "changelog": {
+      "added": [
+        "New Order Details Printing. Easily print your order details with the new 'Print' option."
+      ],
+      "changed": [
+      ],
+      "fixed": [
+        "Order list filters for channel and status were not setting their default values."
+      ]
+    }
   }
 ]

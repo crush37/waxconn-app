@@ -5,6 +5,7 @@ import { AuthGuard } from '@features/auth/auth.guard';
 import { MainLayoutComponent } from '@layouts/main-layout/main-layout.component';
 import { BasicLayoutComponent } from '@layouts/basic-layout/basic-layout.component';
 import { BlankLayoutComponent } from '@layouts/blank-layout/blank-layout.component';
+import { PrintLayoutComponent } from "@layouts/print-layout/print-layout.component";
 
 const routes: Routes = [
   {
@@ -43,6 +44,12 @@ const routes: Routes = [
         loadChildren: () => import('@features/channels/channels.module').then(m => m.ChannelsModule)
       }
     ]
+  },
+  {
+    path: 'print',
+    resolve: { app: AppResolver },
+    component: PrintLayoutComponent,
+    loadChildren: () => import('./features/print/print.module').then(m => m.PrintModule)
   },
   {
     path: '',
