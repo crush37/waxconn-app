@@ -6,7 +6,7 @@ import { Order } from '@core/models/order.model';
   templateUrl: './part-customer-order-list.component.html'
 })
 export class PartCustomerOrderListComponent {
-  @Input() orderList: { data: Order[] | null } = { data: null };
+  @Input() orderList: { data: Order[] } = { data: [] };
 
   o = (row: Order) => row;
 }

@@ -43,7 +43,7 @@ export class CustomerComponent implements OnInit {
 
   id!: string;
   customer!: Customer;
-  orderList: { data: Order[] | null } = { data: null };
+  orderList: { data: Order[] } = { data: [] };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,7 +63,7 @@ export class CustomerComponent implements OnInit {
   loadData(): void {
     this.apiService.get(this.id).subscribe((customer: Customer) => {
       this.customer = customer;
-      this.orderList.data = customer.orders;
+      this.orderList.data = customer.orders || [];
       this.loading = false;
     });
   }
