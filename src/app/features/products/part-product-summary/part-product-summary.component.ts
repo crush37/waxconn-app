@@ -14,6 +14,7 @@ import { Product } from '../product/product.component';
 export class PartProductSummaryComponent implements OnInit {
   @Input() product!: Product;
   @Input() formGroup!: UntypedFormGroup;
+  @Input() isPublishingListings!: boolean;
 
   channels!: any;
   selectedChannels: string[] = [];
@@ -33,7 +34,8 @@ export class PartProductSummaryComponent implements OnInit {
     });
     this.setSelectedChannels();
     this.setFormGroup();
-    this.isActive(this.product.status)
+    this.isActive(this.product.status);
+    this.isPublishing();
   }
 
   isActive(status: string) {
@@ -44,6 +46,13 @@ export class PartProductSummaryComponent implements OnInit {
       this.disableEdits = true;
       this.formGroup.disable();
       this.formGroup.get('status')?.enable();
+    }
+  }
+
+  isPublishing() {
+    if (this.isPublishingListings) {
+      this.disableEdits = true;
+      this.formGroup.disable();
     }
   }
 
@@ -88,5 +97,11 @@ export class PartProductSummaryComponent implements OnInit {
 
   isChannelChecked(id: string): boolean {
     return this.selectedChannels.includes(id);
+  }
+
+  isPublishingListing(channelId: string): boolean {
+    const listing = this.product.listings?.find((listing: Listing) => listing.channelId === channelId);
+
+    return listing ? listing.publishedAt === null : false;
   }
 }

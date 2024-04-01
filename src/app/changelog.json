@@ -138,5 +138,19 @@
         "Order list filters for channel and status were not setting their default values."
       ]
     }
+  },
+  {
+    "id": 12,
+    "version": "1.81.00",
+    "date": "Mar 12, 2024",
+    "changelog": {
+      "added": [
+        "Minor UI improvements"
+      ],
+      "changed": [
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]

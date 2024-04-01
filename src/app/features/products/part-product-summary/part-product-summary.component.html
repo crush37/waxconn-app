@@ -23,7 +23,7 @@
         <ul *ngIf="channels">
           <li *ngFor="let channel of channels">
             <mat-checkbox (change)="selectChannel(channel.id, $event)" [checked]="isChannelChecked(channel.id)" [disabled]="disableEdits">
-              {{ channel.name | titlecase }}
+              <span [ngClass]="{'blinking-text': isPublishingListing(channel.id)}">{{ channel.name | titlecase }}</span>
             </mat-checkbox>
           </li>
         </ul>

@@ -1,7 +1,16 @@
 <app-page-header [subTitle]="subTitle" [title]="title">
   <ng-template #actions>
     <app-back-button></app-back-button>
-    <app-submit-button *ngIf="product?.status != 'deleted'" [formGroup]="formGroup" [goTo]="'products'"></app-submit-button>
+    <app-submit-button
+      *ngIf="product?.status != 'deleted' && !isPublishingListings"
+      [formGroup]="formGroup"
+      [goTo]="'products'">
+    </app-submit-button>
+
+    <button *ngIf="isPublishingListings" (click)="refreshPage()" color="warn" mat-flat-button>
+      <span class="blinking-text">Syncing</span>
+    </button>
+
   </ng-template>
 </app-page-header>
 
@@ -13,7 +22,7 @@
   </div>
 
   <div class="lg:col-span-2">
-    <app-part-product-summary [product]="product" [formGroup]="formGroup"></app-part-product-summary>
+    <app-part-product-summary [product]="product" [formGroup]="formGroup" [isPublishingListings]="isPublishingListings"></app-part-product-summary>
     <div class="pt-5 text-center">
       <app-delete-button *ngIf="product.status != 'deleted'" [id]="product.id" label="Delete Product"></app-delete-button>
     </div>

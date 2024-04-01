@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Product as BaseProduct, ProductSerializer as BaseProductSerializer } from '@core/models/product.model';
@@ -49,7 +49,10 @@ export class ProductComponent implements OnInit {
   product!: Product;
   formGroup = new UntypedFormGroup({});
 
+  isPublishingListings: boolean = false;
+
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private apiService: ApiService<Product>) {
   }
@@ -63,6 +66,7 @@ export class ProductComponent implements OnInit {
           this.product = product;
           this.formGroup.setControl('id', new UntypedFormControl(product.id));
           this.formGroup.setControl('listings', new UntypedFormArray([]));
+          this.setIsPublishingListings();
           this.loading = false;
         });
         this.formGroup.valueChanges.subscribe(form => {
@@ -71,6 +75,20 @@ export class ProductComponent implements OnInit {
           }
         })
       }
+    });
+  }
+
+  setIsPublishingListings(): void {
+    this.isPublishingListings = this.product.listings?.some((listing: Listing) => !listing.publishedAt) ?? false;
+  }
+
+  refreshPage() {
+    // Get the current route URL
+    const currentUrl = this.router.url;
+
+    // Navigate to the same route
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
     });
   }
 }
