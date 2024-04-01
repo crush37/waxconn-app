@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.httpClient.get<boolean>('auth/check');
+    return this.httpClient.get<boolean>('auth/authenticated');
   }
 
   login(params: { email: string, password: string }): Observable<boolean> {
