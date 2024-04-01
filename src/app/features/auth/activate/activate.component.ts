@@ -14,6 +14,7 @@ export class ActivateComponent implements OnInit {
   activated = false;
   id!: string | null;
   hash!: string | null;
+  expires!: string | null;
   signature!: string | null;
 
   constructor(
@@ -26,6 +27,7 @@ export class ActivateComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.id = params.get('id');
       this.hash = params.get('hash');
+      this.expires = params.get('expires');
       this.signature = params.get('signature');
 
       this.formGroup = new UntypedFormGroup({
@@ -53,9 +55,9 @@ export class ActivateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.formGroup.valid && this.id && this.hash && this.signature) {
+    if (this.formGroup.valid && this.id && this.hash && this.expires && this.signature) {
       concat(this.authService.csrfCookie(), this.authService.activate(
-        this.id, this.hash, this.signature, this.formGroup.getRawValue())
+        this.id, this.hash, this.expires, this.signature, this.formGroup.getRawValue())
       ).subscribe(next => {
         if (next) {
           this.activated = true;
