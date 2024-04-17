@@ -11,7 +11,7 @@ import { SearchConfig } from '@shared/data-list/data-list.component';
   providers: [
     ApiService,
     { provide: 'apiServiceEndpoint', useValue: 'products' },
-    { provide: 'apiServiceOptions', useValue: { with: 'listings', per_page: 6 } },
+    { provide: 'apiServiceOptions', useValue: { with: 'listings', per_page: 6, status: 'active' } },
     { provide: 'apiServiceSerializer', useClass: ProductSerializer },
     DataListService,
     { provide: 'DataListServiceStorageKey', useValue: 'pos' },
