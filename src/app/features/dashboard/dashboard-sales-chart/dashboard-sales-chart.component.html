@@ -2,7 +2,13 @@
   <h3>Sales Over Time</h3>
   <mat-divider></mat-divider>
   <div class="h-48">
-    <ng-container *ngIf="loading" class="p-4">Loading..</ng-container>
+
+    <tbody *ngIf="loading">
+    <tr>
+      <td class="p-4">Loading..</td>
+    </tr>
+    </tbody>
+
     <ng-container *ngIf="!loading && barChartData">
       <canvas baseChart
               [data]="barChartData"
