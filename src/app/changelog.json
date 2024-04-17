@@ -152,5 +152,19 @@
       "fixed": [
       ]
     }
+  },
+  {
+    "id": 13,
+    "version": "1.82.00",
+    "date": "Apr 17, 2024",
+    "changelog": {
+      "added": [
+      ],
+      "changed": [
+      ],
+      "fixed": [
+        "POS channel not updating inventory and syncing to Discogs and Shopify."
+      ]
+    }
   }
 ]

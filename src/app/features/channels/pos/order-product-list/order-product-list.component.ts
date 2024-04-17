@@ -35,7 +35,7 @@ export class OrderProductListComponent {
     if (!item && product.inventoryCount >= 1 && product.status !== 'draft' && this.availableOnPosChannel(product)) {
       item = new OrderItem();
       item.productId = product.id;
-      item.externalId = null;
+      item.externalId = this.getExternalId(product);
       item.thumb = product.thumb;
       item.title = product.title;
       item.vendor = product.vendor;
@@ -54,6 +54,11 @@ export class OrderProductListComponent {
     return product.listings?.some(listing => listing.channelType === 'pos') ?? false;
   }
 
+  getExternalId(product: Product): string | null {
+    const listing = product.listings?.find(listing => listing.channelType === 'pos');
+    return listing ? listing.externalId : null;
+  }
+
   itemsCount(): number {
     return this.items.reduce((acc, item) => acc + item.quantity, 0);
   }
@@ -67,7 +72,7 @@ export class OrderProductListComponent {
     this.hide.emit(true);
   }
 
-  onImgError(event: any){
+  onImgError(event: any) {
     event.target.src = this.imagePlaceholder;
   }
 }
