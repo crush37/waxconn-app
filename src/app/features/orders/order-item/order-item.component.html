@@ -9,7 +9,7 @@
 <div *ngIf="!loading && orderItem" class="grid lg:grid-cols-8 gap-4">
 
   <div class="lg:col-span-6">
-    <app-part-order-item-overview [orderItem]="orderItem"></app-part-order-item-overview>
+    <app-part-order-item-overview [orderItem]="orderItem" [cancelled]="!!orderItem.order.cancelledAt"></app-part-order-item-overview>
   </div>
 
   <div class="lg:col-span-2">

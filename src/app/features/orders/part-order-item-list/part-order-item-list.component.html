@@ -3,14 +3,23 @@
 
     <ng-template #header>
       <th class="w-8/12 px-4 pb-4 text-left">
-        <h3 *ngIf="order.fulfillmentStatus === 'fulfilled'" class="mb-0 flex items-center"> Fulfilled
-          <mat-icon class="ml-2 text-green-600">check_circle</mat-icon>
-        </h3>
-        <h3 *ngIf="order.fulfillmentStatus !== 'fulfilled'" class="mb-0 flex items-center">
-          <mat-icon class="mr-2 text-red-600">error</mat-icon>
-          {{ order.fulfillmentStatus | removeUnderscore | titlecase }}
-        </h3>
+        <ng-container *ngIf="order.cancelledAt">
+          <h3 class="mb-0 flex items-center">
+            <mat-icon class="mr-2 text-orange-400">warning</mat-icon> Cancelled
+          </h3>
+        </ng-container>
+
+        <ng-container *ngIf="!order.cancelledAt">
+          <h3 *ngIf="order.fulfillmentStatus === 'fulfilled'" class="mb-0 flex items-center">
+            <mat-icon class="mr-2 text-green-600">check_circle</mat-icon> Fulfilled
+          </h3>
+          <h3 *ngIf="order.fulfillmentStatus !== 'fulfilled'" class="mb-0 flex items-center">
+            <mat-icon class="mr-2 text-red-600">error</mat-icon>
+            {{ order.fulfillmentStatus | removeUnderscore | titlecase }}
+          </h3>
+        </ng-container>
       </th>
+
       <th class="w-2/12 px-4 pb-4 text-right">Quantity</th>
       <th class="w-2/12 px-4 pb-4 text-right">Subtotal</th>
     </ng-template>

@@ -30,8 +30,12 @@
         <app-part-order-notes [notes]="order.message"></app-part-order-notes>
       </div>
 
-      <div class="mb-4">
+      <div class="mb-5">
         <app-part-order-customer-overview [order]="order"></app-part-order-customer-overview>
+      </div>
+
+      <div *ngIf="order.channelType === 'pos' && !order.cancelledAt" class="text-center">
+        <app-cancel-button [id]="order.id" label="Cancel Order"></app-cancel-button>
       </div>
     </div>
   </div>

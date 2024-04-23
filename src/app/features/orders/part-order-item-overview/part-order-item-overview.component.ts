@@ -9,6 +9,7 @@ import { OrderItem } from '../order-item/order-item.component';
 })
 export class PartOrderItemOverviewComponent implements OnInit {
   @Input() orderItem!: OrderItem;
+  @Input() cancelled: boolean = false
 
   currencyCode!: string;
 

@@ -1,8 +1,15 @@
 <mat-card>
   <h3 class="inline-flex items-center">
-    <mat-icon *ngIf="order.paymentStatus === 'paid'" class="mr-2 text-green-600">check_circle</mat-icon>
-    <mat-icon *ngIf="order.paymentStatus !== 'paid'" class="mr-2 text-red-600">error</mat-icon>
-    {{ order.paymentStatus | removeUnderscore | titlecase }}
+    <ng-container *ngIf="order.cancelledAt">
+      <mat-icon class="mr-2 text-orange-400">warning</mat-icon>
+      Cancelled
+    </ng-container>
+
+    <ng-container *ngIf="!order.cancelledAt">
+      <mat-icon *ngIf="order.paymentStatus === 'paid'" class="mr-2 text-green-600">check_circle</mat-icon>
+      <mat-icon *ngIf="order.paymentStatus !== 'paid'" class="mr-2 text-red-600">error</mat-icon>
+      {{ order.paymentStatus | removeUnderscore | titlecase }}
+    </ng-container>
   </h3>
   <mat-divider></mat-divider>
 
