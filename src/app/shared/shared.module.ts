@@ -5,6 +5,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { CurrencyPipe } from './pipes/currency.pipe';
 import { DataListComponent } from '@shared/data-list/data-list.component';
 import { DatePipe } from './pipes/date.pipe';
+import { CancelButtonComponent } from '@shared/cancel-button/cancel-button.component';
 import { DeleteButtonComponent } from '@shared/delete-button/delete-button.component';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxComponent } from './lightbox/lightbox.component';
@@ -51,12 +52,14 @@ import {
     CurrencyPipe,
     DataListComponent,
     DatePipe,
+    CancelButtonComponent,
     DeleteButtonComponent,
     LightboxComponent,
     PageHeaderComponent,
     NotificationsComponent,
     RemoveUnderscorePipe,
     SubmitButtonComponent,
+    UpdateNotificationComponent,
     UpdateNotificationComponent,
     UpdateNotificationDialogComponent
   ],
@@ -83,6 +86,7 @@ import {
     CurrencyPipe,
     DataListComponent,
     DatePipe,
+    CancelButtonComponent,
     DeleteButtonComponent,
     MatAutocompleteModule,
     MatBadgeModule,
