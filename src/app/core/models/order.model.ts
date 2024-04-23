@@ -78,6 +78,7 @@ export class OrderSerializer implements Serializer {
       payment_status: resource.paymentStatus,
       fulfillment_status: resource.fulfillmentStatus,
       message: resource.message,
+      cancelled_at: resource.cancelledAt,
       cancel_reason: resource.cancelReason,
       is_archived: resource.isArchived,
       tracking_number: resource.trackingNumber,
