@@ -7,6 +7,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatIconRegistry } from '@angular/material/icon';
 import { ErrorInterceptor } from '@core/error.interceptor';
 import { environment } from '@environments/environment';
+import { NgxEditorModule } from "ngx-editor";
 
 @NgModule({
   declarations: [],
@@ -17,7 +18,8 @@ import { environment } from '@environments/environment';
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    HttpClientModule
+    HttpClientModule,
+    NgxEditorModule
   ],
   providers: [
     {
