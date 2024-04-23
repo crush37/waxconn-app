@@ -5,7 +5,9 @@ import { Serializer } from '@core/models/serializer.interface';
 export class Product extends Resource {
   public id!: string;
   public thumb!: string;
+  public artist!: string;
   public title!: string;
+  public listingTitle!: string;
   public description!: string;
   public metaTitle!: string;
   public metaDescription!: string;
@@ -48,7 +50,9 @@ export class ProductSerializer implements Serializer {
     const resource = new Product();
     resource.id = json.id;
     resource.thumb = json.thumb;
+    resource.artist = json.artist;
     resource.title = json.title;
+    resource.listingTitle = json.listing_title;
     resource.description = json.description;
     resource.metaTitle = json.meta_title;
     resource.metaDescription = json.meta_description;
@@ -97,7 +101,7 @@ export class ProductSerializer implements Serializer {
     return {
       id: resource.id,
       thumb: resource.thumb,
-      title: resource.title,
+      listing_title: resource.listingTitle,
       description: resource.description,
       type: resource.type,
       barcode: resource.barcode,
