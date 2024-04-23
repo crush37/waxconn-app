@@ -12,8 +12,7 @@
 
   <div class="grid grid-cols-4 gap-4">
 
-    <!--  Left Side -->
-    <div class="col-span-full lg:col-span-3">
+    <div class="col-span-full">
       <mat-card>
         <mat-tab-group mat-align-tabs="start" animationDuration="750ms" dynamicHeight>
           <mat-tab>
@@ -24,37 +23,18 @@
             <ng-template mat-tab-label>Settings</ng-template>
             <ng-container *ngTemplateOutlet="settings"></ng-container>
           </mat-tab>
-<!--          <mat-tab>-->
-<!--            <ng-template mat-tab-label>Templates</ng-template>-->
-<!--            <ng-container *ngTemplateOutlet="templates"></ng-container>-->
-<!--          </mat-tab>-->
+<!--                    <mat-tab>-->
+<!--                      <ng-template mat-tab-label>Templates</ng-template>-->
+<!--                      <ng-container *ngTemplateOutlet="templates"></ng-container>-->
+<!--                    </mat-tab>-->
         </mat-tab-group>
       </mat-card>
     </div>
 
-    <!--  Right Side -->
-    <div class="col-span-full lg:col-span-1 order-first lg:order-last">
-      <!--  Credentials -->
-      <mat-card class="mb-4">
-        <h3 class="inline-flex">Credentials</h3>
-        <mat-divider></mat-divider>
-        <p class="pt-5 pb-2">
-          Required to connect to Discogs and manage your inventory and orders.
-        </p>
-        <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
-          <input formControlName="apiUsername" matInput required type="text">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>API Token</mat-label>
-          <input formControlName="apiToken" matInput required type="password">
-        </mat-form-field>
-      </mat-card>
-    </div>
   </div>
 
   <ng-template #general>
-    <div class="grid grid-cols-4 gap-4 mt-4 lg:mt-8">
+    <div class="grid grid-cols-6 gap-4 mt-4 lg:mt-8">
       <!--  General Settings -->
       <div class="col-span-full md:col-span-2">
         <div class="mb-4">A short and unique name for internal usage (optional).</div>
@@ -74,18 +54,38 @@
         </mat-form-field>
       </div>
 
-      <div class="col-span-full md:col-span-2 pb-4">
+      <div class="col-span-full md:col-span-2 text-right">
         <div class="mb-4">Is this channel enabled or disabled?</div>
         <mat-slide-toggle formControlName="isActive">
           <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
           <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
         </mat-slide-toggle>
       </div>
+
+      <div class="col-span-full md:col-span-2 pb-4">
+        <h3 class="inline-flex">Credentials</h3>
+        <mat-divider></mat-divider>
+        <p class="pt-5 pb-2">
+          Required to connect to Discogs and manage your inventory and orders.
+        </p>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input formControlName="apiUsername" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>API Token</mat-label>
+          <input formControlName="apiToken" matInput required type="password">
+        </mat-form-field>
+      </div>
+
     </div>
   </ng-template>
 
   <ng-template #settings>
     <div class="grid grid-cols-4 gap-4 mt-4">
+
       <!--  Auto Relistings -->
       <div class="col-span-full">
         <h3 class="inline-flex">Auto Relistings</h3>
@@ -106,12 +106,11 @@
       </div>
       <div *ngIf="listingPolicy === 'all'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 lg:p-8">
         <h4 class="font-bold">Publish all policy</h4>
-        <p>Creates a listing for each copy of the product available in stock.</p>
+        <p>Creates a number of listings according to the total available stock for the product.</p>
       </div>
       <div *ngIf="listingPolicy === 'amount'" class="col-span-full md:col-span-2 bg-gray-50 rounded-xl p-4 lg:p-8">
-        <h4 class="font-bold">Number of copies policy</h4>
-        <p>Creates a number of listings for every product, according to the value set here and the
-          product available inventory.</p>
+        <h4 class="font-bold">Number of Listings Policy</h4>
+        <p>Creates a number of listings according to the product available inventory.</p>
         <p>When one copy is sold a new listing is created. Until the inventory is empty.</p>
       </div>
 
@@ -121,43 +120,32 @@
         <mat-divider></mat-divider>
       </div>
       <div class="col-span-full">
-        <p class="pb-2 text-primary-300">
-          System-wide settings that affect how Waxconn relates with Discogs.
-        </p>
         <ul>
-          <li>
-            <mat-checkbox formControlName="salesDisabled">
-              <span class="font-bold inline-flex">
-                Disable Sales?
-                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="If you only use Discogs to
-                search and create products in other channels and you do not wish to sale on Discogs at all,
-                check this box." matTooltipPosition="above">
-                  help</mat-icon>
-              </span>
-            </mat-checkbox>
-          </li>
-        </ul>
-        <ul class="mt-4">
-          <li>
-            <mat-checkbox formControlName="syncReleases">
-              <span class="font-bold inline-flex">
-                Sync Release Updates?
-                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="By default, When a release
-                  is updated in Discogs it is also be updated in Waxconn and any enabled sales channels
-                  (like Shopify). Uncheck this option to disable this behaviour." matTooltipPosition="above">
-                  help</mat-icon>
-              </span>
-            </mat-checkbox>
-          </li>
-          <li>
+          <li class="mb-4">
             <mat-checkbox formControlName="publishByDefault">
-              <span class="font-bold inline-flex">
-                Publish by Default?
-                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
-                Discogs will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
-                  help</mat-icon>
-              </span>
+              <span class="font-bold inline-flex">Publish by Default?</span>
             </mat-checkbox>
+            <p>
+              When new products are created, Discogs is pre-selected as 'available for sale' by default.
+            </p>
+          </li>
+          <li class="mb-4">
+            <mat-checkbox formControlName="syncReleases">
+              <span class="font-bold inline-flex">Sync Release Updates?</span>
+            </mat-checkbox>
+            <p>
+              When a release is updated on Discogs it is also updated on Waxconn and will synced with any
+              enabled sales channels (like Shopify). Uncheck this option to disable this behaviour.
+            </p>
+          </li>
+          <li class="mb-4">
+            <mat-checkbox formControlName="salesDisabled">
+              <span class="font-bold inline-flex">Disable Sales?</span>
+            </mat-checkbox>
+            <p>
+              If you only use Discogs to search and create products on other channels and do not wish
+              to sale on Discogs at all, check this box.
+            </p>
           </li>
         </ul>
 
@@ -166,159 +154,159 @@
     </div>
   </ng-template>
 
-<!--  <ng-template #templates>-->
-<!--    <div class="grid grid-cols-1 gap-4 mt-4">-->
-<!--      &lt;!&ndash;  Shipment Template &ndash;&gt;-->
-<!--      <div class="col-span-full">-->
-<!--        <mat-accordion class="expansion-panel">-->
-<!--          <mat-expansion-panel hideToggle>-->
-<!--            <mat-expansion-panel-header>-->
-<!--              <mat-panel-title>Tracked Shipment Email</mat-panel-title>-->
-<!--              <mat-panel-description>The confirmation email on your Discogs order shipments.</mat-panel-description>-->
-<!--            </mat-expansion-panel-header>-->
-<!--            <div class="grid grid-cols-5 gap-4 mt-4">-->
-<!--              &lt;!&ndash;  Shipment Template &ndash;&gt;-->
-<!--              <div class="col-span-full md:col-span-3 pb-4">-->
-<!--                <textarea formControlName="trackedShipmentTemplate" class="resize-none border rounded-md p-4" style="height: 300px; width: 100%;"></textarea>-->
-<!--              </div>-->
-<!--              <div class="col-span-full lg:col-span-2">-->
-<!--                <p class="font-bold">Available Params</p>-->
-<!--                <div class="border-gray-200 border-b mb-4"></div>-->
-<!--                <table class="table w-full" ngNonBindable>-->
-<!--                  <tbody>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">{{shop}}</td>-->
-<!--                    <td>Your shop name</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">{{first_name}}</td>-->
-<!--                    <td>The customer first name</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">{{last_name}}</td>-->
-<!--                    <td>The customer last name</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">{{courier}}</td>-->
-<!--                    <td>The courier name (eg. DHL)</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">{{tracking_url}}</td>-->
-<!--                    <td>The tracking url</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">{{tracking_number}}</td>-->
-<!--                    <td>The tracking number</td>-->
-<!--                  </tr>-->
-<!--                  </tbody>-->
-<!--                </table>-->
-<!--                <div class="mt-6">-->
-<!--                  <button color="primary" mat-stroked-button routerLink="" disabled>-->
-<!--                    <span> Preview </span>-->
-<!--                  </button>-->
+<!--    <ng-template #templates>-->
+<!--      <div class="grid grid-cols-1 gap-4 mt-4">-->
+<!--        &lt;!&ndash;  Shipment Template &ndash;&gt;-->
+<!--        <div class="col-span-full">-->
+<!--          <mat-accordion class="expansion-panel">-->
+<!--            <mat-expansion-panel hideToggle>-->
+<!--              <mat-expansion-panel-header>-->
+<!--                <mat-panel-title>Tracked Shipment Email</mat-panel-title>-->
+<!--                <mat-panel-description>The confirmation email on your Discogs order shipments.</mat-panel-description>-->
+<!--              </mat-expansion-panel-header>-->
+<!--              <div class="grid grid-cols-5 gap-4 mt-4">-->
+<!--                &lt;!&ndash;  Shipment Template &ndash;&gt;-->
+<!--                <div class="col-span-full md:col-span-3 pb-4">-->
+<!--                  <textarea formControlName="trackedShipmentTemplate" class="resize-none border rounded-md p-4" style="height: 300px; width: 100%;"></textarea>-->
+<!--                </div>-->
+<!--                <div class="col-span-full lg:col-span-2">-->
+<!--                  <p class="font-bold">Available Params</p>-->
+<!--                  <div class="border-gray-200 border-b mb-4"></div>-->
+<!--                  <table class="table w-full" ngNonBindable>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">{{shop}}</td>-->
+<!--                      <td>Your shop name</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">{{first_name}}</td>-->
+<!--                      <td>The customer first name</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">{{last_name}}</td>-->
+<!--                      <td>The customer last name</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">{{courier}}</td>-->
+<!--                      <td>The courier name (eg. DHL)</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">{{tracking_url}}</td>-->
+<!--                      <td>The tracking url</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">{{tracking_number}}</td>-->
+<!--                      <td>The tracking number</td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                  </table>-->
+<!--                  <div class="mt-6">-->
+<!--                    <button color="primary" mat-stroked-button routerLink="" disabled>-->
+<!--                      <span> Preview </span>-->
+<!--                    </button>-->
+<!--                  </div>-->
 <!--                </div>-->
 <!--              </div>-->
-<!--            </div>-->
-<!--          </mat-expansion-panel>-->
+<!--            </mat-expansion-panel>-->
 
-<!--          <mat-expansion-panel hideToggle>-->
-<!--            <mat-expansion-panel-header>-->
-<!--              <mat-panel-title>Product Description</mat-panel-title>-->
-<!--              <mat-panel-description>The general product description for other sale channels.</mat-panel-description>-->
-<!--            </mat-expansion-panel-header>-->
-<!--            <div class="grid grid-cols-5 gap-4 mt-4">-->
-<!--              &lt;!&ndash;  Shipment Template &ndash;&gt;-->
-<!--              <div class="col-span-full md:col-span-3 pb-4">-->
-<!--                &lt;!&ndash; <quill-editor formControlName="productDescriptionTemplate" [styles]="{height: '500px'}"></quill-editor>&ndash;&gt;-->
-<!--                <textarea formControlName="productDescriptionTemplate" class="resize-none border rounded-md p-4" style="height: 260px; width: 100%;"></textarea>-->
-<!--              </div>-->
-<!--              <div class="col-span-full lg:col-span-2">-->
-<!--                <p class="font-bold">Available Params</p>-->
-<!--                <div class="border-gray-200 border-b mb-4"></div>-->
-<!--                <table class="table w-full" ngNonBindable>-->
-<!--                  <tbody>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[artist]</td>-->
-<!--                    <td>The artist name</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[title]</td>-->
-<!--                    <td>The item title</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[label]</td>-->
-<!--                    <td>The label name</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[catalog]</td>-->
-<!--                    <td>The catalog number</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[type]</td>-->
-<!--                    <td>The release type</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[format]</td>-->
-<!--                    <td>The release format</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[country]</td>-->
-<!--                    <td>The country of release</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[released]</td>-->
-<!--                    <td>The year of release</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[genres]</td>-->
-<!--                    <td>The release genres</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[styles]</td>-->
-<!--                    <td>The release styles</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[tracklist]</td>-->
-<!--                    <td>Display the tracklist</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[notes]</td>-->
-<!--                    <td>The release notes</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[videos:x]</td>-->
-<!--                    <td>X is amount to display</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td colspan="2">-->
-<!--                      <p class="font-bold pt-3 underline">Available Listing Params</p>-->
-<!--                    </td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[media_condition]</td>-->
-<!--                    <td>The listing media condition</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[sleeve_condition]</td>-->
-<!--                    <td>The listing sleeve condition</td>-->
-<!--                  </tr>-->
-<!--                  <tr>-->
-<!--                    <td class="font-bold">[comments]</td>-->
-<!--                    <td>Item condition comments</td>-->
-<!--                  </tr>-->
-<!--                  </tbody>-->
-<!--                </table>-->
-<!--                <div class="mt-6">-->
-<!--                  <button color="primary" mat-stroked-button routerLink="" disabled>-->
-<!--                    <span> Preview </span>-->
-<!--                  </button>-->
+<!--            <mat-expansion-panel hideToggle>-->
+<!--              <mat-expansion-panel-header>-->
+<!--                <mat-panel-title>Product Description</mat-panel-title>-->
+<!--                <mat-panel-description>The general product description for other sale channels.</mat-panel-description>-->
+<!--              </mat-expansion-panel-header>-->
+<!--              <div class="grid grid-cols-5 gap-4 mt-4">-->
+<!--                &lt;!&ndash;  Shipment Template &ndash;&gt;-->
+<!--                <div class="col-span-full md:col-span-3 pb-4">-->
+<!--                  &lt;!&ndash; <quill-editor formControlName="productDescriptionTemplate" [styles]="{height: '500px'}"></quill-editor>&ndash;&gt;-->
+<!--                  <textarea formControlName="productDescriptionTemplate" class="resize-none border rounded-md p-4" style="height: 260px; width: 100%;"></textarea>-->
+<!--                </div>-->
+<!--                <div class="col-span-full lg:col-span-2">-->
+<!--                  <p class="font-bold">Available Params</p>-->
+<!--                  <div class="border-gray-200 border-b mb-4"></div>-->
+<!--                  <table class="table w-full" ngNonBindable>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[artist]</td>-->
+<!--                      <td>The artist name</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[title]</td>-->
+<!--                      <td>The item title</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[label]</td>-->
+<!--                      <td>The label name</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[catalog]</td>-->
+<!--                      <td>The catalog number</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[type]</td>-->
+<!--                      <td>The release type</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[format]</td>-->
+<!--                      <td>The release format</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[country]</td>-->
+<!--                      <td>The country of release</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[released]</td>-->
+<!--                      <td>The year of release</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[genres]</td>-->
+<!--                      <td>The release genres</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[styles]</td>-->
+<!--                      <td>The release styles</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[tracklist]</td>-->
+<!--                      <td>Display the tracklist</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[notes]</td>-->
+<!--                      <td>The release notes</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[videos:x]</td>-->
+<!--                      <td>X is amount to display</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td colspan="2">-->
+<!--                        <p class="font-bold pt-3 underline">Available Listing Params</p>-->
+<!--                      </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[media_condition]</td>-->
+<!--                      <td>The listing media condition</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[sleeve_condition]</td>-->
+<!--                      <td>The listing sleeve condition</td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td class="font-bold">[comments]</td>-->
+<!--                      <td>Item condition comments</td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                  </table>-->
+<!--                  <div class="mt-6">-->
+<!--                    <button color="primary" mat-stroked-button routerLink="" disabled>-->
+<!--                      <span> Preview </span>-->
+<!--                    </button>-->
+<!--                  </div>-->
 <!--                </div>-->
 <!--              </div>-->
-<!--            </div>-->
-<!--          </mat-expansion-panel>-->
-<!--        </mat-accordion>-->
+<!--            </mat-expansion-panel>-->
+<!--          </mat-accordion>-->
+<!--        </div>-->
 <!--      </div>-->
-<!--    </div>-->
 
-<!--  </ng-template>-->
+<!--    </ng-template>-->
 </form>

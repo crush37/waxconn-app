@@ -9,10 +9,10 @@
 <mat-card *ngIf="loading">Loading..</mat-card>
 
 <form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
-  <div class="grid grid-cols-4 gap-2 md:gap-4">
 
-    <!--  Left Side -->
-    <div class="col-span-full lg:col-span-3">
+  <div class="grid grid-cols-4 gap-4">
+
+    <div class="col-span-full">
       <mat-card>
         <mat-tab-group mat-align-tabs="start" animationDuration="750ms" dynamicHeight>
           <mat-tab>
@@ -23,50 +23,19 @@
             <ng-template mat-tab-label>Settings</ng-template>
             <ng-container *ngTemplateOutlet="settings"></ng-container>
           </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>Mapping</ng-template>
+            <ng-container *ngTemplateOutlet="mapping"></ng-container>
+          </mat-tab>
         </mat-tab-group>
       </mat-card>
     </div>
 
-    <!--  Right Side -->
-    <div class="col-span-full lg:col-span-1 order-first lg:order-last">
-      <mat-card class="mb-4">
-        <div class="col-span-full">
-          <h3 class="inline-flex">Credentials</h3>
-          <!--        <a [routerLink]="" class="float-right pt-0.5 link">Need help?</a>-->
-          <mat-divider></mat-divider>
-          <p class="pt-4 pb-2 text-primary-300">
-            Required to connect to Shopify and manage your inventory and orders.
-          </p>
-        </div>
-
-        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-          <mat-label>Store URL (eg. waxstore.myshopify.com)</mat-label>
-          <input formControlName="hostname" matInput required type="text">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-          <mat-label>Admin API Token</mat-label>
-          <input formControlName="apiPassword" matInput required type="password">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-          <mat-label>API Key</mat-label>
-          <input formControlName="apiKey" matInput required type="text">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-          <mat-label>API Secret Key</mat-label>
-          <input formControlName="apiSharedSecret" matInput required type="password">
-        </mat-form-field>
-
-      </mat-card>
-    </div>
-
     <ng-template #general>
-      <div class="grid grid-cols-4 gap-4 mt-4">
+      <div class="grid grid-cols-6 gap-4 mt-4 lg:mt-8">
         <!--  General Settings -->
         <div class="col-span-full lg:col-span-2">
-          <p class="pt-4 pb-2 text-primary-300">
+          <p class="mb-4 text-primary-300">
             A short and unique name for internal usage (optional).
           </p>
           <mat-form-field appearance="outline">
@@ -76,7 +45,7 @@
         </div>
 
         <div class="col-span-full lg:col-span-2">
-          <p class="pt-4 pb-2 text-primary-300">
+          <p class="mb-4 text-primary-300">
             Where you manage your inventory and fulfill orders.
           </p>
           <mat-form-field appearance="outline">
@@ -87,13 +56,43 @@
           </mat-form-field>
         </div>
 
-        <div class="col-span-full md:col-span-2 pb-4">
+        <div class="col-span-full md:col-span-2 text-right">
           <div class="mb-4">Is this channel enabled or disabled?</div>
           <mat-slide-toggle formControlName="isActive">
             <span *ngIf="formGroup.get('isActive')?.value">Enabled</span>
             <span *ngIf="!formGroup.get('isActive')?.value">Disabled</span>
           </mat-slide-toggle>
         </div>
+
+        <div class="col-span-full md:col-span-2 pb-4">
+          <h3 class="inline-flex">Credentials</h3>
+          <!--        <a [routerLink]="" class="float-right pt-0.5 link">Need help?</a>-->
+          <mat-divider></mat-divider>
+          <p class="pt-4 pb-2 text-primary-300">
+            Required to connect to Shopify and manage your inventory and orders.
+          </p>
+
+          <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+            <mat-label>Store URL (eg. waxstore.myshopify.com)</mat-label>
+            <input formControlName="hostname" matInput required type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+            <mat-label>Admin API Token</mat-label>
+            <input formControlName="apiPassword" matInput required type="password">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+            <mat-label>API Key</mat-label>
+            <input formControlName="apiKey" matInput required type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+            <mat-label>API Secret Key</mat-label>
+            <input formControlName="apiSharedSecret" matInput required type="password">
+          </mat-form-field>
+        </div>
+
       </div>
     </ng-template>
 
@@ -136,39 +135,176 @@
           <ul>
             <li>
               <mat-checkbox formControlName="publishByDefault">
-              <span class="font-bold inline-flex">
-                Publish by Default?
-                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
-                Shopify will always be pre-selected as 'available for sale' by default." matTooltipPosition="above">
-                  help</mat-icon>
-              </span>
+                <span class="font-bold inline-flex">Publish by Default?</span>
               </mat-checkbox>
+              <p>
+                When new products are created, Shopify is pre-selected as 'available for sale' by default.
+              </p>
             </li>
             <li>
               <mat-checkbox formControlName="taxable">
-              <span class="font-bold inline-flex">
-                Charge Tax by Default?
-                <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="When you create new products,
-                'charge tax' will be pre-selected by default." matTooltipPosition="above">
-                  help</mat-icon>
-              </span>
+                <span class="font-bold inline-flex">Charge Tax by Default?</span>
               </mat-checkbox>
+              <p>
+                When new products are created, 'charge tax' is pre-selected by default.
+              </p>
             </li>
             <li>
               <mat-checkbox formControlName="deleteOutOfStockProducts">
-                <span class="font-bold inline-flex">
-                  Delete Products When Out of Stock?
-                  <mat-icon class="text-gray-400" style="transform: scale(0.6);" matTooltip="By default, when a
-                  product available inventory reaches 0 it is kept as an Out of Stock item in Shopify. Enable this
-                  option to instead delete these products from Shopify." matTooltipPosition="above">
-                    help</mat-icon>
-                </span>
+                <span class="font-bold inline-flex">Delete Products When Out of Stock?</span>
               </mat-checkbox>
+              <p>
+                By default, when a product's available inventory reaches 0, it's marked as "Out of Stock" in Shopify.
+                Enable this option to delete these products from Shopify instead.
+              </p>
             </li>
           </ul>
         </div>
 
       </div>
+    </ng-template>
+
+    <ng-template #mapping>
+      <div class="grid grid-cols-6 gap-4 mt-4">
+
+        <!--  Product Title & Mappings -->
+        <div class="col-span-full lg:col-span-4 grid gap-4">
+
+          <div class="col-span-full">
+            <h3 class="inline-flex">Product</h3>
+            <mat-divider></mat-divider>
+          </div>
+
+          <div class="pb-2 col-span-full">
+            <p class="text-primary-300">
+              How Waxconn maps into the Shopify product.
+            </p>
+
+            <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+              <mat-label>Title</mat-label>
+              <input formControlName="productTitleTemplate" matInput required type="text">
+            </mat-form-field>
+
+            <p class="font-bold">
+              Description
+            </p>
+
+            <div class="NgxEditor__Wrapper">
+              <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+              <ngx-editor [editor]="editor" formControlName="productDescriptionTemplate"></ngx-editor>
+            </div>
+
+            <mat-form-field appearance="outline" class="col-span-full lg:col-span-2 mt-4">
+              <mat-label>Vendor</mat-label>
+              <input formControlName="productVendorTemplate" matInput required type="text">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+              <mat-label>Tags</mat-label>
+              <input formControlName="productTagsTemplate" matInput required type="text">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+              <mat-label>Meta Title</mat-label>
+              <input formControlName="productMetaTitleTemplate" matInput required type="text">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
+              <mat-label>Meta Description</mat-label>
+              <input formControlName="productMetaDescriptionTemplate" matInput required type="text">
+            </mat-form-field>
+
+          </div>
+
+        </div>
+
+        <div class="col-span-full lg:col-span-2">
+
+          <div class="col-span-full pl-2">
+            <h3 class="inline-flex">Available Product Properties (Click to Copy)</h3>
+            <mat-divider></mat-divider>
+          </div>
+
+          <div class="col-span-full p-2 gap-2 inline-flex flex-wrap">
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{title}}'">
+              <span class="font-bold" ngNonBindable>{{title}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{artist}}'">
+              <span class="font-bold" ngNonBindable>{{artist}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{catalog_number}}'">
+              <span class="font-bold" ngNonBindable>{{catalog_number}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{type}}'">
+              <span class="font-bold" ngNonBindable>{{type}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{format}}'">
+              <span class="font-bold" ngNonBindable>{{format}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{country}}'">
+              <span class="font-bold" ngNonBindable>{{country}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{released}}'">
+              <span class="font-bold" ngNonBindable>{{released}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{title}}'">
+              <span class="font-bold" ngNonBindable>{{genres}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{styles}}'">
+              <span class="font-bold" ngNonBindable>{{styles}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{label}}'">
+              <span class="font-bold" ngNonBindable>{{label}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{tracklist}}'">
+              <span class="font-bold" ngNonBindable>{{tracklist}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{notes}}'">
+              <span class="font-bold" ngNonBindable>{{notes}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{videos:x}}'">
+              <span class="font-bold" ngNonBindable>{{videos:x}}</span>
+            </button>
+
+          </div>
+
+          <div class="col-span-full pl-2 mt-4">
+            <h3 class="inline-flex">Other</h3>
+            <mat-divider></mat-divider>
+          </div>
+
+          <div class="col-span-full p-2 gap-2 inline-flex  flex-wrap">
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{media_condition}}'">
+              <span class="font-bold" ngNonBindable>{{media_condition}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{sleeve_condition}}'">
+              <span class="font-bold" ngNonBindable>{{sleeve_condition}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{comments}}'">
+              <span class="font-bold" ngNonBindable>{{comments}}</span>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
     </ng-template>
   </div>
 

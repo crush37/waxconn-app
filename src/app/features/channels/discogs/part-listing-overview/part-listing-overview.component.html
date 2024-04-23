@@ -156,20 +156,4 @@
     </div>
   </mat-card>
 
-  <mat-card class="mt-4">
-    <h3>SEO Metadata</h3>
-    <mat-divider></mat-divider>
-
-    <mat-form-field appearance="outline" class="col-span-full pt-4">
-      <mat-label>Meta Title</mat-label>
-      <input formControlName="metaTitle" matInput maxlength="255">
-      <mat-hint align="end">{{formGroup.get('metaTitle')?.value?.length}} / 60</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="col-span-full">
-      <mat-label>Meta Description</mat-label>
-      <textarea formControlName="metaDescription" matInput maxlength="255" rows="4"></textarea>
-      <mat-hint align="end">{{formGroup.get('metaDescription')?.value?.length}} / 160</mat-hint>
-    </mat-form-field>
-  </mat-card>
 </form>

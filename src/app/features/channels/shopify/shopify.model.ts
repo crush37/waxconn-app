@@ -15,6 +15,12 @@ export class Setting extends Resource {
   public publishByDefault!: boolean;
   public productUpdatesPolicy!: string;
   public deleteOutOfStockProducts!: boolean;
+  public productTitleTemplate!: string;
+  public productDescriptionTemplate!: string;
+  public productVendorTemplate!: string;
+  public productTagsTemplate!: string;
+  public productMetaTitleTemplate!: string;
+  public productMetaDescriptionTemplate!: string;
 }
 
 @Injectable({
@@ -36,6 +42,12 @@ export class SettingSerializer implements Serializer {
     resource.isActive = json.is_active;
     resource.publishByDefault = json.settings.publish_by_default;
     resource.deleteOutOfStockProducts = json.settings.delete_out_of_stock_products;
+    resource.productTitleTemplate = json.settings.templates.product.title;
+    resource.productDescriptionTemplate = json.settings.templates.product.description;
+    resource.productVendorTemplate = json.settings.templates.product.vendor;
+    resource.productTagsTemplate = json.settings.templates.product.tags;
+    resource.productMetaTitleTemplate = json.settings.templates.product.meta_title;
+    resource.productMetaDescriptionTemplate = json.settings.templates.product.meta_description;
 
     return resource;
   }
@@ -56,6 +68,16 @@ export class SettingSerializer implements Serializer {
         },
         delete_out_of_stock_products: resource.deleteOutOfStockProducts,
         publish_by_default: resource.publishByDefault,
+        templates: {
+          product: {
+            title: resource.productTitleTemplate,
+            description: resource.productDescriptionTemplate,
+            vendor: resource.productVendorTemplate,
+            tags: resource.productTagsTemplate,
+            meta_title: resource.productMetaTitleTemplate,
+            meta_description: resource.productMetaDescriptionTemplate,
+          }
+        }
       },
       taxable: resource.taxable,
       is_active: resource.isActive,

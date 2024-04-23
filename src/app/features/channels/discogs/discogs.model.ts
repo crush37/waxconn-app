@@ -28,8 +28,6 @@ export class Release extends Resource {
   public lowestPrice!: number;
   public externalUrl!: string;
   public notes!: string | null;
-  public metaTitle!: string;
-  public metaDescription!: string;
   public want!: number;
   public have!: number;
   public blockedFromSale!: boolean;
@@ -68,8 +66,6 @@ export class ReleaseSerializer implements Serializer {
     resource.lowestPrice = json.lowest_price;
     resource.externalUrl = json.external_url;
     resource.notes = json.notes;
-    resource.metaTitle = json.meta_title;
-    resource.metaDescription = json.meta_description;
     resource.want = json.want;
     resource.have = json.have;
     resource.blockedFromSale = json.blocked_from_sale;
@@ -91,8 +87,6 @@ export class ReleaseSerializer implements Serializer {
       comments: resource.comments,
       private_comments: resource.privateComments,
       location: resource.location,
-      meta_title: resource.metaTitle,
-      meta_description: resource.metaDescription,
       price: resource.price,
       allow_offers: resource.allowOffers,
       taxable: resource.taxable,
@@ -135,8 +129,6 @@ export class PriceSuggestionSerializer implements Serializer {
       sleeve_condition: resource.sleeveCondition,
       comments: resource.comments,
       private_comments: resource.privateComments,
-      meta_title: resource.metaTitle,
-      meta_description: resource.metaDescription,
       price: resource.price,
       currency: resource.currency,
       inventory: {
@@ -196,7 +188,6 @@ export class Setting extends Resource {
   public locationId!: string;
   public apiUsername!: string;
   public apiToken!: string;
-  public productDescriptionTemplate!: string;
   public trackedShipmentTemplate!: string;
   public isActive!: boolean;
   public syncReleases!: boolean;
@@ -218,7 +209,6 @@ export class SettingSerializer implements Serializer {
     resource.locationId = json.location_id ? json.location_id.toString() : null;
     resource.apiUsername = json.settings.api_username;
     resource.apiToken = json.settings.api_token;
-    resource.productDescriptionTemplate = json.settings.templates.description;
     resource.trackedShipmentTemplate = json.settings.templates.tracked_shipment;
     resource.isActive = json.is_active;
     resource.syncReleases = json.syncs[0].is_active;
@@ -246,7 +236,6 @@ export class SettingSerializer implements Serializer {
           quantity: resource.listingPolicyQuantity
         },
         templates: {
-          description: resource.productDescriptionTemplate,
           tracked_shipment: resource.trackedShipmentTemplate
         }
       },

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Setting, SettingSerializer } from '../shopify.model';
 import { Location } from '@core/models/location.model';
 import { ApiMetaService } from '@core/services/api-meta.service';
 import { MatRadioChange } from '@angular/material/radio';
+import { Editor, Toolbar } from "ngx-editor";
 
 @Component({
   selector: 'app-settings',
@@ -24,10 +25,22 @@ export class SettingsComponent implements OnInit {
 
   id!: string;
   settings!: Setting;
-  formGroup = new UntypedFormGroup({});
+  formGroup = new FormGroup({});
 
   locations!: Location[];
   productUpdatesPolicy!: string;
+
+  editor!: Editor;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['horizontal_rule', 'format_clear'],
+  ];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -47,6 +60,8 @@ export class SettingsComponent implements OnInit {
           this.setFormGroup();
           this.loading = false;
         });
+
+        this.editor = new Editor();
       }
     });
   }
@@ -59,22 +74,32 @@ export class SettingsComponent implements OnInit {
 
   setFormGroup(): void {
     this.formGroup = new UntypedFormGroup({
-      id: new UntypedFormControl(this.id),
-      name: new UntypedFormControl(this.settings?.name ?? 'Shopify'),
-      locationId: new UntypedFormControl(this.settings?.locationId, Validators.required),
-      hostname: new UntypedFormControl(this.settings?.hostname, Validators.required),
-      apiKey: new UntypedFormControl(this.settings?.apiKey, Validators.required),
-      apiPassword: new UntypedFormControl(this.settings?.apiPassword, Validators.required),
-      apiSharedSecret: new UntypedFormControl(this.settings?.apiSharedSecret, Validators.required),
-      isActive: new UntypedFormControl(this.settings?.isActive ?? false),
-      taxable: new UntypedFormControl(this.settings?.taxable ?? false),
-      publishByDefault: new UntypedFormControl(this.settings?.publishByDefault ?? true),
-      deleteOutOfStockProducts: new UntypedFormControl(this.settings?.deleteOutOfStockProducts ?? false),
-      productUpdatesPolicy: new UntypedFormControl(this.settings?.productUpdatesPolicy, Validators.required),
+      id: new FormControl(this.id),
+      name: new FormControl(this.settings?.name ?? 'Shopify'),
+      locationId: new FormControl(this.settings?.locationId, Validators.required),
+      hostname: new FormControl(this.settings?.hostname, Validators.required),
+      apiKey: new FormControl(this.settings?.apiKey, Validators.required),
+      apiPassword: new FormControl(this.settings?.apiPassword, Validators.required),
+      apiSharedSecret: new FormControl(this.settings?.apiSharedSecret, Validators.required),
+      isActive: new FormControl(this.settings?.isActive ?? false),
+      taxable: new FormControl(this.settings?.taxable ?? false),
+      publishByDefault: new FormControl(this.settings?.publishByDefault ?? true),
+      deleteOutOfStockProducts: new FormControl(this.settings?.deleteOutOfStockProducts ?? false),
+      productUpdatesPolicy: new FormControl(this.settings?.productUpdatesPolicy, Validators.required),
+      productTitleTemplate: new FormControl(this.settings?.productTitleTemplate, Validators.required),
+      productDescriptionTemplate: new FormControl(this.settings?.productDescriptionTemplate, Validators.required),
+      productVendorTemplate: new FormControl(this.settings?.productVendorTemplate, Validators.required),
+      productTagsTemplate: new FormControl(this.settings?.productTagsTemplate, Validators.required),
+      productMetaTitleTemplate: new FormControl(this.settings?.productMetaTitleTemplate, Validators.required),
+      productMetaDescriptionTemplate: new FormControl(this.settings?.productMetaDescriptionTemplate, Validators.required),
     });
   }
 
   toggleProductPolicy(event: MatRadioChange) {
     this.productUpdatesPolicy = event.value;
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 }

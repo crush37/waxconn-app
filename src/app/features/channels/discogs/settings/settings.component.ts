@@ -68,7 +68,6 @@ export class SettingsComponent implements OnInit {
       apiUsername: new UntypedFormControl(this.settings?.apiUsername, Validators.required),
       apiToken: new UntypedFormControl(this.settings?.apiToken, Validators.required),
       trackedShipmentTemplate: new UntypedFormControl(this.settings?.trackedShipmentTemplate, Validators.required),
-      productDescriptionTemplate: new UntypedFormControl(this.settings?.productDescriptionTemplate, Validators.required),
       isActive: new UntypedFormControl(this.settings?.isActive ?? false),
       syncReleases: new UntypedFormControl({'value': this.settings?.syncReleases ?? false, 'disabled': this.settings?.salesDisabled ?? false}),
       publishByDefault: new UntypedFormControl({'value': this.settings?.publishByDefault ?? true, 'disabled': this.settings?.salesDisabled ?? false}),

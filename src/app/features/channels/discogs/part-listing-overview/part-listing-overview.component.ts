@@ -86,8 +86,6 @@ export class PartListingOverviewComponent implements OnInit {
       comments: new UntypedFormControl(null),
       privateComments: new UntypedFormControl(null),
       location: new UntypedFormControl(null),
-      metaTitle: new UntypedFormControl(this.release.metaTitle),
-      metaDescription: new UntypedFormControl(this.release.metaDescription)
     });
     this.formGroup.valueChanges.subscribe(() => {
       this.values.emit(this.formGroup);
