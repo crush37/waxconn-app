@@ -5,6 +5,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { PartProductOverviewComponent } from './part-product-overview/part-product-overview.component';
 import { PartProductSummaryComponent } from './part-product-summary/part-product-summary.component';
+import { NgxEditorModule } from "ngx-editor";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PartProductSummaryComponent } from './part-product-summary/part-product
   ],
   imports: [
     SharedModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    NgxEditorModule
   ]
 })
 export class ProductsModule {

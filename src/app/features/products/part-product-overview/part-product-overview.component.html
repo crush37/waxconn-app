@@ -56,7 +56,7 @@
 
         </p>
 
-        <h3 class="mb-0">{{product.vendor }} - {{ product.title }}</h3>
+        <h3 class="mb-0">{{product.artist }} - {{ product.title }}</h3>
 
       </div>
 
@@ -67,7 +67,7 @@
     <div class="grid grid-cols-2 gap-x-4 pt-4">
       <mat-form-field appearance="outline" class="col-span-2 lg:col-span-1">
         <mat-label>Media Condition</mat-label>
-        <mat-select formControlName="mediaCondition" required>
+        <mat-select formControlName="mediaCondition">
           <mat-option value="Mint (M)">Mint (M)</mat-option>
           <mat-option value="Near Mint (NM or M-)">Near Mint (NM or M-)</mat-option>
           <mat-option value="Very Good Plus (VG+)">Very Good Plus (VG+)</mat-option>
@@ -206,27 +206,28 @@
   </ng-template>
 
   <ng-template #shopifyChannel>
-    <h3 class="pt-4">Details</h3>
-    <mat-divider></mat-divider>
 
-    <div class="grid grid-cols-2 gap-x-4 pt-4">
+    <div class="grid grid-cols-3 gap-x-4 pt-4 pb-4">
+
+      <div class="col-span-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input formControlName="listingTitle" matInput>
+        </mat-form-field>
+      </div>
+
       <div class="col-span-1">
         <mat-form-field appearance="outline">
-          <mat-label>Vendor / Artist</mat-label>
+          <mat-label>Vendor</mat-label>
           <input formControlName="vendor" matInput>
         </mat-form-field>
       </div>
 
-      <div class="col-span-1">
-        <mat-form-field appearance="outline">
-          <mat-label>Title</mat-label>
-          <input formControlName="title" matInput>
-        </mat-form-field>
+      <div class="col-span-full NgxEditor__Wrapper">
+        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+        <ngx-editor [editor]="editor" formControlName="description"></ngx-editor>
       </div>
 
-      <!--      <div class="col-span-full">-->
-      <!--        <quill-editor formControlName="description" [styles]="{height: '450px'}"></quill-editor>-->
-      <!--      </div>-->
     </div>
 
     <h3>SEO Metadata</h3>

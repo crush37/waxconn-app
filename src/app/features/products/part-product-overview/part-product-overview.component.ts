@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ApiMetaService } from "@core/services/api-meta.service";
 import { Product } from '../product/product.component';
 import { getCurrencySymbol } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs";
-import {map} from "rxjs/operators";
-import {Listing} from "@core/models/listing.model";
+import { map } from "rxjs/operators";
+import { Listing } from "@core/models/listing.model";
+import { Editor, Toolbar } from "ngx-editor";
 
 @Component({
   selector: 'app-part-product-overview',
@@ -27,6 +28,18 @@ export class PartProductOverviewComponent implements OnInit {
   filteredCommentsOptions!: Observable<string[]>;
   filteredLocationsOptions!: Observable<string[]>;
 
+  editor!: Editor;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['horizontal_rule', 'format_clear'],
+  ];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiMetaService: ApiMetaService) {
@@ -39,6 +52,8 @@ export class PartProductOverviewComponent implements OnInit {
       this.disableQuantities = !response.app.quantities;
       this.latestRepricing = response.app.repricing;
     });
+
+    this.editor = new Editor();
 
     this.getCommentsOptions();
     this.getLocationsOptions();
@@ -89,10 +104,10 @@ export class PartProductOverviewComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup.addControl('title', new UntypedFormControl(this.product.title));
+    this.formGroup.addControl('listingTitle', new UntypedFormControl(this.product.listingTitle));
     this.formGroup.addControl('vendor', new UntypedFormControl(this.product.vendor));
     this.formGroup.addControl('description', new UntypedFormControl(this.product.description));
-    this.formGroup.addControl('mediaCondition', new UntypedFormControl(this.product.options.discogs?.mediaCondition));
+    this.formGroup.addControl('mediaCondition', new UntypedFormControl(this.product.options.discogs?.mediaCondition, Validators.required));
     this.formGroup.addControl('sleeveCondition', new UntypedFormControl(this.product.options.discogs?.sleeveCondition));
     this.formGroup.addControl('comments', new UntypedFormControl(this.product.options.discogs?.comments));
     this.formGroup.addControl('privateComments', new UntypedFormControl(this.product.options.discogs?.privateComments));

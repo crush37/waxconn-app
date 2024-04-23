@@ -31,7 +31,7 @@
           </div>
           <img src="{{ g(row).thumb  || imagePlaceholder }}" style="height: 60px; width: 60px; min-width: 60px;" height="60" width="60" class="border rounded p-1 mr-4" alt="" (error)="onImgError($event)">
           <div>
-            <span class="mat-body-strong">{{ g(row).title }} - {{ g(row).vendor }}</span><br>
+            <span class="mat-body-strong">{{ g(row).artist }} - {{ g(row).title }}</span><br>
             <span *ngIf="g(row).status === 'active' && g(row).listings" class="mat-small">
               Available on
               <ng-container *ngFor="let channel of productChannels(g(row).listings ?? []); let i = index">
