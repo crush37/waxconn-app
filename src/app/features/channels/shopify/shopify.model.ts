@@ -18,7 +18,7 @@ export class Setting extends Resource {
   public productTitleTemplate!: string;
   public productDescriptionTemplate!: string;
   public productVendorTemplate!: string;
-  public productTagsTemplate!: string;
+  public productTagsTemplate!: string[];
   public productMetaTitleTemplate!: string;
   public productMetaDescriptionTemplate!: string;
 }
