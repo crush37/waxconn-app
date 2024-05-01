@@ -29,8 +29,8 @@ export class NavigationComponent implements OnInit {
     ],
     tools: [
       { href: '/tools/repricing-agent', icon: 'refresh', text: 'Repricing Agent' },
+      { href: '/tools/listings-manager', icon: 'density_small', text: 'Listings Manager' },
       { href: '/tools/database-importer', icon: 'download', text: 'Database Importer' },
-      // { href: '/tools/listings-publisher', icon: 'upload', text: 'Listings Publisher' },
     ],
     channels: [
       { href: '/channels/discogs', icon: 'device_hub', text: 'Discogs' },
