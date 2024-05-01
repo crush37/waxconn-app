@@ -1,0 +1,101 @@
+<app-page-header [title]="title" [subTitle]="subTitle">
+  <ng-template #actions>
+    <app-back-button></app-back-button>
+  </ng-template>
+</app-page-header>
+
+<mat-card *ngIf="loading">Loading..</mat-card>
+
+<mat-card *ngIf="!loading && channels.length === 0" class="grid grid-cols-8 gap-x-4">
+  <div class="col-span-full pb-2">
+    <h3>Not available</h3>
+    <mat-divider></mat-divider>
+    <p class="pt-4 pb-2 text-primary-400">
+      Please activate a sales channel before using the Listings Manager.
+    </p>
+    <button routerLink="/system/channels" color="primary" mat-flat-button>
+      To Sales Channels
+    </button>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="!loading && channels.length > 0">
+  <ng-container *ngIf="!isListing">
+
+    <div class="col-span-full">
+      <h3>Operation Details</h3>
+      <mat-divider></mat-divider>
+      <p class="pt-4 pb-2 text-primary-400">
+        Relist and bulk update all product details on the selected sales channels. Please select one of
+        the available options.
+      </p>
+    </div>
+
+    <div class="pt-4">
+      <form *ngIf="!loading" [formGroup]="formGroup" autocomplete="off">
+          <mat-radio-group formControlName="operation" class="inline-flex flex-col" (change)="toggleStepTwo($event)">
+            <mat-radio-button value="create" class="font-bold" disabled>Create Listings (currently unavailable)</mat-radio-button>
+            <p class="mt-2">
+              Creates new listings on the selected sales channel, from the available inventory.
+            </p>
+            <mat-radio-button value="update" class="font-bold">Update Listings</mat-radio-button>
+            <p class="mt-2">
+              Updates the existing listings on the selected sales channel.
+            </p>
+            <mat-radio-button value="consolidate" class="font-bold" disabled>Consolidate Listings (currently unavailable)</mat-radio-button>
+            <p class="mt-2">
+              Consolidates the existing listings and available inventory, between 2 or more sales channels.
+            </p>
+          </mat-radio-group>
+
+        <ng-container *ngIf="stepTwo === 'update'">
+          <p class="mt-4">
+            Please select the channel to perform changes on.
+          </p>
+
+          <mat-radio-group class="inline-flex flex-col" (change)="toggleStepThree($event)">
+            <mat-radio-button value="shopify" class="font-bold">Shopify</mat-radio-button>
+          </mat-radio-group>
+
+        </ng-container>
+
+        <ng-container *ngIf="stepTwo === 'update' && stepThree === 'shopify'">
+          <p class="mt-4">
+            The fields, from Shopify product, you want want to regenerate and update.
+          </p>
+
+          <ul>
+            <li><mat-checkbox (change)="selectShopifyOption('title', $event)">Title</mat-checkbox></li>
+            <li><mat-checkbox (change)="selectShopifyOption('description', $event)">Description</mat-checkbox></li>
+            <li><mat-checkbox (change)="selectShopifyOption('vendor', $event)">Vendor</mat-checkbox></li>
+            <li><mat-checkbox (change)="selectShopifyOption('meta_title', $event)">Meta Title</mat-checkbox></li>
+            <li><mat-checkbox (change)="selectShopifyOption('meta_description', $event)">Meta Description</mat-checkbox></li>
+            <li><mat-checkbox (change)="selectShopifyOption('tags', $event)">Tags</mat-checkbox></li>
+          </ul>
+        </ng-container>
+
+      </form>
+    </div>
+
+    <div class="pt-8">
+      <p class="mb-8">
+        <span class="font-bold">Notes:</span><br>
+        While running some system features may be temporarily disabled.<br>
+        Depending on the amount of data this operation can take several hours to complete.<br><br>
+        <span class="font-bold">It is not possible to revert this operation.</span>
+      </p>
+
+      <button color="warn" routerLink="/tools/repricing-agent" mat-flat-button>Discard</button>
+      <button (click)="submit()" [disabled]="!formGroup.dirty" color="primary" class="ml-2" mat-flat-button>
+        Save & Run
+      </button>
+
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isListing">
+    <div>
+      <span class="font-bold">Working. Please wait.</span>
+    </div>
+  </ng-container>
+</mat-card>
