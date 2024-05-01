@@ -200,11 +200,6 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
-              <mat-label>Tags</mat-label>
-              <input formControlName="productTagsTemplate" matInput required type="text">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="col-span-full lg:col-span-2">
               <mat-label>Meta Title</mat-label>
               <input formControlName="productMetaTitleTemplate" matInput required type="text">
             </mat-form-field>
@@ -243,8 +238,12 @@
               <span class="font-bold" ngNonBindable>{{type}}</span>
             </button>
 
-            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{format}}'">
-              <span class="font-bold" ngNonBindable>{{format}}</span>
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{formats}}'">
+              <span class="font-bold" ngNonBindable>{{formats}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{format_descriptions}}'">
+              <span class="font-bold" ngNonBindable>{{format_descriptions}}</span>
             </button>
 
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{country}}'">
@@ -299,6 +298,58 @@
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{comments}}'">
               <span class="font-bold" ngNonBindable>{{comments}}</span>
             </button>
+
+          </div>
+
+          <div class="col-span-full pl-2 mt-4">
+            <h3 class="inline-flex">Tags</h3>
+            <mat-divider></mat-divider>
+
+            <p class="mt-4">
+              The available values to use as product tags in Shopify.
+            </p>
+
+            <ul>
+              <li><mat-checkbox [checked]="isTagChecked('artist')"
+                                (change)="selectTag('artist', $event)">
+                Artist Name</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('type')"
+                                (change)="selectTag('type', $event)">
+                Type</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('genres')"
+                                (change)="selectTag('genres', $event)">
+                Genres</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('styles')"
+                                (change)="selectTag('styles', $event)">
+                Styles</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('label')"
+                                (change)="selectTag('label', $event)">
+                Label</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('formats')"
+                                (change)="selectTag('formats', $event)">
+                Formats</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('format_descriptions')"
+                                (change)="selectTag('format_descriptions', $event)">
+                Format Descriptions</mat-checkbox>
+              </li>
+
+              <li><mat-checkbox [checked]="isTagChecked('country')"
+                                (change)="selectTag('country', $event)">
+                Country</mat-checkbox>
+              </li>
+            </ul>
 
           </div>
 

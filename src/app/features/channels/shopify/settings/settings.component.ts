@@ -7,6 +7,7 @@ import { Location } from '@core/models/location.model';
 import { ApiMetaService } from '@core/services/api-meta.service';
 import { MatRadioChange } from '@angular/material/radio';
 import { Editor, Toolbar } from "ngx-editor";
+import { MatCheckboxChange } from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-settings',
@@ -29,6 +30,8 @@ export class SettingsComponent implements OnInit {
 
   locations!: Location[];
   productUpdatesPolicy!: string;
+
+  selectedTags: string[] = [];
 
   editor!: Editor;
   toolbar: Toolbar = [
@@ -57,6 +60,7 @@ export class SettingsComponent implements OnInit {
         this.apiService.get(this.id).subscribe((settings: Setting) => {
           this.settings = settings;
           this.productUpdatesPolicy = settings.productUpdatesPolicy;
+          this.selectedTags = this.settings.productTagsTemplate;
           this.setFormGroup();
           this.loading = false;
         });
@@ -73,7 +77,7 @@ export class SettingsComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new UntypedFormGroup({
+    this.formGroup = new FormGroup<{}>({
       id: new FormControl(this.id),
       name: new FormControl(this.settings?.name ?? 'Shopify'),
       locationId: new FormControl(this.settings?.locationId, Validators.required),
@@ -89,10 +93,24 @@ export class SettingsComponent implements OnInit {
       productTitleTemplate: new FormControl(this.settings?.productTitleTemplate, Validators.required),
       productDescriptionTemplate: new FormControl(this.settings?.productDescriptionTemplate, Validators.required),
       productVendorTemplate: new FormControl(this.settings?.productVendorTemplate, Validators.required),
-      productTagsTemplate: new FormControl(this.settings?.productTagsTemplate, Validators.required),
+      productTagsTemplate: new FormControl(this.selectedTags, Validators.required),
       productMetaTitleTemplate: new FormControl(this.settings?.productMetaTitleTemplate, Validators.required),
       productMetaDescriptionTemplate: new FormControl(this.settings?.productMetaDescriptionTemplate, Validators.required),
     });
+  }
+
+  selectTag(tag: string, event: MatCheckboxChange): void {
+    const i = this.selectedTags.indexOf(tag);
+    event.checked ?
+      this.selectedTags.push(tag) :
+      this.selectedTags.splice(i, 1);
+
+    this.formGroup.patchValue({ productTagsTemplate: this.selectedTags });
+    this.formGroup.get('productTagsTemplate')?.markAsDirty();
+  }
+
+  isTagChecked(tag: string): boolean {
+    return this.selectedTags.includes(tag);
   }
 
   toggleProductPolicy(event: MatRadioChange) {
