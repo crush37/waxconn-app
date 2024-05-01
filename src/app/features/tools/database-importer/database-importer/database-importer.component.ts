@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Import, ImportSerializer } from '@core/models/import.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -23,7 +23,7 @@ export class DatabaseImporterComponent implements OnInit {
   channels!: any;
   isImporting = false;
   lastImportAt?: string;
-  formGroup!: UntypedFormGroup;
+  formGroup!: FormGroup;
 
   selectedChannels: string[] = [];
 
@@ -52,10 +52,10 @@ export class DatabaseImporterComponent implements OnInit {
   }
 
   setFormGroup(): void {
-    this.formGroup = new UntypedFormGroup({
-      channelDiscogs: new UntypedFormControl(null),
-      channelShopify: new UntypedFormControl(null),
-      channels: new UntypedFormControl(null)
+    this.formGroup = new FormGroup({
+      channelDiscogs: new FormControl(null),
+      channelShopify: new FormControl(null),
+      channels: new FormControl(null)
     });
   }
 
@@ -74,14 +74,17 @@ export class DatabaseImporterComponent implements OnInit {
       return;
     }
     this.formGroup.disable();
-    this.apiService.save(this.formGroup.getRawValue()).subscribe(() => {
-      setTimeout(() => {
-        this.formGroup.markAsPristine();
+    this.apiService.save(this.formGroup.getRawValue()).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.formGroup.markAsPristine();
+          this.formGroup.enable();
+          this.getImports();
+        }, 500);
+      },
+      error: () => {
         this.formGroup.enable();
-        this.getImports();
-      }, 500);
-    }, () => {
-      this.formGroup.enable();
+      }
     });
   }
 }
