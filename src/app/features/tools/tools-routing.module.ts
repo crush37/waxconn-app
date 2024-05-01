@@ -10,13 +10,13 @@ const routes: Routes = [
     loadChildren: () => import('./repricing-agent/repricing-agent.module').then(m => m.RepricingAgentModule)
   },
   {
+    path: 'listings-manager',
+    loadChildren: () => import('./listings-manager/listings-manager.module').then(m => m.ListingsManagerModule)
+  },
+  {
     path: 'database-importer',
     loadChildren: () => import('./database-importer/database-importer.module').then(m => m.DatabaseImporterModule)
   },
-  // {
-  //   path: 'listings-publisher',
-  //   loadChildren: () => import('./listings/listings.module').then(m => m.ListingsModule)
-  // }
 ];
 
 @NgModule({
