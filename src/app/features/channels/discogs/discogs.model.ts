@@ -147,7 +147,7 @@ export class ReleaseList extends Resource {
   public thumb!: string;
   public title!: string;
   public catalog!: string;
-  public format!: string;
+  public formats!: string;
   public country!: string;
   public year!: string | null;
   public externalUrl!: string;
@@ -168,7 +168,7 @@ export class ReleaseListSerializer implements Serializer {
     resource.thumb = json.thumb;
     resource.title = json.title;
     resource.catalog = json.catalog;
-    resource.format = Array.isArray(json.format) ? ReleaseListSerializer.cleanup(json.format).join(', ') : json.format;
+    resource.formats = Array.isArray(json.formats) ? ReleaseListSerializer.cleanup(json.formats).join(', ') : json.formats;
     resource.country = json.country;
     resource.year = json.year;
     resource.externalUrl = json.external_url;
