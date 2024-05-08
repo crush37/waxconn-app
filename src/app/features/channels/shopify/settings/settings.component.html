@@ -270,10 +270,6 @@
               <span class="font-bold" ngNonBindable>{{tracklist}}</span>
             </button>
 
-            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{notes}}'">
-              <span class="font-bold" ngNonBindable>{{notes}}</span>
-            </button>
-
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{videos:x}}'">
               <span class="font-bold" ngNonBindable>{{videos:x}}</span>
             </button>
@@ -281,7 +277,7 @@
           </div>
 
           <div class="col-span-full pl-2 mt-4">
-            <h3 class="inline-flex">Other</h3>
+            <h3 class="inline-flex">Other (Discogs)</h3>
             <mat-divider></mat-divider>
           </div>
 
@@ -297,6 +293,14 @@
 
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{comments}}'">
               <span class="font-bold" ngNonBindable>{{comments}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{location}}'">
+              <span class="font-bold" ngNonBindable>{{location}}</span>
+            </button>
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{release_notes}}'">
+              <span class="font-bold" ngNonBindable>{{release_notes}}</span>
             </button>
 
           </div>
