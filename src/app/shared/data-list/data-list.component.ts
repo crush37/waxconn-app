@@ -29,6 +29,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
   formGroup!: UntypedFormGroup;
 
   @Input() page!: any;
+  @Input() viewMode = 'list';
   @Input() searchConfig?: SearchConfig;
   @Input() itemRoute?: string[];
   @Input() paginated = true;
@@ -36,6 +37,8 @@ export class DataListComponent implements OnInit, AfterViewInit {
   @Input() selecting = false;
 
   @ContentChild('topActions', { static: false }) topActionsTemplateOutlet!: TemplateRef<any>;
+  @ContentChild('beforeSearchActions', { static: false }) beforeSearchActionsOutlet!: TemplateRef<any>;
+  @ContentChild('afterSearchActions', { static: false }) afterSearchActionsOutlet!: TemplateRef<any>;
   @ContentChild('header', { static: false }) headerTemplateOutlet!: TemplateRef<any>;
   @ContentChild('row', { static: false }) rowTemplateOutlet!: TemplateRef<any>;
   @ContentChild('footer', { static: false }) footerTemplateOutlet!: TemplateRef<any>;
