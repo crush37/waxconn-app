@@ -11,7 +11,7 @@ import { SearchConfig } from '@shared/data-list/data-list.component';
   providers: [
     ApiService,
     { provide: 'apiServiceEndpoint', useValue: 'products' },
-    { provide: 'apiServiceOptions', useValue: { with: 'listings', per_page: 6, status: 'active' } },
+    { provide: 'apiServiceOptions', useValue: { with: 'listings', per_page: 50, status: 'active' } },
     { provide: 'apiServiceSerializer', useClass: ProductSerializer },
     DataListService,
     { provide: 'DataListServiceStorageKey', useValue: 'pos' },
@@ -29,6 +29,8 @@ export class OrderProductListComponent {
   g = (row: Product) => row;
 
   imagePlaceholder = './assets/default-placeholder.png';
+
+  viewMode = 'list';
 
   select(product: Product): void {
     let item = this.items.find(item => item.productId === product.id);
@@ -74,5 +76,9 @@ export class OrderProductListComponent {
 
   onImgError(event: any) {
     event.target.src = this.imagePlaceholder;
+  }
+
+  setView(view: string) : void {
+    this.viewMode = view;
   }
 }

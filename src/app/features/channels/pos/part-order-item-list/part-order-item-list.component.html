@@ -1,6 +1,15 @@
 <mat-card class="px-0 pb-0 h-full rounded-none sm:rounded-lg">
   <div class="flex w-full p-4 pt-0 text-left">
-    <div class="flex-grow self-center font-bold">Shopping Cart</div>
+    <div class="flex-grow self-center">
+      <span class="font-bold">Shopping Cart</span><br>
+      <small *ngIf="customer">{{ customer.fullName }}</small>
+    </div>
+
+    <div class="flex-grow-0 self-center justify-self-end">
+      <button (click)="removeAll()" [disabled]="items.length < 1" color="primary" mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
     <div class="block sm:hidden flex-grow-0 self-center justify-self-end">
       <button (click)="close()" color="primary" mat-icon-button>
         <mat-icon>arrow_back</mat-icon>
@@ -8,7 +17,7 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-  <mat-card-content class="scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-100 overflow-y-scroll w-full">
+  <div class="scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-100 overflow-y-scroll w-full">
     <table class="table-fixed w-full">
       <thead>
       <tr>
@@ -36,5 +45,5 @@
       </tr>
       </tbody>
     </table>
-  </mat-card-content>
+  </div>
 </mat-card>

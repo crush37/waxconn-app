@@ -1,74 +1,92 @@
 <mat-card class="px-0 pb-0 h-full rounded-none sm:rounded-lg">
-  <div class="flex w-full p-4 pt-0 text-left">
-    <div *ngIf="search" class="flex-grow self-center font-bold">Customers</div>
-    <div *ngIf="!search" class="flex-grow self-center font-bold">New Customer</div>
-    <div class="flex-grow-0 self-center justify-self-end">
-      <button (click)="close()" color="primary" mat-icon-button class="mr-3">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <button *ngIf="search" (click)="newCustomer()" color="primary" mat-flat-button>
-        New Customer
-      </button>
-      <button *ngIf="!search" (click)="submit()" color="primary" mat-flat-button [disabled]="!formGroup.dirty">
-        Save
-      </button>
-    </div>
-  </div>
-  <mat-card-content class="scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-100 overflow-y-scroll w-full">
-    <ng-container *ngIf="search">
-      <app-data-list [searchConfig]="searchConfig" [paginated]="false">
-        <ng-template #header>
-          <th class="flex w-full p-4 pt-0 text-left"></th>
-        </ng-template>
 
-        <ng-template #row let-row="row">
-          <tr (click)="selectCustomer(row)" class="hover:bg-gray-50 cursor-pointer">
-            <td class="text-left border-b">
-              <div class="p-4">
+  <ng-container *ngIf="search">
+
+    <app-data-list [searchConfig]="searchConfig" [paginated]="false">
+
+      <ng-template #beforeSearchActions>
+        <div class="inline-flex self-center justify-self-end">
+          <button (click)="close()" color="primary" mat-icon-button>
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #afterSearchActions>
+        <div (click)="newCustomer()" class="inline-flex self-center justify-self-end">
+          <button color="primary" mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template #header>
+        <th class="flex w-full p-2 pt-0 text-left"></th>
+      </ng-template>
+
+      <ng-template #row let-row="row">
+        <tr (click)="selectCustomer(row)" class="hover:bg-gray-50 cursor-pointer">
+          <td class="text-left border-b">
+            <div class="p-4">
                 <span *ngIf="g(row).firstName" class="font-bold">
                   {{ g(row).fullName }}<br>
                 </span>
-                <span class="mat-small">{{ g(row).email }}</span>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </app-data-list>
-    </ng-container>
-
-    <ng-container *ngIf="!search">
-      <form [formGroup]="formGroup" autocomplete="off">
-        <div class="grid p-4 h-full">
-
-          <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input formControlName="email" matInput required type="email">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>First name</mat-label>
-            <input formControlName="firstName" matInput type="text">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Last name</mat-label>
-            <input formControlName="lastName" matInput type="text">
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Phone</mat-label>
-            <input formControlName="phone" matInput type="text">
-          </mat-form-field>
-
-          <div class="grid grid-cols-2 pt-4">
-            <div class="col-full lg:col-auto self-center">
-              <mat-checkbox formControlName="acceptsMarketing" labelPosition="after">
-                Accepts Marketing?
-              </mat-checkbox>
+              <span class="mat-small">{{ g(row).email }}</span>
             </div>
+          </td>
+        </tr>
+      </ng-template>
+    </app-data-list>
+
+  </ng-container>
+
+  <!-- Create Customer -->
+  <ng-container *ngIf="!search">
+    <form [formGroup]="formGroup" autocomplete="off">
+      <div class="grid p-4 h-full">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput required type="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>First name</mat-label>
+          <input formControlName="firstName" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last name</mat-label>
+          <input formControlName="lastName" matInput type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input formControlName="phone" matInput type="text">
+        </mat-form-field>
+
+        <div class="grid grid-cols-2 pt-4">
+          <div class="col-full lg:col-auto self-center">
+            <mat-checkbox formControlName="acceptsMarketing" labelPosition="after">
+              Accepts Marketing?
+            </mat-checkbox>
           </div>
         </div>
-      </form>
-    </ng-container>
-  </mat-card-content>
+      </div>
+    </form>
+
+    <div class="inline-flex py-4 px-2">
+      <button (click)="close()" color="accent" mat-flat-button>
+        Back
+      </button>
+    </div>
+
+    <div class="inline-flex py-4">
+      <button (click)="submit()" color="primary" mat-flat-button [disabled]="!formGroup.dirty">
+        Save
+      </button>
+    </div>
+
+  </ng-container>
+
 </mat-card>

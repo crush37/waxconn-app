@@ -4,7 +4,6 @@ import { PosRoutingModule } from './pos-routing.module';
 import { PosCreateOrderButtonComponent } from './pos-create-order-button/pos-create-order-button.component';
 import { SettingsComponent } from './settings/settings.component';
 import { OrderComponent } from './order/order.component';
-import { PartOrderCustomerComponent } from './part-order-customer/part-order-customer.component';
 import { PartOrderItemListComponent } from './part-order-item-list/part-order-item-list.component';
 import { PartOrderSummaryComponent } from './part-order-summary/part-order-summary.component';
 import { DialogOrderCheckoutComponent } from './dialog-order-checkout/dialog-order-checkout.component';
@@ -17,7 +16,6 @@ import { DialogDiscountComponent } from './dialog-discount/dialog-discount.compo
     PosCreateOrderButtonComponent,
     SettingsComponent,
     OrderComponent,
-    PartOrderCustomerComponent,
     PartOrderItemListComponent,
     PartOrderSummaryComponent,
     DialogOrderCheckoutComponent,

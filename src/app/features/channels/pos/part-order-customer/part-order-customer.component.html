@@ -1,9 +1,0 @@
-<mat-card *ngIf="customer">
-  <div class="flex">
-    <div class="flex-grow font-bold">Customer</div>
-    <div class="flex-grow-0 text-right">
-      <span *ngIf="customer.fullName" class="mb-0">{{ customer.fullName }}</span><br>
-      <span *ngIf="!customer.fullName" class="mb-0">{{ customer.email }}</span>
-    </div>
-  </div>
-</mat-card>

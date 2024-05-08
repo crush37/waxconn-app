@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ import { DialogDiscountComponent } from '@features/channels/pos/dialog-discount/
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss'],
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, AfterViewInit {
   loading = false;
   title = 'POS Terminal';
   subTitle = 'New Order';
@@ -25,6 +25,11 @@ export class OrderComponent implements OnInit {
   showProductSearch = false;
   showShoppingCart = false;
 
+  @ViewChild('posHeightReference', { static: false }) posHeightReference!: ElementRef;
+  @ViewChild('posProductListHolder', { static: false }) posProductListHolder!: ElementRef;
+
+  height: number = 0;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     protected dialog: MatDialog) {
@@ -32,6 +37,12 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.setFormGroup();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.height = this.posHeightReference.nativeElement.offsetHeight;
+    }, 150);
   }
 
   setFormGroup(): void {
@@ -53,6 +64,16 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  setProductListHolderHeight(): void {
+    if ((this.showCustomerSearch || this.showProductSearch) && this.height > 768) {
+      this.posProductListHolder.nativeElement.style.height = `${ this.height }px`;
+      this.posProductListHolder.nativeElement.style.maxHeight = `${ this.height }px`;
+    } else {
+      this.posProductListHolder.nativeElement.style.height = 'auto';
+      this.posProductListHolder.nativeElement.style.maxHeight = 'auto';
+    }
+  }
+
   setCustomer(customer: Customer): void {
     this.customer = customer;
     this.formGroup.controls.customerId.patchValue(customer.id);
@@ -62,10 +83,12 @@ export class OrderComponent implements OnInit {
 
   searchCustomer(): void {
     this.showCustomerSearch = true;
+    this.setProductListHolderHeight();
   }
 
   searchProduct(): void {
     this.showProductSearch = true;
+    this.setProductListHolderHeight();
   }
 
   removeCustomer(): void {
@@ -75,6 +98,8 @@ export class OrderComponent implements OnInit {
   hideSearch(): void {
     this.showCustomerSearch = false;
     this.showProductSearch = false;
+
+    this.setProductListHolderHeight();
   }
 
   showCart(): void {

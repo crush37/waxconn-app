@@ -29,7 +29,7 @@ export class CustomerSerializer extends BaseCustomerSerializer {
   providers: [
     ApiService,
     { provide: 'apiServiceEndpoint', useValue: 'customers' },
-    { provide: 'apiServiceOptions', useValue: { with: 'defaultAddress', per_page: 7 } },
+    { provide: 'apiServiceOptions', useValue: { with: 'defaultAddress', per_page: 50 } },
     { provide: 'apiServiceSerializer', useClass: CustomerSerializer },
     DataListService,
     { provide: 'DataListServiceStorageKey', useValue: 'customers' },
