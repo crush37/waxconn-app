@@ -166,5 +166,40 @@
         "POS channel not updating inventory and syncing to Discogs and Shopify."
       ]
     }
+  },
+  {
+    "id": 14,
+    "version": "1.83.00",
+    "date": "May 1, 2024",
+    "changelog": {
+      "added": [
+        "New: Shopify Mapping Settings (title, description, tags, etc).",
+        "New: Bulk & Tools - Listings Manager (updates).",
+        "New: POS - Cancel in store orders."
+      ],
+      "changed": [
+        "Improved: Search.",
+        "Improved: Some minor POS improvements (don't show out of stock items).",
+        "Improved: Minor UI improvements (Channels Settings)",
+        "Improved: Lock Products while Syncing with Channels.",
+        "Improved: General API tweaks and stability."
+      ],
+      "fixed": [
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "version": "1.84.01",
+    "date": "May 8, 2024",
+    "changelog": {
+      "added": [
+      ],
+      "changed": [
+      ],
+      "fixed": [
+        "Fixed: Typo in Shopify template property name (release_notes)."
+      ]
+    }
   }
 ]
