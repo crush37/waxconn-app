@@ -13,6 +13,7 @@ export class Release extends Resource {
   public companies!: { name: string, catalog: string, type: string }[];
   public identifiers!: { type: string, value: string, description: string }[];
   public format!: string;
+  public formatDescriptions!: string;
   public type!: string;
   public country!: string;
   public year!: string;
@@ -38,6 +39,10 @@ export class Release extends Resource {
   providedIn: 'root'
 })
 export class ReleaseSerializer implements Serializer {
+  private static cleanup(arr: any): any {
+    return arr.sort().filter((item: any, pos: any, ary: any) => !pos || item !== ary[pos - 1]);
+  }
+
   fromJson(json: any): Release {
     const resource = new Release();
 
@@ -51,6 +56,9 @@ export class ReleaseSerializer implements Serializer {
     resource.companies = json.companies;
     resource.identifiers = json.identifiers;
     resource.format = json.format;
+    resource.formatDescriptions = Array.isArray(json.format_descriptions)
+      ? ReleaseSerializer.cleanup(json.format_descriptions).join(', ')
+      : json.format_descriptions;
     resource.type = json.type;
     resource.country = json.country;
     resource.year = json.year;

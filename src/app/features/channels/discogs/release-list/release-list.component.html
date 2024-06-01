@@ -12,8 +12,8 @@
   <app-data-list *ngIf="enabled" [itemRoute]="['channels', 'discogs']" [searchConfig]="searchConfig">
 
     <ng-template #header>
-      <th class="w-8/12 p-4 text-left">Discogs Releases</th>
-      <th class="w-3/12 p-4 text-right">Type</th>
+      <th class="w-7/12 p-4 text-left">Discogs Releases</th>
+      <th class="w-4/12 p-4 text-right">Format Descriptions</th>
       <th class="w-2/12 p-4 text-right">Country, Year</th>
     </ng-template>
 
@@ -21,8 +21,7 @@
       <td class="p-4 text-left border-b">
         <div class="flex items-center">
           <div class="mr-4">
-            <img alt="" height="60" src="{{ g(row).thumb || imagePlaceholder }}"
-                 style="height: 60px; width: 60px">
+            <img alt="" height="60" src="{{ g(row).thumb || imagePlaceholder }}" style="height: 60px; width: 60px">
           </div>
           <div>
             <span class="mat-body-strong">{{ g(row).title }}</span><br>
@@ -31,7 +30,7 @@
         </div>
       </td>
 
-      <td class="p-4 text-right border-b">{{ g(row).formats || 'n/a' }}</td>
+      <td class="p-4 text-right border-b">{{ g(row).formats }}</td>
 
       <td class="p-4 text-right border-b">
         <span *ngIf="g(row).country" class="mat-body-strong">{{ g(row).country }}</span>
