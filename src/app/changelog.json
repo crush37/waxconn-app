@@ -201,5 +201,19 @@
         "Fixed: Typo in Shopify template property name (release_notes)."
       ]
     }
+  },
+  {
+    "id": 16,
+    "version": "1.85.00",
+    "date": "Jun 2, 2024",
+    "changelog": {
+      "added": [
+      ],
+      "changed": [
+        "Improved: Discogs search list results (format descriptions)"
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]
