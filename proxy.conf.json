@@ -4,8 +4,7 @@
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
-      "^/api": "/api",
-      "^/sanctum": "/sanctum"
+      "^/api": "/api"
     },
     "logLevel": "debug"
   },
