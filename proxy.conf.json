@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://mywaxconn.test",
+    "target": "http://localhost",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
@@ -9,7 +9,7 @@
     "logLevel": "debug"
   },
   "/sanctum/*": {
-    "target": "http://mywaxconn.test",
+    "target": "http://localhost",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
@@ -18,7 +18,7 @@
     "logLevel": "debug"
   },
   "/auth/*": {
-    "target": "http://mywaxconn.test",
+    "target": "http://localhost",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
