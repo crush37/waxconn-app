@@ -215,5 +215,20 @@
       "fixed": [
       ]
     }
+  },
+  {
+    "id": 16,
+    "version": "1.86.00",
+    "date": "Jun 17, 2024",
+    "changelog": {
+      "added": [
+        "New: Product Bin Location",
+        "New: Shopify Metafield (single line text)"
+      ],
+      "changed": [
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]
