@@ -1,8 +1,7 @@
 <app-page-header [title]="title" [subTitle]="subTitle">
   <ng-template #actions>
     <app-back-button></app-back-button>
-    <app-submit-button [formGroup]="formGroup" [goTo]="'system/channels'"
-                       [reload]="true"></app-submit-button>
+    <app-submit-button *ngIf="!loading" [formGroup]="formGroup" [goTo]="'system/channels'" [reload]="true"></app-submit-button>
   </ng-template>
 </app-page-header>
 
@@ -211,6 +210,72 @@
 
           </div>
 
+          <div class="col-span-full pb-2">
+            <div class="flex">
+              <h3 class="flex-grow">Metafields</h3>
+              <button (click)="addMetafield()" color="primary" mat-button class="flex-grow-0 self-center justify-self-end">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+            <mat-divider></mat-divider>
+
+            <p class="mt-4 mb-4">
+              The available values to use as product metafields in Shopify.
+            </p>
+
+            <button *ngIf="productMetafieldsArray.length === 0" (click)="addMetafield()" color="accent" mat-flat-button>
+              <span class="font-bold">Add Metafield</span>
+            </button>
+
+            <div formArrayName="productMetafields">
+              <div *ngFor="let metafield of productMetafieldsArray.controls; let i = index" [formGroupName]="i" class="col-span-full grid grid-cols-9 gap-4">
+
+                <div class="col-span-full md:col-span-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Key</mat-label>
+                    <input formControlName="key" matInput type="text" minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_-]{3,255}$">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-full md:col-span-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Namespace</mat-label>
+                    <input formControlName="namespace" matInput type="text" minlength="3" maxlength="255" pattern="^[a-zA-Z0-9_-]{3,255}$">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-full md:col-span-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Value</mat-label>
+                    <input formControlName="value" matInput type="text" maxlength="255" pattern="^[a-zA-Z0-9_-]{3,255}$">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-full md:col-span-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type" required>
+                      <mat-option value="single_line_text_field">Single Line Text</mat-option>
+<!--                      <mat-option value="multi_line_text_field">Multi Line Text</mat-option>-->
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-full md:col-span-1 flex items-center justify-end mat-form-field-wrapper my-1">
+                  <button (click)="removeMetafield(i)" color="primary" mat-button class="self-center">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                </div>
+
+              </div>
+
+              <div class="col-span-full">
+                Note: Key and Namespace can only contain alphanumeric, hyphen, and underscore characters.
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
         <div class="col-span-full lg:col-span-2">
@@ -274,6 +339,10 @@
               <span class="font-bold" ngNonBindable>{{videos:x}}</span>
             </button>
 
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{bin_location}}'">
+              <span class="font-bold" ngNonBindable>{{bin_location}}</span>
+            </button>
+
           </div>
 
           <div class="col-span-full pl-2 mt-4">
@@ -282,6 +351,10 @@
           </div>
 
           <div class="col-span-full p-2 gap-2 inline-flex  flex-wrap">
+
+            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{release_id}}'">
+              <span class="font-bold" ngNonBindable>{{release_id}}</span>
+            </button>
 
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{media_condition}}'">
               <span class="font-bold" ngNonBindable>{{media_condition}}</span>
@@ -293,10 +366,6 @@
 
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{comments}}'">
               <span class="font-bold" ngNonBindable>{{comments}}</span>
-            </button>
-
-            <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{location}}'">
-              <span class="font-bold" ngNonBindable>{{location}}</span>
             </button>
 
             <button color="accent" mat-flat-button [cdkCopyToClipboard]="'{{release_notes}}'">
@@ -314,43 +383,35 @@
             </p>
 
             <ul>
-              <li><mat-checkbox [checked]="isTagChecked('artist')"
-                                (change)="selectTag('artist', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('artist')" (change)="selectTag('artist', $event)">
                 Artist Name</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('type')"
-                                (change)="selectTag('type', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('type')" (change)="selectTag('type', $event)">
                 Type</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('genres')"
-                                (change)="selectTag('genres', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('genres')" (change)="selectTag('genres', $event)">
                 Genres</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('styles')"
-                                (change)="selectTag('styles', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('styles')" (change)="selectTag('styles', $event)">
                 Styles</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('label')"
-                                (change)="selectTag('label', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('label')" (change)="selectTag('label', $event)">
                 Label</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('formats')"
-                                (change)="selectTag('formats', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('formats')" (change)="selectTag('formats', $event)">
                 Formats</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('format_descriptions')"
-                                (change)="selectTag('format_descriptions', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('format_descriptions')" (change)="selectTag('format_descriptions', $event)">
                 Format Descriptions</mat-checkbox>
               </li>
 
-              <li><mat-checkbox [checked]="isTagChecked('country')"
-                                (change)="selectTag('country', $event)">
+              <li><mat-checkbox [checked]="isTagChecked('country')" (change)="selectTag('country', $event)">
                 Country</mat-checkbox>
               </li>
             </ul>

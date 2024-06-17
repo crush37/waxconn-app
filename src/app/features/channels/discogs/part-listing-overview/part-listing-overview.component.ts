@@ -27,10 +27,8 @@ export class PartListingOverviewComponent implements OnInit {
   }];
 
   commentsOptions: string[] = [];
-  locationsOptions: string[] = [];
 
   filteredCommentsOptions!: Observable<string[]>;
-  filteredLocationsOptions!: Observable<string[]>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,15 +41,10 @@ export class PartListingOverviewComponent implements OnInit {
     });
 
     this.getCommentsOptions();
-    this.getLocationsOptions();
     this.setFromGroup();
 
     this.filteredCommentsOptions = this.formGroup.controls.comments.valueChanges.pipe(
       map(value => this.filterComments(value || '')),
-    );
-
-    this.filteredLocationsOptions = this.formGroup.controls.location.valueChanges.pipe(
-      map(value => this.filterLocations(value || '')),
     );
   }
 
@@ -61,21 +54,9 @@ export class PartListingOverviewComponent implements OnInit {
     return this.commentsOptions.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  private filterLocations(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.locationsOptions.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
   getCommentsOptions(): void {
     this.apiMetaService.getDiscogsComments().subscribe((comments: string[]) => {
       this.commentsOptions = comments;
-    });
-  }
-
-  getLocationsOptions(): void {
-    this.apiMetaService.getDiscogsLocations().subscribe((locations: string[]) => {
-      this.locationsOptions = locations;
     });
   }
 
@@ -85,7 +66,6 @@ export class PartListingOverviewComponent implements OnInit {
       sleeveCondition: new UntypedFormControl(null),
       comments: new UntypedFormControl(null),
       privateComments: new UntypedFormControl(null),
-      location: new UntypedFormControl(null),
     });
     this.formGroup.valueChanges.subscribe(() => {
       this.values.emit(this.formGroup);

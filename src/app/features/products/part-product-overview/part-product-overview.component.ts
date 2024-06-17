@@ -23,10 +23,7 @@ export class PartProductOverviewComponent implements OnInit {
   latestRepricing!: { operation: string, channels: string[]|string, createdAt: string }|null;
 
   commentsOptions: string[] = [];
-  locationsOptions: string[] = [];
-
   filteredCommentsOptions!: Observable<string[]>;
-  filteredLocationsOptions!: Observable<string[]>;
 
   editor!: Editor;
   toolbar: Toolbar = [
@@ -56,16 +53,11 @@ export class PartProductOverviewComponent implements OnInit {
     this.editor = new Editor();
 
     this.getCommentsOptions();
-    this.getLocationsOptions();
     this.setFormGroup();
     this.setFormGroupListings();
 
     this.filteredCommentsOptions = this.formGroup.controls.comments.valueChanges.pipe(
       map(value => this.filterComments(value || '')),
-    );
-
-    this.filteredLocationsOptions = this.formGroup.controls.location.valueChanges.pipe(
-      map(value => this.filterLocations(value || '')),
     );
   }
 
@@ -75,21 +67,9 @@ export class PartProductOverviewComponent implements OnInit {
     return this.commentsOptions.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  private filterLocations(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.locationsOptions.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
   getCommentsOptions(): void {
     this.apiMetaService.getDiscogsComments().subscribe((comments: string[]) => {
       this.commentsOptions = comments;
-    });
-  }
-
-  getLocationsOptions(): void {
-    this.apiMetaService.getDiscogsLocations().subscribe((locations: string[]) => {
-      this.locationsOptions = locations;
     });
   }
 
@@ -111,7 +91,6 @@ export class PartProductOverviewComponent implements OnInit {
     this.formGroup.addControl('sleeveCondition', new UntypedFormControl(this.product.options.discogs?.sleeveCondition));
     this.formGroup.addControl('comments', new UntypedFormControl(this.product.options.discogs?.comments));
     this.formGroup.addControl('privateComments', new UntypedFormControl(this.product.options.discogs?.privateComments));
-    this.formGroup.addControl('location', new UntypedFormControl(this.product.options.discogs?.location));
 
     this.formGroup.addControl('metaTitle', new UntypedFormControl(this.product.metaTitle));
     this.formGroup.addControl('metaDescription', new UntypedFormControl(this.product.metaDescription));

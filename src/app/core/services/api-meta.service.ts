@@ -68,7 +68,7 @@ export class ApiMetaService {
   }
 
   getDiscogsLocations(): Observable<any> {
-    return this.httpClient.get<string[]>('api/v1/meta/discogs-locations').pipe(map((payload: any) => {
+    return this.httpClient.get<string[]>('api/v1/meta/bin-locations').pipe(map((payload: any) => {
       payload.data = payload.data.map((data: any) => { return data.value });
       return payload.data;
     }));

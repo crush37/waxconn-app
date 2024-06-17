@@ -5,6 +5,9 @@ import { getCurrencySymbol } from '@angular/common';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ApiService } from '@core/services/api.service';
 import { PriceSuggestion, PriceSuggestionSerializer, Release } from '../discogs.model';
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { ApiMetaService } from "@core/services/api-meta.service";
 
 @Component({
   selector: 'app-part-listing-summary',
@@ -31,9 +34,13 @@ export class PartListingSummaryComponent implements OnInit {
   disableQuantities: boolean = true;
   taxable: boolean = false;
 
+  locationsOptions: string[] = [];
+  filteredLocationsOptions!: Observable<string[]>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private apiService: ApiService<PriceSuggestion>) {
+    private apiService: ApiService<PriceSuggestion>,
+    private apiMetaService: ApiMetaService) {
   }
 
   ngOnInit(): void {
@@ -57,11 +64,16 @@ export class PartListingSummaryComponent implements OnInit {
         }).filter(Boolean);
       }
 
+      this.getLocationsOptions();
     });
 
     this.setFormGroup();
     this.values.emit(this.formGroup);
     this.onMediaConditionAdded();
+
+    this.filteredLocationsOptions = this.formGroup.controls.binLocation.valueChanges.pipe(
+      map(value => this.filterLocations(value || '')),
+    );
   }
 
   setFormGroup(): void {
@@ -70,8 +82,9 @@ export class PartListingSummaryComponent implements OnInit {
       price: new UntypedFormControl(null, Validators.required),
       allowOffers: new UntypedFormControl(false, Validators.required),
       taxable: new UntypedFormControl(this.taxable, Validators.required),
-      barcode: new UntypedFormControl(this.release.barcode),
       sku: new UntypedFormControl(null),
+      barcode: new UntypedFormControl(this.release.barcode),
+      binLocation: new UntypedFormControl(null),
       formatQuantity: new UntypedFormControl(this.release.formatQuantity),
       weight: new UntypedFormControl(this.release.estimatedWeight),
       status: new UntypedFormControl('active', Validators.required),
@@ -107,5 +120,17 @@ export class PartListingSummaryComponent implements OnInit {
   setSuggestedPrice(): void {
     this.formGroup.patchValue({ price: this.priceSuggestion?.value.toFixed(2) });
     this.formGroup.controls.price.markAsDirty();
+  }
+
+  private filterLocations(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.locationsOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  getLocationsOptions(): void {
+    this.apiMetaService.getDiscogsLocations().subscribe((locations: string[]) => {
+      this.locationsOptions = locations;
+    });
   }
 }

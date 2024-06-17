@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '@core/services/api.service';
 import { Setting, SettingSerializer } from '../shopify.model';
 import { Location } from '@core/models/location.model';
@@ -20,18 +20,20 @@ import { MatCheckboxChange } from "@angular/material/checkbox";
   ]
 })
 export class SettingsComponent implements OnInit {
-  loading = false;
+  loading = true;
   title = 'Shopify';
   subTitle = 'Settings';
 
   id!: string;
   settings!: Setting;
-  formGroup = new FormGroup({});
+  formGroup!: FormGroup;
 
   locations!: Location[];
   productUpdatesPolicy!: string;
 
   selectedTags: string[] = [];
+
+  productMetafields: { key: string, namespace: string, value: string, type: string }[] = [];
 
   editor!: Editor;
   toolbar: Toolbar = [
@@ -55,13 +57,13 @@ export class SettingsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params.get('id') || this.id) {
         this.id = params.get('id') ?? this.id;
-        this.loading = true;
         this.getMetaData();
         this.apiService.get(this.id).subscribe((settings: Setting) => {
           this.settings = settings;
           this.productUpdatesPolicy = settings.productUpdatesPolicy;
           this.selectedTags = this.settings.productTagsTemplate;
           this.setFormGroup();
+          this.setFormGroupMetafields();
           this.loading = false;
         });
 
@@ -96,6 +98,35 @@ export class SettingsComponent implements OnInit {
       productTagsTemplate: new FormControl(this.selectedTags, Validators.required),
       productMetaTitleTemplate: new FormControl(this.settings?.productMetaTitleTemplate, Validators.required),
       productMetaDescriptionTemplate: new FormControl(this.settings?.productMetaDescriptionTemplate, Validators.required),
+      productMetafields: new FormArray([])
+    });
+  }
+
+  get productMetafieldsArray(): FormArray {
+    return this.formGroup.controls['productMetafields'] as FormArray;
+  }
+
+  setFormGroupMetafields(): void {
+    this.settings?.productMetafields?.forEach((metafield, index, object) => {
+      this.productMetafieldsArray.push(this.createMetafieldFormGroup(metafield));
+    });
+  }
+
+  addMetafield(): void {
+    this.productMetafieldsArray.push(this.createMetafieldFormGroup());
+  }
+
+  removeMetafield(index: number): void {
+    this.productMetafieldsArray.removeAt(index);
+    this.formGroup.markAsDirty();
+  }
+
+  createMetafieldFormGroup(metafield?: any): FormGroup {
+    return new FormGroup({
+      key: new FormControl(metafield?.key ?? '', Validators.required),
+      namespace: new FormControl(metafield?.namespace ?? '', Validators.required),
+      value: new FormControl(metafield?.value ?? '', Validators.required),
+      type: new FormControl(metafield?.type ?? 'single_line_text_field', Validators.required),
     });
   }
 
@@ -113,7 +144,7 @@ export class SettingsComponent implements OnInit {
     return this.selectedTags.includes(tag);
   }
 
-  toggleProductPolicy(event: MatRadioChange) {
+  toggleProductPolicy(event: MatRadioChange): void {
     this.productUpdatesPolicy = event.value;
   }
 

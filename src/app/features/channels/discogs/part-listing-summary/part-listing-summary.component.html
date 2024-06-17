@@ -69,6 +69,16 @@
           <mat-label>Barcode (ISBN, UPC, GTIN, etc)</mat-label>
           <input formControlName="barcode" matInput type="text">
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-span-2">
+          <mat-label>Bin Location</mat-label>
+          <input formControlName="binLocation" matInput maxLength="255" [matAutocomplete]="autoLocation"/>
+          <mat-autocomplete #autoLocation="matAutocomplete">
+            <mat-option *ngFor="let option of filteredLocationsOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline" class="col-span-1" >

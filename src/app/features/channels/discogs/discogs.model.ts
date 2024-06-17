@@ -94,13 +94,13 @@ export class ReleaseSerializer implements Serializer {
       sleeve_condition: resource.sleeveCondition,
       comments: resource.comments,
       private_comments: resource.privateComments,
-      location: resource.location,
       price: resource.price,
       allow_offers: resource.allowOffers,
       taxable: resource.taxable,
       inventory: {
         available: resource.quantity,
-        sku: resource.sku
+        sku: resource.sku,
+        bin_location: resource.binLocation,
       },
       currency: resource.currency,
       weight: resource.weight,
@@ -142,6 +142,7 @@ export class PriceSuggestionSerializer implements Serializer {
       inventory: {
         available: resource.quantity,
         sku: resource.sku,
+        bin_location: resource.binLocation,
       },
       weight: resource.weight,
       format_quantity: resource.formatQuantity,

@@ -21,6 +21,12 @@ export class Setting extends Resource {
   public productTagsTemplate!: string[];
   public productMetaTitleTemplate!: string;
   public productMetaDescriptionTemplate!: string;
+  public productMetafields!: {
+    key: string;
+    namespace: string,
+    value: string,
+    type: string
+  }[];
 }
 
 @Injectable({
@@ -48,6 +54,7 @@ export class SettingSerializer implements Serializer {
     resource.productTagsTemplate = json.settings.templates.product.tags;
     resource.productMetaTitleTemplate = json.settings.templates.product.meta_title;
     resource.productMetaDescriptionTemplate = json.settings.templates.product.meta_description;
+    resource.productMetafields = json.settings.templates.product.metafields;
 
     return resource;
   }
@@ -76,6 +83,7 @@ export class SettingSerializer implements Serializer {
             tags: resource.productTagsTemplate,
             meta_title: resource.productMetaTitleTemplate,
             meta_description: resource.productMetaDescriptionTemplate,
+            metafields: resource.productMetafields,
           }
         }
       },

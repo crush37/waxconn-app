@@ -5,6 +5,9 @@ import { getCurrencySymbol } from '@angular/common';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Listing } from '@core/models/listing.model';
 import { Product } from '../product/product.component';
+import { Observable } from "rxjs";
+import { ApiMetaService } from "@core/services/api-meta.service";
+import { map } from "rxjs/operators";
 
 
 @Component({
@@ -23,7 +26,12 @@ export class PartProductSummaryComponent implements OnInit {
   disableQuantities: boolean = true;
   disableEdits: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  locationsOptions: string[] = [];
+  filteredLocationsOptions!: Observable<string[]>;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private apiMetaService: ApiMetaService) {
   }
 
   ngOnInit(): void {
@@ -33,9 +41,14 @@ export class PartProductSummaryComponent implements OnInit {
       this.currencyCode = getCurrencySymbol(response.app.currency, 'narrow');
     });
     this.setSelectedChannels();
+    this.getLocationsOptions();
     this.setFormGroup();
     this.isActive(this.product.status);
     this.isPublishing();
+
+    this.filteredLocationsOptions = this.formGroup.controls.binLocation.valueChanges.pipe(
+      map(value => this.filterLocations(value || '')),
+    );
   }
 
   isActive(status: string) {
@@ -70,6 +83,7 @@ export class PartProductSummaryComponent implements OnInit {
     this.formGroup.addControl('taxable', new UntypedFormControl(this.product.taxable ?? false));
     this.formGroup.addControl('barcode', new UntypedFormControl(this.product.barcode));
     this.formGroup.addControl('sku', new UntypedFormControl(this.product.sku));
+    this.formGroup.addControl('binLocation', new UntypedFormControl(this.product.binLocation));
     this.formGroup.addControl('formatQuantity', new UntypedFormControl(this.product.options.discogs?.formatQuantity));
     this.formGroup.addControl('weight', new UntypedFormControl(this.product.weight));
     this.formGroup.addControl('status', new UntypedFormControl(this.product.status));
@@ -103,5 +117,17 @@ export class PartProductSummaryComponent implements OnInit {
     const listing = this.product.listings?.find((listing: Listing) => listing.channelId === channelId);
 
     return listing ? listing.publishedAt === null : false;
+  }
+
+  private filterLocations(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.locationsOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  getLocationsOptions(): void {
+    this.apiMetaService.getDiscogsLocations().subscribe((locations: string[]) => {
+      this.locationsOptions = locations;
+    });
   }
 }

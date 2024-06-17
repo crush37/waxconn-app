@@ -112,18 +112,6 @@
         <textarea formControlName="privateComments" matInput maxLength="255" rows="2" style="resize: none;"></textarea>
         <mat-hint align="end">{{ formGroup.get('privateComments')?.value?.length || 0 }} / 255</mat-hint>
       </mat-form-field>
-
-      <mat-form-field appearance="outline" class="col-span-2">
-        <mat-label>Location</mat-label>
-        <input formControlName="location" matInput maxLength="255" [matAutocomplete]="autoLocation"/>
-        <mat-autocomplete #autoLocation="matAutocomplete">
-          <mat-option *ngFor="let option of filteredLocationsOptions | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-        <mat-hint align="end">{{ formGroup.get('location')?.value?.length || 0 }} / 255</mat-hint>
-      </mat-form-field>
-
     </div>
 
     <mat-divider class="my-4"></mat-divider>

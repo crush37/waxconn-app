@@ -17,6 +17,7 @@ export class Product extends Resource {
   public taxable!: boolean;
   public barcode!: string;
   public sku!: string;
+  public binLocation!: string;
   public cost!: number;
   public currency!: string;
   public weight!: number;
@@ -34,7 +35,6 @@ export class Product extends Resource {
       formatQuantity: number,
       comments: string,
       privateComments: string,
-      location: string,
       price: number,
       quantity: number,
       allowOffers: number,
@@ -60,6 +60,7 @@ export class ProductSerializer implements Serializer {
     resource.quantity = json.quantity;
     resource.barcode = json.barcode;
     resource.sku = json.sku;
+    resource.binLocation = json.bin_location;
     resource.price = json.price;
     resource.taxable = json.taxable;
     resource.cost = json.cost;
@@ -86,7 +87,6 @@ export class ProductSerializer implements Serializer {
           formatQuantity: element.properties.format_quantity,
           comments: element.properties.comments,
           privateComments: element.properties.private_comments,
-          location: element.properties.location,
           price: element.properties.price,
           quantity: element.properties.quantity,
           allowOffers: element.properties.allow_offers,
@@ -120,13 +120,13 @@ export class ProductSerializer implements Serializer {
           format_quantity: resource.formatQuantity,
           comments: resource.comments,
           private_comments: resource.privateComments,
-          location: resource.location,
           allow_offers: resource.allowOffers
         }
       },
       inventory: {
         available: resource.quantity,
         sku: resource.sku,
+        bin_location: resource.binLocation,
       },
       channels: resource.channels,
     };
