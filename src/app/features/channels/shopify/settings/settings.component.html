@@ -223,19 +223,12 @@
               The available values to use as product metafields in Shopify.
             </p>
 
-            <button *ngIf="productMetafieldsArray.length === 0" (click)="addMetafield()" color="accent" mat-flat-button>
+            <button *ngIf="productMetafieldsArray.length === 0" (click)="addMetafield()" color="accent" mat-flat-button class="mb-4">
               <span class="font-bold">Add Metafield</span>
             </button>
 
             <div formArrayName="productMetafields">
               <div *ngFor="let metafield of productMetafieldsArray.controls; let i = index" [formGroupName]="i" class="col-span-full grid grid-cols-9 gap-4">
-
-                <div class="col-span-full md:col-span-2">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Key</mat-label>
-                    <input formControlName="key" matInput type="text" minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_-]{3,255}$">
-                  </mat-form-field>
-                </div>
 
                 <div class="col-span-full md:col-span-2">
                   <mat-form-field appearance="outline">
@@ -246,8 +239,15 @@
 
                 <div class="col-span-full md:col-span-2">
                   <mat-form-field appearance="outline">
+                    <mat-label>Key</mat-label>
+                    <input formControlName="key" matInput type="text" minlength="3" maxlength="64" pattern="^[a-zA-Z0-9_-]{3,255}$">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-span-full md:col-span-2">
+                  <mat-form-field appearance="outline">
                     <mat-label>Value</mat-label>
-                    <input formControlName="value" matInput type="text" maxlength="255" pattern="^[a-zA-Z0-9_-]{3,255}$">
+                    <input formControlName="value" matInput type="text" maxlength="255" pattern="^[a-zA-Z0-9_-{}]{3,255}$">
                   </mat-form-field>
                 </div>
 
