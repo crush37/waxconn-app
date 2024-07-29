@@ -5,6 +5,7 @@ import { Location, LocationSerializer } from '@core/models/location.model';
 
 export class App extends Resource {
   public id!: string;
+  public app!: string;
   public name!: string;
   public language!: string;
   public timezone!: string;
@@ -34,6 +35,10 @@ export class App extends Resource {
     createdAt: string;
   }|null;
   public listing!: boolean;
+  public discogsApiStatus!: {
+    status: string;
+    message: string;
+  }
 }
 
 @Injectable({
@@ -43,6 +48,7 @@ export class AppSerializer implements Serializer {
   fromJson(json: any): Resource {
     const resource = new App();
     resource.id = json.id;
+    resource.app = json.app;
     resource.name = json.name;
     resource.language = json.language;
     resource.timezone = json.timezone;
@@ -75,6 +81,10 @@ export class AppSerializer implements Serializer {
       createdAt: json.repricing.created_at,
     } : null;
     resource.listing = json.listing;
+    resource.discogsApiStatus = {
+      status: json.discogs_api_status.status,
+      message: json.discogs_api_status.message,
+    };
 
     return resource;
   }
