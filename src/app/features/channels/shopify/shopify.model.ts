@@ -11,6 +11,7 @@ export class Setting extends Resource {
   public apiPassword!: string;
   public apiSharedSecret!: string;
   public taxable!: boolean;
+  public normalizeBarcodes!: boolean;
   public isActive!: boolean;
   public publishByDefault!: boolean;
   public productUpdatesPolicy!: string;
@@ -45,6 +46,7 @@ export class SettingSerializer implements Serializer {
     resource.apiSharedSecret = json.settings.api_shared_secret;
     resource.productUpdatesPolicy = json.settings.product_updates.policy;
     resource.taxable = json.taxable;
+    resource.normalizeBarcodes = json.settings.normalize_barcodes;
     resource.isActive = json.is_active;
     resource.publishByDefault = json.settings.publish_by_default;
     resource.deleteOutOfStockProducts = json.settings.delete_out_of_stock_products;
@@ -75,6 +77,7 @@ export class SettingSerializer implements Serializer {
         },
         delete_out_of_stock_products: resource.deleteOutOfStockProducts,
         publish_by_default: resource.publishByDefault,
+        normalize_barcodes: resource.normalizeBarcodes,
         templates: {
           product: {
             title: resource.productTitleTemplate,

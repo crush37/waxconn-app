@@ -89,6 +89,7 @@ export class SettingsComponent implements OnInit {
       apiSharedSecret: new FormControl(this.settings?.apiSharedSecret, Validators.required),
       isActive: new FormControl(this.settings?.isActive ?? false),
       taxable: new FormControl(this.settings?.taxable ?? false),
+      normalizeBarcodes: new FormControl(this.settings?.normalizeBarcodes ?? false),
       publishByDefault: new FormControl(this.settings?.publishByDefault ?? true),
       deleteOutOfStockProducts: new FormControl(this.settings?.deleteOutOfStockProducts ?? false),
       productUpdatesPolicy: new FormControl(this.settings?.productUpdatesPolicy, Validators.required),
