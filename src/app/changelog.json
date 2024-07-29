@@ -230,5 +230,61 @@
       "fixed": [
       ]
     }
+  },
+  {
+    "id": 17,
+    "version": "1.87.00",
+    "date": "Jul 12, 2024",
+    "changelog": {
+      "added": [
+        "New: Format (Discogs) barcodes for scanning (in Shopify). Cleanup barcodes imported from Discogs before sending them to Shopify, to improve compatibility with barcode scanners."
+      ],
+      "changed": [
+      ],
+      "fixed": [
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "version": "1.87.01",
+    "date": "Jul 15, 2024",
+    "changelog": {
+      "added": [
+      ],
+      "changed": [
+      ],
+      "fixed": [
+        "Remove collections (under development) select box from create product form."
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "version": "1.88.00",
+    "date": "Jul 28, 2024",
+    "changelog": {
+      "added": [
+      ],
+      "changed": [
+        "Minor improvement on Discogs Search to allow searching releases directly with Discogs release codes (e.g. [r27299607])"
+      ],
+      "fixed": [
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "version": "1.89.00",
+    "date": "Jul 29, 2024",
+    "changelog": {
+      "added": [
+        "New: API service status (discogs)."
+      ],
+      "changed": [
+      ],
+      "fixed": [
+      ]
+    }
   }
 ]
