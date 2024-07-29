@@ -1,6 +1,23 @@
-<footer class="hidden sm:flex px-10 py-5">
-  <span class="mr-4">© {{ year }} Waxconn </span> |
-  <a *ngFor="let link of links" class="ml-4" href="{{ link.href }}" target="_blank">
-    <span> {{ link.text }}</span>
-  </a>
+<footer class="hidden sm:flex px-10 py-5 justify-between items-center">
+
+  <div>
+    <span class="mr-4">© {{ year }} Waxconn </span> |
+    <a *ngFor="let link of links" class="ml-4" href="{{ link.href }}" target="_blank">
+      <span> {{ link.text }}</span>
+    </a>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <span class="text-xs">{{ message }}</span>
+    <mat-icon
+      [ngClass]="{
+        'text-green-500': status === 'available',
+        'text-red-500': status === 'unavailable',
+        'text-yellow-500': status === 'degraded',
+        'text-gray-500': status === 'rate-limited'
+      }"
+      class="text-xs leading-none flex items-center justify-center border"
+    >fiber_manual_record</mat-icon>
+  </div>
+
 </footer>
