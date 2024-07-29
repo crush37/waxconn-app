@@ -86,6 +86,14 @@ export class DataListComponent implements OnInit, AfterViewInit {
     this.formGroup = new UntypedFormGroup({
       q: new UntypedFormControl(this.query)
     });
+
+    this.formGroup.get('q')!.valueChanges.subscribe(value => {
+      const sanitizedValue = this.sanitizeInput(value);
+      if (sanitizedValue !== value) {
+        this.formGroup.get('q')!.setValue(sanitizedValue, { emitEvent: false });
+      }
+    });
+
     if (this.searchConfig?.selects) {
       this.searchConfig.selects.forEach(select => {
         this.formGroup.addControl(
@@ -140,5 +148,12 @@ export class DataListComponent implements OnInit, AfterViewInit {
     }
 
     return status;
+  }
+
+  sanitizeInput(value: string): string {
+    if (value.startsWith('[r')) {
+      return value.replace(/[\[\]]/g, '');
+    }
+    return value;
   }
 }
