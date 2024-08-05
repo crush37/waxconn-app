@@ -3,7 +3,6 @@ import { Resource } from '@core/models/resource';
 import { Serializer } from '@core/models/serializer.interface';
 
 export class Setting extends Resource {
-  public id!: string;
   public name!: string;
   public companyName!: string;
   public taxNumber!: string;
@@ -26,40 +25,40 @@ export class Setting extends Resource {
 export class SettingSerializer implements Serializer {
   fromJson(json: any): Setting {
     const resource = new Setting();
-    resource.name = json.name;
-    resource.companyName = json.company_name;
-    resource.taxNumber = json.tax_number;
-    resource.address1 = json.address_1;
-    resource.address2 = json.address_2;
-    resource.country = json.country;
-    resource.region = json.region;
-    resource.city = json.city;
-    resource.postcode = json.postcode;
-    resource.email = json.email;
-    resource.phone = json.phone;
-    resource.language = json.language;
-    resource.timezone = json.timezone;
-    resource.currency = json.currency;
+    resource.name = json.app_name;
+    resource.companyName = json.app_company_name;
+    resource.taxNumber = json.app_tax_number;
+    resource.address1 = json.app_address_1;
+    resource.address2 = json.app_address_2;
+    resource.country = json.app_country;
+    resource.region = json.app_region;
+    resource.city = json.app_city;
+    resource.postcode = json.app_postcode;
+    resource.email = json.app_email;
+    resource.phone = json.app_phone;
+    resource.language = json.app_language;
+    resource.timezone = json.app_timezone;
+    resource.currency = json.app_currency;
 
     return resource;
   }
 
   toJson(resource: any): any {
     return {
-      name: resource.name,
-      company_name: resource.companyName,
-      tax_number: resource.taxNumber,
-      address_1: resource.address1,
-      address_2: resource.address2,
-      country: resource.country,
-      region: resource.region,
-      city: resource.city,
-      postcode: resource.postcode,
-      email: resource.email,
-      phone: resource.phone,
-      language: resource.language,
-      timezone: resource.timezone,
-      currency: resource.currency
+      app_name: resource.name,
+      app_company_name: resource.companyName,
+      app_tax_number: resource.taxNumber,
+      app_address_1: resource.address1,
+      app_address_2: resource.address2,
+      app_country: resource.country,
+      app_region: resource.region,
+      app_city: resource.city,
+      app_postcode: resource.postcode,
+      app_email: resource.email,
+      app_phone: resource.phone,
+      app_language: resource.language,
+      app_timezone: resource.timezone,
+      app_currency: resource.currency
     };
   }
 }

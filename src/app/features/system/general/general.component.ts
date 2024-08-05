@@ -58,8 +58,8 @@ export class GeneralComponent implements OnInit {
 
   getData(): void {
     this.loading = true;
-    this.apiService.get(this.id).subscribe((account: Setting) => {
-      this.setting = account;
+    this.apiService.index({}, false).subscribe((data: any) => {
+      this.setting = data[0];
       this.setFormGroup();
       this.loading = false;
     });
