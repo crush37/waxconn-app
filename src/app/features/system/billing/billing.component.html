@@ -30,7 +30,7 @@
           <h3 class="pt-4 mb-1">Billing Settings</h3>
           <p>This information appears on your monthly invoice and should be your legal address.</p>
           <p *ngIf="billing.settings.address1 && billing.settings.country" class="pt-3">
-            {{ billing.settings.companyName }}<br>
+            {{ billing.settings.name }}<br>
             {{ billing.settings.address1 }}<br>
             <ng-container *ngIf="billing.settings.address2">{{ billing.settings.address2 }}<br></ng-container>
             {{ billing.settings.city }}, {{ billing.settings.country }}, {{ billing.settings.postcode }}
@@ -107,7 +107,7 @@
         </mat-card>
       </div>
 
-      <div *ngIf="!loading && !isPaid" class="col-span-full pb-4 text-center">
+      <div *ngIf="!loading && billing && !isPaid" class="col-span-full pb-4 text-center">
         <mat-card>
           <div *ngIf="!hasPendingPayment">
             <p class="mb-0">

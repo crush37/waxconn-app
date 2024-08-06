@@ -7,7 +7,15 @@ import { Invoice, InvoiceSerializer } from '@core/models/invoice.model';
 export class Billing extends Resource {
   public id!: string;
   public plan!: string;
-  public settings!: Setting;
+  public settings!: {
+    name: string,
+    address1: string | null,
+    address2: string | null,
+    city: string | null,
+    country: string | null,
+    postcode: string | null,
+    taxNumber: string | null,
+  }
   public description!: string;
   public totalSubscription!: number;
   public totalChannels!: number;
@@ -29,7 +37,15 @@ export class BillingSerializer implements Serializer {
     const resource = new Billing();
     resource.id = json.id;
     resource.plan = json.plan;
-    resource.settings = new SettingSerializer().fromJson(json.settings);
+    resource.settings = {
+      name: json.settings.name,
+      city: json.settings.city,
+      address1: json.settings.address_1,
+      address2: json.settings.address_2,
+      country: json.settings.country,
+      postcode: json.settings.postcode,
+      taxNumber: json.settings.tax_number,
+    };
     resource.description = json.description;
     resource.totalSubscription = json.total_subscription;
     resource.totalChannels = json.total_channels;
