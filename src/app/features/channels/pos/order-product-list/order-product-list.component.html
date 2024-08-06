@@ -2,7 +2,7 @@
 
   <app-data-list [searchConfig]="searchConfig" [pageSizeOptions]="[]" [paginated]="false" [viewMode]="viewMode">
     <ng-template #beforeSearchActions>
-      <div class="inline-flex self-center justify-self-end">
+      <div class="inline-flex self-center justify-self-end mr-4">
         <button (click)="close()" color="primary" mat-icon-button>
           <mat-icon>arrow_back</mat-icon>
         </button>
@@ -10,7 +10,7 @@
     </ng-template>
 
     <ng-template #afterSearchActions>
-      <div class="hidden md:inline-flex self-center justify-self-end">
+      <div class="hidden md:inline-flex self-center justify-self-end ml-4">
         <button (click)="setView('list')" [ngClass]="{'bg-amber-400': viewMode === 'list'}" color="primary" mat-icon-button>
           <mat-icon>list</mat-icon>
         </button>

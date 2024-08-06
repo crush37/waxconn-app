@@ -5,7 +5,7 @@
     <app-data-list [searchConfig]="searchConfig" [paginated]="false">
 
       <ng-template #beforeSearchActions>
-        <div class="inline-flex self-center justify-self-end">
+        <div class="inline-flex self-center justify-self-end mr-4">
           <button (click)="close()" color="primary" mat-icon-button>
             <mat-icon>arrow_back</mat-icon>
           </button>
@@ -13,7 +13,7 @@
       </ng-template>
 
       <ng-template #afterSearchActions>
-        <div (click)="newCustomer()" class="inline-flex self-center justify-self-end">
+        <div (click)="newCustomer()" class="inline-flex self-center justify-self-end ml-4">
           <button color="primary" mat-icon-button>
             <mat-icon>add</mat-icon>
           </button>
