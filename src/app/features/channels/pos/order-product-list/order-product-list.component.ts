@@ -20,7 +20,8 @@ import { SearchConfig } from '@shared/data-list/data-list.component';
 export class OrderProductListComponent {
   searchConfig: SearchConfig = {
     appearance: 'outline',
-    showFilterInput: true
+    showFilterInput: true,
+    withAutoRefresh: true,
   };
 
   @Input() items: OrderItem[] = [];

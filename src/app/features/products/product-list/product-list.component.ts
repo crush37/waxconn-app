@@ -73,6 +73,7 @@ export class ProductListComponent implements OnInit {
         ]
       }
     ],
+    withAutoRefresh: false,
   };
   imagePlaceholder = './assets/default-placeholder.png';
 

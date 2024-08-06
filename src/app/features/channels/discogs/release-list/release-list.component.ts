@@ -23,7 +23,8 @@ export class ReleaseListComponent implements OnInit {
   searchConfig: SearchConfig = {
     label: 'Search',
     appearance: 'outline',
-    showFilterInput: true
+    showFilterInput: true,
+    withAutoRefresh: false,
   };
   enabled = false;
 

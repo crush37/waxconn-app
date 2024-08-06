@@ -79,7 +79,8 @@ export class OrderListComponent {
           { text: 'Cancelled', value: 'cancelled' },
         ]
       }
-    ]
+    ],
+    withAutoRefresh: false,
   };
 
   constructor(private activatedRoute: ActivatedRoute) {

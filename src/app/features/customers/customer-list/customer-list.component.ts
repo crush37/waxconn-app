@@ -51,7 +51,8 @@ export class CustomerListComponent {
           { text: 'Non Subscribers', value: 0 }
         ]
       }
-    ]
+    ],
+    withAutoRefresh: false,
   };
   exporting = false;
 

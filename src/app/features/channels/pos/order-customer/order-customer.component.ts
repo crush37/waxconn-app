@@ -39,7 +39,8 @@ export class OrderCustomerComponent implements OnInit {
   search = true;
   searchConfig: SearchConfig = {
     appearance: 'outline',
-    showFilterInput: true
+    showFilterInput: true,
+    withAutoRefresh: true,
   };
   formGroup!: UntypedFormGroup;
 
