@@ -17,6 +17,7 @@ export interface SearchConfig {
     multiple: boolean,
     options: { text: string, value: number | string | boolean | null }[]
   }[];
+  withAutoRefresh: boolean;
 }
 
 @Component({
@@ -65,9 +66,11 @@ export class DataListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.formGroup?.valueChanges.pipe(
-      debounceTime(500), distinctUntilChanged()
-    ).subscribe(next => this.dataListService.announce(next, true));
+    if (this.searchConfig?.withAutoRefresh) {
+      this.formGroup?.valueChanges.pipe(
+        debounceTime(500), distinctUntilChanged()
+      ).subscribe(next => this.dataListService.announce(next, true));
+    }
 
     this.paginator?.page.subscribe(next => {
       const stored: {} = this.dataListService.getStored();
@@ -80,6 +83,26 @@ export class DataListComponent implements OnInit, AfterViewInit {
       this.dataListService.storeValues(params);
       this.loadData(params);
     });
+  }
+
+  search(): void {
+    if (this.formGroup.valid) {
+      const stored: {} = this.dataListService.getStored();
+      const formValues = this.formGroup.value;
+      const params = {...stored, ...formValues};
+
+      this.dataListService.announce(params, true);
+    }
+  }
+
+  clear(): void {
+    this.formGroup.get('q')?.setValue('');
+
+    const stored: {} = this.dataListService.getStored();
+    const formValues = this.formGroup.value;
+    const params = {...stored, ...formValues};
+
+    this.dataListService.announce(params, true);
   }
 
   setFormGroup(): void {

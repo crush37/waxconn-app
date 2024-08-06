@@ -6,21 +6,20 @@
 
   <div class="flex">
 
-    <div class="flex-shrink-0 pl-2 pt-2">
+    <div class="flex-shrink-0 pl-4 pt-2">
       <ng-container *ngTemplateOutlet="beforeSearchActionsOutlet"></ng-container>
     </div>
 
     <div class="flex-grow-0 w-full">
-      <form *ngIf="!importing && searchConfig" [formGroup]="formGroup" autocomplete="off" class="px-4" (keydown.enter)="$event.preventDefault()">
+      <form *ngIf="!importing && searchConfig" [formGroup]="formGroup" (ngSubmit)="search()" autocomplete="off">
         <div class="lg:flex">
-          <div class="lg:flex-grow">
+          <div class="lg:flex-grow flex items-center">
             <div class="flex-auto">
               <mat-form-field [appearance]="searchConfig.appearance">
                 <mat-label>{{ searchConfig.label || 'Filter' }}</mat-label>
-                <mat-icon matPrefix>search</mat-icon>
+                <mat-icon *ngIf="!searchConfig.withAutoRefresh" matPrefix>search</mat-icon>
                 <input matInput type="text" formControlName="q">
-                <button *ngIf="formGroup.get('q')?.value" matSuffix aria-label="Clear"
-                        (click)="formGroup.get('q')?.setValue('')">
+                <button *ngIf="formGroup.get('q')?.value" (click)="clear();" type="button" matSuffix aria-label="Clear">
                   <mat-icon>close</mat-icon>
                 </button>
               </mat-form-field>
@@ -37,6 +36,11 @@
                 </mat-select>
               </mat-form-field>
             </ng-container>
+          </div>
+          <div *ngIf="!searchConfig.withAutoRefresh" class="lg:flex-grow-0 flex items-center pb-5">
+            <button mat-flat-button color="warn" class="md:ml-2 py-1.5 w-full sm:w-auto" type="submit">
+              <mat-icon>search</mat-icon>
+            </button>
           </div>
         </div>
       </form>
