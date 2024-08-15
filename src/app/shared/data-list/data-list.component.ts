@@ -87,11 +87,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
 
   search(): void {
     if (this.formGroup.valid) {
-      const stored: {} = this.dataListService.getStored();
-      const formValues = this.formGroup.value;
-      const params = {...stored, ...formValues};
-
-      this.dataListService.announce(params, true);
+      this.dataListService.announce(this.formGroup.value, true);
     }
   }
 
