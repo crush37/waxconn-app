@@ -262,9 +262,10 @@
   {
     "id": 19,
     "version": "1.88.00",
-    "date": "Jul 28, 2024",
+    "date": "Jul 29, 2024",
     "changelog": {
       "added": [
+        "New API service status shows the current status of the connection with sales channels (discogs API)."
       ],
       "changed": [
         "Minor improvement on Discogs Search to allow searching releases directly with Discogs release codes (e.g. [r27299607])"
@@ -276,14 +277,28 @@
   {
     "id": 20,
     "version": "1.89.00",
-    "date": "Jul 29, 2024",
+    "date": "Aug 7, 2024",
     "changelog": {
       "added": [
-        "New: API service status (discogs)."
+      ],
+      "changed": [
+        "We are transitioning from the current instant search feature to a standard search. Now, you can press the Enter key or click the search button to execute your search. This change is aimed at improving performance and reducing unnecessary searches."
+      ],
+      "fixed": [
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "version": "1.89.01",
+    "date": "Aug 15, 2024",
+    "changelog": {
+      "added": [
       ],
       "changed": [
       ],
       "fixed": [
+        "Discogs search returns server error from out of range requests and cached page item from a previous search."
       ]
     }
   }
